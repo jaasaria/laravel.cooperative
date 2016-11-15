@@ -7,11 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Iloilo|Finest </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Iloilo|Finest') }}</title>
 
     <link rel="stylesheet" href=" {{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/font-awesome/css/font-awesome.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('css/custom.min.css') }} ">  
+
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
+
+
 
 {{-- 
     <link rel="stylesheet" href=" {{ asset('bootstrap/css/bootstrap.min.css') }} ">

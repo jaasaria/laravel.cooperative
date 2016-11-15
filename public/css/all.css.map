@@ -1,0 +1,1 @@
+{"version":3,"sources":["c1.css","c2.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;ACHA;AACA;AACA;AACA;AACA","file":"all.css","sourcesContent":["p {\r\n    text-align: center;\r\n    color: red;\r\n}","p {\r\n    text-align: center;\r\n    color: blue;\r\n    \r\n}"]}

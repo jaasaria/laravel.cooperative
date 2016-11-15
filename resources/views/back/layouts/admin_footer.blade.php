@@ -1,7 +1,10 @@
       <!-- footer content -->
         <footer>
+
+            Copyright © 2016-2017 Southern Iloilo Area Multipurpose Cooperative. All Rights Reserved.
+
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            <a href="#">Iloilo Finest v1.0.0</a>
           </div>
           <div class="clearfix"></div>
         </footer>

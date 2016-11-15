@@ -19,8 +19,8 @@
                   <img src="upload/avatars/andrew.jpg" alt="..." class="img-circle profile_img">
                 </div>
                 <div class="profile_info">
-                  <span>Welcome,</span>
-                  <h2>John Doe</h2>
+                  <span>Welcome,</span><br>
+                  <h2 style="font-size: 13px">John Andrew Asaria</h2>
                 </div>
               </div>
               <!-- /menu profile quick info -->
@@ -35,7 +35,7 @@
 
                      <li><a><i class="fa fa-home"></i> Home</a></li>
 
-                     <li><a><i class="fa fa-edit"></i> Transaction <span class="fa fa-chevron-down"></span></a>
+                     <li><a><i class="fa fa-share-alt-square"></i> Transaction <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         
                         <li><a href="#">Purchases</a></li>
@@ -49,7 +49,7 @@
 
 
 
-                    <li><a><i class="fa fa-edit"></i> Master Files <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-trophy"></i> Master Files <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         <li><a href="#">Item Listing</a></li>
                         <li><a href="#">Customer</a></li>
@@ -57,14 +57,14 @@
                       </ul>
                     </li>
 
-                    <li><a><i class="fa fa-edit"></i> Other Files <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-tasks"></i> Other Files <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         <li><a href="#">Category</a></li>
                         <li><a href="#">Units</a></li>
                       </ul>
                     </li>
 
-                     <li><a><i class="fa fa-edit"></i> Users Setup<span class="fa fa-chevron-down"></span></a>
+                     <li><a><i class="fa fa-slideshare"></i> Users Setup<span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         <li><a href="#">User List</a></li>
                         <li><a href="#">Role</a></li>
@@ -80,13 +80,16 @@
                   
                   <ul class="nav side-menu">
                    
-                    <li><a><i class="fa fa-windows"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-bar-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         <li><a href="#">Report 1</a></li>
                         <li><a href="#">Report 2</a></li>
                         <li><a href="#">Report 3</a></li>
                       </ul>
                     </li>
+
+                    <li><a><i class="fa fa-wechat"></i> Message</a></li>
+
                                   
                   </ul>
                 </div>
@@ -96,15 +99,11 @@
 
               <!-- /menu footer buttons -->
               <div class="sidebar-footer hidden-small">
+              
                 <a data-toggle="tooltip" data-placement="top" title="Settings">
                   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 </a>
-                <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                  <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                </a>
-                <a data-toggle="tooltip" data-placement="top" title="Lock">
-                  <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                </a>
+              
                 <a data-toggle="tooltip" data-placement="top" title="Logout">
                   <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
