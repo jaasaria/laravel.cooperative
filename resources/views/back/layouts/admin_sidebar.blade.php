@@ -20,7 +20,7 @@
                 </div>
                 <div class="profile_info">
                   <span>Welcome,</span><br>
-                  <h2 style="font-size: 13px">John Andrew Asaria</h2>
+                  <h2 style="font-size: 13px">{{ ucwords(auth::user()->name) }}</h2>
                 </div>
               </div>
               <!-- /menu profile quick info -->
@@ -98,13 +98,13 @@
               <!-- /sidebar menu -->
 
               <!-- /menu footer buttons -->
-              <div class="sidebar-footer hidden-small">
+              <div class="sidebar-footer hidden-small"">
               
                 <a data-toggle="tooltip" data-placement="top" title="Settings">
                   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 </a>
               
-                <a data-toggle="tooltip" data-placement="top" title="Logout">
+                <a href="{{ url('/logout') }}" data-toggle="tooltip" data-placement="top" title="Logout">
                   <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
               </div>

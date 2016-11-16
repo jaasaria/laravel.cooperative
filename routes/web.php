@@ -11,14 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('auth.login');
+
+// });
+
+Route::get('/', ['uses'=>'\App\Http\Controllers\Auth\LoginController@showLoginForm','as' => 'user.login'] );
+
+
+Route::group(['middleware' => 'auth'],function(){
+	Route::get('/dashboard', 'PagesController@dashboard');
 });
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
-Route::get('/dashboard', 'PagesController@dashboard');
+
+
+
+
+
 

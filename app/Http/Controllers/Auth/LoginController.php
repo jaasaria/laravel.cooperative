@@ -16,7 +16,11 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+    // */
+    // protected $loginPath = '/auth/login';
+    // protected $redirectPath = '/dashboard';
+    // protected $redirectTo = '/dashboard';
+
 
     use AuthenticatesUsers;
 
@@ -25,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.

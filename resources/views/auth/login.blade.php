@@ -1,68 +1,57 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
+@extends('back.layouts.auth')
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+@section('authcontent')
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                <h2 >Sign In</h2>
+                <p>Sign in below:</p>
+                
+                <form  method="POST" action="{{ url('/login') }}" id="login">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                            {{ csrf_field() }}
+              
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                    <input id="email" type="email" class="cls-controls form-control" name="email" value="{{ old('email') }}" required autofocus placeholder="Email Address">
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                    <input id="password" type="password" class="cls-controls form-control block" placeholder="Password" name="password" required>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                            <small>{{ $errors->first('password') }}</small>
+                                        </span>
+                                    @endif
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
+                            <div class="form-group">
+                                <label id="group_remember"><input type="checkbox" name="remember"> Remember Me</label> 
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
+                           <button class="btn btnhover btn-login" id="voyager-login-btn">
+                                <span class="login_text">
+                                    <i class="voyager-lock"></i> Login
+                                </span>
+                                <span class="login_loader">
+                                    <img class="btn-loading"
+                                            src="{{ asset('img/logo-light.png') }}"> Logging in
+                                </span>
+                            </button>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">
-                                    Forgot Your Password?
-                                </a>
+                            <div id="forgot" class="hidden-xs">
+                                <a class="btn-link" href="{{ url('/password/reset') }}">
+                                        <small>Forgot Your Password?</small>
+                                </a> 
+                                <br>
+                                <a class="btn-link" href="{{ url('/register') }}">
+                                        <small>Register New User</small>
+                                </a>      
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+                </form>
+@stop
+
