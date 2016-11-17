@@ -1,18 +1,11 @@
 @extends('back.layouts.auth')
-
-
 @section('authcontent')
-
-                <h2 >Reset Password</h2>
+                <h2>Reset Password</h2>
                 <p>Enter email to send reset link:</p>
 
-
-
-                
                 <form  method="POST" action="{{  url('/password/email') }}" id="login">
 
                         {{ csrf_field() }}
-              
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <input id="email" type="email" class="cls-controls form-control" placeholder="Email" name="email" value="{{ old('email') }}" required>
@@ -37,12 +30,4 @@
                              
                         </div>
                 </form>
-
-                @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                @endif
-
-
 @stop

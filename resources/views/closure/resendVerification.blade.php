@@ -1,0 +1,1 @@
+Please verify your account first or click  <a href=""> <strong>	Here</strong> </a>  to resend verification link.

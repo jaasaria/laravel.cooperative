@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','token','verified'
     ];
 
     /**
@@ -26,4 +26,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+
+    public function UpdateVerified(){
+            $this->verified = true;
+            $this->token = null;
+            $this->save();
+    }
+
+
+    public function scopeVerified()
+    {
+        return $query->where('verified', '=', true);
+    }
+
+
 }

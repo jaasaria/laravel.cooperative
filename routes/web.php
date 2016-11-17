@@ -26,7 +26,12 @@ Route::group(['middleware' => 'auth'],function(){
 
 Auth::routes();
 
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('logout', 'Auth\LoginController@logout');
+Route::get('register/token/{token}', 'Auth\RegisterController@verifylink');
+Route::get('register/resend/{mail}', 'Auth\RegisterController@SendMail');
+
+
+
 
 
 

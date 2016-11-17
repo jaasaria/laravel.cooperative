@@ -3,24 +3,27 @@
 
 @section('authcontent')
 
-                <h2 >Reset Password</h2>
-                {{-- <p>Enter email to send reset link:</p> --}}
+                <h2>Reset Password</h2>
+                <p>Enter email and Password to proceed:</p>
 
                 <form  method="POST" action="{{  url('/password/reset')  }}" id="login">
 
                         {{ csrf_field() }}
 
-                        
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input id="email" type="email" class="form-control" placeholder="Email" name="email" value="{{ $email or old('email') }}" required autofocus>
+
+                        <input type="hidden" name="token" value="{{ $token }}">
+
+
+                        <div class="form-group">                        
+                            <input id="email" type="email" class="form-control" placeholder="Email" name="email" value="{{ $email or old('email') }}" required autofocus>
+                         </div>
+
+                        <div class="form-group">
+                            <input id="password" type="password" class="form-control" placeholder="Password" name="password" required>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <input id="password" type="password" class="form-control" name="password" required>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        <div class="form-group">
+                                <input id="password-confirm" type="password" class="form-control"  placeholder="Confirm Password" name="password_confirmation" required>
                         </div>
 
 

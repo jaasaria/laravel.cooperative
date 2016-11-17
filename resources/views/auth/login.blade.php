@@ -12,21 +12,10 @@
               
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <input id="email" type="email" class="cls-controls form-control" name="email" value="{{ old('email') }}" required autofocus placeholder="Email Address">
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                     <input id="password" type="password" class="cls-controls form-control block" placeholder="Password" name="password" required>
-
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <small>{{ $errors->first('password') }}</small>
-                                        </span>
-                                    @endif
                             </div>
 
                             <div class="form-group">
@@ -45,13 +34,31 @@
 
                             <div id="forgot" class="hidden-xs">
                                 <a class="btn-link" href="{{ url('/password/reset') }}">
-                                        <small>Forgot Your Password?</small>
+                                        <small>Forgot Your Password</small>
                                 </a> 
                                 <br>
                                 <a class="btn-link" href="{{ url('/register') }}">
                                         <small>Register New User</small>
-                                </a>      
+                                </a>
+
+
+                                @if (old('token'))
+                                    <br>
+                                    <a class="btn-link" href="{{ url('/register/resend/' . old('token')) }}">
+                                            <small>Resend Verification Link</small>
+                                    </a>      
+                                @endif
+
+  
+
+
+
                             </div>
                 </form>
+
+
+             
+
+
 @stop
 

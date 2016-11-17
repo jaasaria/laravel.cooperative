@@ -14,6 +14,7 @@
     <link rel="stylesheet" href=" {{ asset('vendors/font-awesome/css/font-awesome.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('css/w3.css') }}">
 
+
     <style>
 
      html, body{
@@ -230,16 +231,15 @@
             margin: 0;
             bottom: 0;
             right: 0;
+            left: 0;
         }
 
+        /*
         #messagebox .alert{
             margin: 0;
-        }
-        
+        }*/
 
     </style>
-
-
 
 </head>
 <body class="login-page">
@@ -265,14 +265,15 @@
     {{-- left sidebar --}}
     <div class="col-xs-12 col-sm-12 col-md-3" id="login_section">
 
-       
-
         <div id="login_section_box">
             @yield('authcontent')
         </div>
-         <div id="messagebox">
-            @yield('messagebox')
-            @include('errors.errors')
+        <div id="messagebox">
+
+            @include('closure.errors')      {{-- validation & error only --}}
+            @include('closure.alerts')      {{-- validation & error only --}}
+            @include('flash::message')      {{-- toast only --}}
+            
         </div>
 
     </div>

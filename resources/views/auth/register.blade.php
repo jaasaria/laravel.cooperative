@@ -8,7 +8,7 @@
                 
                 <form  method="POST" action="{{ url('/register') }}" id="login">
 
-                            {{ csrf_field() }}
+                        {{ csrf_field() }}
               
 
                          <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
