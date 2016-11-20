@@ -29,10 +29,10 @@
 
 	<div class="box-header with-border">
 		<span class="pull-left">
-			<h3 class="box-title">Category <small>Referencial file</small></h3>
+			<h3 class="box-title">{{ $form }} <small>Referencial file</small></h3>
 		</span>
 		<span class="pull-right">
-			<a href=" {{ url('category/create') }} " class="btn btn-success">Create New</a>
+			<a href=" {{ url( $route . '/create') }} " class="btn btn-success">Create New</a>
 		</span>
 	</div>
 
@@ -101,7 +101,7 @@
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! url('category/data') !!}',
+                ajax: '{!! url( $route . '/data') !!}',
                 order: [[2, 'desc']],		//start with Zero(0)
                 columns: [
                     { data: 'name', name: 'name' ,"searchable": true},
@@ -127,7 +127,7 @@
                     };
 
 					$.ajax({  
-                         url:'{!! URL::to('category/delete') !!}', 			//URL::to('/category/delete')
+                         url:'{!! URL::to( $route . '/delete') !!}', 			//URL::to('/category/delete')
                          type:"delete",  
                          data: value,  
                          success:function(){ 

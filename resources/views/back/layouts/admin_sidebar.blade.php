@@ -33,13 +33,14 @@
                   <h3>General</h3>
                   <ul class="nav side-menu">
 
-                     <li><a><i class="fa fa-home"></i> Home</a></li>
+                     <li {{ Request::is('dashboard') ? 'active' : '' }}><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i> Home</a></li>
 
                      <li><a><i class="fa fa-share-alt-square"></i> Transaction <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         
                         <li><a href="#">Purchases</a></li>
                         <li><a href="#">Sales</a></li>
+
                         <li><a href="#">Re-Stock</a></li>
                         <li><a href="#">Pull-Out</a></li>
 
@@ -53,14 +54,17 @@
                       <ul class="nav child_menu">
                         <li><a href="#">Item Listing</a></li>
                         <li><a href="#">Customer</a></li>
-                        <li><a href="#">Supplier</a></li>
+                        <li {{ Request::is('supplier') ? 'active' : '' }}>
+                          <a href="{{ url('supplier/') }}">Supplier</a></li>
                       </ul>
                     </li>
 
                     <li><a><i class="fa fa-tasks"></i> Other Files <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
-                        <li><a href="#">Category</a></li>
-                        <li><a href="#">Units</a></li>
+                        <li {{ Request::is('category') ? 'active' : '' }} >
+                           <a href="{{ url('category/') }}">Category</a></li>
+                        <li {{ Request::is('units') ? 'active' : '' }}>
+                           <a href="{{ url('unit/') }}">Units</a></li>
                       </ul>
                     </li>
 

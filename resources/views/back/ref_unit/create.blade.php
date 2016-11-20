@@ -9,10 +9,10 @@
 
 	<div class="box-header with-border">
 		<span class="pull-left">
-			<h3 class="box-title">Category <small>Referencial file</small></h3>
+			<h3 class="box-title"> {{ $form }} <small>Referencial file</small></h3>
 		</span>
 		<span class="pull-right">
-			<a href=" {{ url('category') }} " class="btn btn-warning">Back</a>
+			<a href=" {{ url( $route) }} " class="btn btn-warning">Back</a>
 		</span>
 	</div>
 
@@ -23,7 +23,10 @@
 
 	    <div class="x_panel">
 		    <div class="x_title">
-		        <h2>Create</h2>
+		        <h2>{{ (empty($data) ? 'Create' : 'Modify') }} </h2>
+		         
+
+
 			        <ul class="nav navbar-right panel_toolbox">
 			          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 			          </li>
@@ -36,7 +39,7 @@
 	    <div class="x_content">
 	
 
-		    <form  method="POST" action="{{ (empty($data) ? route('category.store'): route('category.update',$data->id)) }}" class="form-horizontal">
+<form  method="POST" action="{{ (empty($data) ? route( $route . '.store'):route( $route . '.update',$data->id)) }}" class="form-horizontal">
 
 		        {{ csrf_field() }}
 		        {{ (empty($data) ? null : method_field('PUT')) }}  {{-- use for update only --}}
@@ -60,7 +63,7 @@
 				<div class="ln_solid"></div>
 
 		   		<div class="form-group text-center">
-					<a href="{{ url('category') }}" class="btn btn-warning">Cancel</a>
+					<a href="{{ url(  $route ) }}" class="btn btn-warning">Cancel</a>
 		   			<button type="submit" class="btn btn-success">{{ (empty($data)? 'Save Data': 'Update Data') }}</button>
 		        </div>
 		        
@@ -87,7 +90,7 @@
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! url('request/data') !!}',
+                ajax: '{!! url(  $route . '/data') !!}',
                 order: [[3, 'desc']],
                 columns: [
                     { data: 'title', name: 'title' ,"searchable": true},
