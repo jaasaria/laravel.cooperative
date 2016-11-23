@@ -39,6 +39,24 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::resource('supplier', 'RefSupplierController');
 
 
+//Customer
+	Route::delete('customer/delete', ['uses' => 'RefCustomerController@delete','as' => 'customer.delete']);
+	Route::get('customer/data', ['uses' => 'RefCustomerController@data','as' => 'customer.data']);
+	Route::resource('customer', 'RefCustomerController');
+
+
+//Item
+	Route::delete('item/delete', ['uses' => 'RefItemController@delete','as' => 'item.delete']);
+	Route::get('item/data', ['uses' => 'RefItemController@data','as' => 'item.data']);
+	Route::resource('item', 'RefItemController');
+
+
+//Purchases
+	Route::delete('purchase/delete', ['uses' => 'TrPurchasesController@delete','as' => 'purchase.delete']);
+	Route::get('purchase/data', ['uses' => 'TrPurchasesController@data','as' => 'purchase.data']);
+	Route::resource('purchase', 'TrPurchasesController');
+
+
 
 
 });

@@ -38,7 +38,9 @@
                      <li><a><i class="fa fa-share-alt-square"></i> Transaction <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                         
-                        <li><a href="#">Purchases</a></li>
+                        <li {{ Request::is('purchase') ? 'active' : '' }} >
+                           <a href="{{ url('purchase/') }}">Purchases</a></li>
+                           
                         <li><a href="#">Sales</a></li>
 
                         <li><a href="#">Re-Stock</a></li>
@@ -52,8 +54,10 @@
 
                     <li><a><i class="fa fa-trophy"></i> Master Files <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
-                        <li><a href="#">Item Listing</a></li>
-                        <li><a href="#">Customer</a></li>
+                        <li {{ Request::is('item') ? 'active' : '' }}>
+                          <a href="{{ url('item/') }}">Item Listing</a></li>
+                        <li {{ Request::is('customer') ? 'active' : '' }}>
+                          <a href="{{ url('customer/') }}">Customer</a></li>
                         <li {{ Request::is('supplier') ? 'active' : '' }}>
                           <a href="{{ url('supplier/') }}">Supplier</a></li>
                       </ul>

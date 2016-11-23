@@ -6,7 +6,7 @@
 		
 		.w15 {width:15%;text-align: center;}
 		.w20 {width:20%;}
-		.w50 {width:50%;text-align: center;}
+		.w40 {width:40%;text-align: center;}
 
  		.td-description{
 	        text-overflow: ellipsis;
@@ -14,7 +14,6 @@
 	        overflow: hidden; 
 	        padding-right: 30px
 	    }
-
 	    th{
 	    	background-color: #2f4358;
 	    	color: white
@@ -29,10 +28,10 @@
 
 	<div class="box-header with-border">
 		<span class="pull-left">
-			<h3 class="box-title">Category <small>Referencial file</small></h3>
+			<h3 class="box-title">{{ $form }} <small>Transaction list</small></h3>
 		</span>
 		<span class="pull-right">
-			<a href=" {{ url('category/create') }} " class="btn btn-success">Create New</a>
+			<a href=" {{ url( $route . '/create') }} " class="btn btn-success">Create New</a>
 		</span>
 	</div>
 
@@ -49,6 +48,23 @@
 			        </ul>
 		        	<div class="clearfix"></div>
 		    </div>
+
+
+
+fdsfsfs123123
+
+			<div id="app">
+
+			  {{ message }}
+
+			</div>
+
+
+
+
+
+
+
 	     <div class="x_content">
 
 			<div class="row">
@@ -60,8 +76,9 @@
 		                <thead>
 		                    <tr role="row">
 
-		                        <th class="w20">Name</th>
-		                        <th class="w50 hidden-xs hidden-sm">Description</th>
+		                        <th class="w15">Item Code</th>
+		                        <th class="w15">Item Name</th>
+		                        <th class="w40 hidden-xs hidden-sm">Description</th>
 		                        <th class="w15 hidden-xs hidden-sm">Date</th>
 		                        <th class="w15">Action</th>
 
@@ -95,15 +112,29 @@
 <script>
 
 
-	$(document).ready(function(){
 
+	var app = new Vue({
+		el: '#app',
+		data: {
+			message: 'Hello Vue!'
+		}
+	})
+
+
+
+
+
+
+	$(document).ready(function(){
  		$(function() {
+
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! url('category/data') !!}',
+                ajax: '{!! url( $route . '/data') !!}',
                 order: [[2, 'desc']],		//start with Zero(0)
                 columns: [
+                    { data: 'code', name: 'code' ,"searchable": true},
                     { data: 'name', name: 'name' ,"searchable": true},
                     { data: 'description', name: 'description' ,"searchable": true},
                     { data: 'created_at', name: 'created_at' ,"searchable": true },
@@ -127,7 +158,7 @@
                     };
 
 					$.ajax({  
-                         url:'{!! URL::to('category/delete') !!}', 			//URL::to('/category/delete')
+                         url:'{!! URL::to( $route . '/delete') !!}', 			//URL::to('/category/delete')
                          type:"delete",  
                          data: value,  
                          success:function(){ 
@@ -136,13 +167,13 @@
                          }  
                     });  
                  });
-	    });
-
-        });
+	    	});
 
 
-	
+
+        });	
 	});
+
 </script>
 @endpush 
 

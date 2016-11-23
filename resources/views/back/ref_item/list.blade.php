@@ -6,7 +6,7 @@
 		
 		.w15 {width:15%;text-align: center;}
 		.w20 {width:20%;}
-		.w50 {width:50%;text-align: center;}
+		.w40 {width:40%;text-align: center;}
 
  		.td-description{
 	        text-overflow: ellipsis;
@@ -14,7 +14,6 @@
 	        overflow: hidden; 
 	        padding-right: 30px
 	    }
-
 	    th{
 	    	background-color: #2f4358;
 	    	color: white
@@ -60,8 +59,9 @@
 		                <thead>
 		                    <tr role="row">
 
-		                        <th class="w20">Name</th>
-		                        <th class="w50 hidden-xs hidden-sm">Address</th>
+		                        <th class="w15">Item Code</th>
+		                        <th class="w15">Item Name</th>
+		                        <th class="w40 hidden-xs hidden-sm">Description</th>
 		                        <th class="w15 hidden-xs hidden-sm">Date</th>
 		                        <th class="w15">Action</th>
 
@@ -104,8 +104,9 @@
                 ajax: '{!! url( $route . '/data') !!}',
                 order: [[2, 'desc']],		//start with Zero(0)
                 columns: [
+                    { data: 'code', name: 'code' ,"searchable": true},
                     { data: 'name', name: 'name' ,"searchable": true},
-                    { data: 'address', name: 'address' ,"searchable": true},
+                    { data: 'description', name: 'description' ,"searchable": true},
                     { data: 'created_at', name: 'created_at' ,"searchable": true },
                     { data: 'action', name: 'action', "orderable":false,"defaultContent": ""}
                 ]

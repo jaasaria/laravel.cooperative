@@ -54,11 +54,22 @@
 
 					{{-- address --}}
 					<div class="form-group">		
-				        <label class="control-label col-md-2 col-sm-2 col-xs-12">Address: *</label>
+				        <label class="control-label col-md-2 col-sm-2 col-xs-12">Permanent Address:*</label>
 				        <div class="col-md-10 col-sm-10 col-xs-12">
-				        	<input id="address" type="text" class="cls-controls form-control" placeholder="Address" name="address" value="{{ (empty($data)?  old('address'): $data->address) }}" required autofocus>
+				        	<input id="address" type="text" class="cls-controls form-control" placeholder="Permanent Address" name="address" value="{{ (empty($data)?  old('address'): $data->address) }}" required autofocus>
 				        </div>
 					</div>
+
+
+					{{-- shipping address --}}
+					<div class="form-group">		
+				        <label class="control-label col-md-2 col-sm-2 col-xs-12">Shipping Address:</label>
+				        <div class="col-md-10 col-sm-10 col-xs-12">
+				        	<input id="shippingAddress" type="text" class="cls-controls form-control" placeholder="Shipping Address" name="shippingAddress" value="{{ (empty($data)?  old('address'): $data->shippingAddress) }}">
+				        </div>
+					</div>
+
+
 					<br>
 
 					{{-- Tel no --}}

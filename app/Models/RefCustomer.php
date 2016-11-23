@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RefSupplier extends Model
+class RefCustomer extends Model
 {
-    
-    protected  $table = 'tbl_supplier';
+    protected  $table = 'tbl_customer';
     protected  $fillable = ['name',
 		    'address',
+		    'shippingAddress',
 			'telno',
 			'mobileno',
 			'faxno',
@@ -18,6 +18,4 @@ class RefSupplier extends Model
 			'notes',
 			'active'
     ];
-
 }
-	

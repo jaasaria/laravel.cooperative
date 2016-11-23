@@ -3,23 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RefSupplier as Cls;
+use App\Models\RefItem as Cls;
+
+use App\Models\RefCategories;
+use App\Models\RefUnits;
+
 use Yajra\Datatables\Datatables;
-use App\Http\Requests\StoreSupplier as ValidateRequest;
+use App\Http\Requests\StoreItem as ValidateRequest;
 
 
-class RefSupplierController extends Controller
+class RefItemController extends Controller
 {
 
     public $form,$route;
     public $rList,$rCreate;
 
+    public $category,$unit;
+
 
     public function __construct(){
-        $this->form = "Supplier";     //plural
-        $this->route = "supplier";
-        $this->rList = "back.ref_supplier.list";
-        $this->rCreate = "back.ref_supplier.create";
+        $this->form = "Item";     //plural
+        $this->route = "item";
+        $this->rList = "back.ref_item.list";
+        $this->rCreate = "back.ref_item.create";
+
+        $this->category = RefCategories::pluck('name', 'id');   
+        $this->unit = RefUnits::pluck('name', 'id');
 
     }
 
@@ -44,7 +53,11 @@ class RefSupplierController extends Controller
     {
         $form = $this->form;
         $route = $this->route;
-        return view($this->rCreate,compact('form','route'));
+
+        $category = $this->category;
+        $unit = $this->unit;
+
+        return view($this->rCreate,compact('form','route','category','unit'));
     }
 
     /**
@@ -55,6 +68,7 @@ class RefSupplierController extends Controller
      */
     public function store(ValidateRequest $request)
     {
+
         Cls::create($request->all());
         return redirect($this->route)->with('success',' Record was successfully saved.');
 
@@ -82,8 +96,11 @@ class RefSupplierController extends Controller
         $form = $this->form;
         $route = $this->route;
 
+        $category = $this->category;
+        $unit = $this->unit;
+
         $data = Cls::findorfail($id);
-        return view($this->rCreate,compact('data','form','route'));
+        return view($this->rCreate,compact('data','form','route','category','unit'));
     }
 
     /**
@@ -143,12 +160,16 @@ class RefSupplierController extends Controller
                         ';
             })
 
+        ->editColumn('code', ' 
+                         {{ $code }}
+                        ')
+
         ->editColumn('name', ' 
                          {{ $name }}
                         ')
 
-        ->editColumn('address', ' 
-                          <div class="td-description"> {!! str_limit($address) !!} </div>
+        ->editColumn('description', ' 
+                          <div class="td-description"> {!! str_limit($description) !!} </div>
                         ')
 
         ->editColumn('created_at',function ($data){

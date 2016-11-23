@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RefSupplier as Cls;
+use App\Models\TrPurchases as Cls;
 use Yajra\Datatables\Datatables;
-use App\Http\Requests\StoreSupplier as ValidateRequest;
+use App\Http\Requests\StoreCategory;
 
 
-class RefSupplierController extends Controller
+class TrPurchasesController extends Controller
 {
 
     public $form,$route;
     public $rList,$rCreate;
 
-
     public function __construct(){
-        $this->form = "Supplier";     //plural
-        $this->route = "supplier";
-        $this->rList = "back.ref_supplier.list";
-        $this->rCreate = "back.ref_supplier.create";
+        $this->form = "Purchases";      //plural
+        $this->route = "purchase";
+        $this->rList = "back.tr_purchase.list";
+        $this->rCreate = "back.tr_purchase.create";
 
     }
 
@@ -53,9 +52,13 @@ class RefSupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidateRequest $request)
+    public function store(StoreCategory $request)
     {
-        Cls::create($request->all());
+
+        $data = new Cls();
+        $data->name =  ucfirst($request->name);
+        $data->description = ucfirst($request->description);
+        $data->save();
         return redirect($this->route)->with('success',' Record was successfully saved.');
 
     }
@@ -93,13 +96,14 @@ class RefSupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidateRequest $request, $id)
+    public function update(StoreCategory $request, $id)
     {
 
-        $active =  ($request->active) ? true : false;
-        $request->merge(array('active' =>  $active ));
+        $data = Cls::findorfail($id);
+        $data->name =  ucfirst($request->name);
+        $data->description = ucfirst($request->description);
+        $data->save();
 
-        Cls::find($id)->update( $request->all());
         return redirect($this->route)->with('success',' Record was successfully updated.');
 
     }
@@ -124,6 +128,7 @@ class RefSupplierController extends Controller
     }
 
 
+ 
     public function data(){
 
         $data = Cls::all();
@@ -143,12 +148,16 @@ class RefSupplierController extends Controller
                         ';
             })
 
-        ->editColumn('name', ' 
-                         {{ $name }}
+        ->editColumn('code', ' 
+                         {{ $code }}
                         ')
 
-        ->editColumn('address', ' 
-                          <div class="td-description"> {!! str_limit($address) !!} </div>
+        ->editColumn('name', ' 
+                         {{ $code }}
+                        ')
+
+        ->editColumn('description', ' 
+                          <div class="td-description"> {!! str_limit($description) !!} </div>
                         ')
 
         ->editColumn('created_at',function ($data){
@@ -167,6 +176,4 @@ class RefSupplierController extends Controller
             ])
             ->make(true);
     }
-
-
 }

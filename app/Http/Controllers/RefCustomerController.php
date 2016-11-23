@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RefSupplier as Cls;
+use App\Models\RefCustomer as Cls;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\StoreSupplier as ValidateRequest;
 
 
-class RefSupplierController extends Controller
+class RefCustomerController extends Controller
 {
 
     public $form,$route;
@@ -16,10 +16,10 @@ class RefSupplierController extends Controller
 
 
     public function __construct(){
-        $this->form = "Supplier";     //plural
-        $this->route = "supplier";
-        $this->rList = "back.ref_supplier.list";
-        $this->rCreate = "back.ref_supplier.create";
+        $this->form = "Customer";     //plural
+        $this->route = "customer";
+        $this->rList = "back.ref_customer.list";
+        $this->rCreate = "back.ref_customer.create";
 
     }
 

@@ -19,11 +19,16 @@
     <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('css/sweetalert/sweetalert.css') }} ">
 
-
     {{-- Datatable --}}
     <link rel="stylesheet" href=" {{ asset('vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }} ">
 
+    <link rel="stylesheet" href=" {{ asset('vendors/iCheck/skins/flat/green.css') }} ">
+    <link rel="stylesheet" href=" {{ asset('vendors/select2/dist/css/select2.min.css') }} ">
+
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    
 
     <script>
         window.Laravel = <?php echo json_encode([
@@ -95,9 +100,19 @@
     <script src=" {{ asset('vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }} "></script>
 
 
+    <script src=" {{ asset('vendors/iCheck/icheck.min.js') }} "></script>
+    <script src=" {{ asset('vendors/switchery/dist/switchery.min.js') }} "></script>
+    <script src=" {{ asset('vendors/jquery.tagsinput/src/jquery.tagsinput.js') }} "></script>
+
+    <script src=" {{ asset('vendors/select2/dist/js/select2.full.min.js') }} "></script>
 
 
-            
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.27/vue.js"></script>
+     --}}
+
+
     @yield('jsscript')     
     @stack('scripts')
 
