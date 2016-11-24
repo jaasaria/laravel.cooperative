@@ -51,17 +51,6 @@
 
 
 
-fdsfsfs123123
-
-			<div id="app">
-
-			  {{ message }}
-
-			</div>
-
-
-
-
 
 
 
@@ -89,9 +78,7 @@ fdsfsfs123123
 		                </tbody>
 
 		            </table>
-
-
-
+			
 
 		        </div>
 	    	</div>
@@ -113,20 +100,16 @@ fdsfsfs123123
 
 
 
-	var app = new Vue({
-		el: '#app',
-		data: {
-			message: 'Hello Vue!'
-		}
-	})
-
-
 
 
 
 
 	$(document).ready(function(){
  		$(function() {
+
+
+
+
 
             $('#table').DataTable({
                 processing: true,

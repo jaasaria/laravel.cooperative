@@ -17,3 +17,9 @@ use Illuminate\Http\Request;
 // })->middleware('auth:api');
 
 
+// Route::get('itemdata', ['uses' => 'RefItemController@data','as' => 'item.data']);
+
+// route::get('test',function(){
+// 	// return response(,200);
+// });
+

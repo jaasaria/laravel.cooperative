@@ -26,10 +26,6 @@
     <link rel="stylesheet" href=" {{ asset('vendors/iCheck/skins/flat/green.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/select2/dist/css/select2.min.css') }} ">
 
-
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    
-
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -57,7 +53,8 @@
     <div class="container body">
       <div class="main_container">
 
-        
+
+
         @include('back.layouts.admin_header')
         @include('back.layouts.admin_sidebar')
         @include('back.layouts.admin_content')
@@ -107,10 +104,20 @@
     <script src=" {{ asset('vendors/select2/dist/js/select2.full.min.js') }} "></script>
 
 
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
-    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.27/vue.js"></script>
-     --}}
+    <script src=" {{ asset('js/moment/moment.min.js') }} "></script>
+    <script src=" {{ asset('js/datepicker/daterangepicker.js') }} "></script>
+
+
+    {{-- <script src="https://unpkg.com/vue/dist/vue.js"></script> --}}
+    {{-- <script src=" {{ asset('js/main.js') }} "></script> --}}
+    
+
+
+    <script src=" {{ asset('js/vue.min.js') }} "></script>
+    <script src=" {{ asset('js/vue-resource.min.js') }} "></script>
+    <script src=" {{ asset('js/app1.js') }} "></script>
+
 
 
     @yield('jsscript')     
@@ -122,13 +129,10 @@
 
 <script src=" {{ asset('js/jquery.min.js') }} "></script>
 <script src=" {{ asset('bootstrap/js/bootstrap.min.js') }} "></script>
-
 <script src=" {{ asset('js/sweetalert/sweetalert.min.js') }} "></script>
 <script src=" {{ asset('js/toastr.min.js') }} "></script>
-
 <script src=" {{ asset('dist/js/bootstrap-select.min.js') }}"></script>
 <script src=" {{ asset('plugins/datepicker/bootstrap-datepicker.js') }}"></script>
-
 
 <script src=" {{ asset('js/buttons.print.min.js') }} "></script>
 <script src=" {{ asset('js/dataTables.buttons.min.js') }} "></script>
