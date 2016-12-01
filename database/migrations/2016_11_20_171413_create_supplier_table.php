@@ -17,12 +17,12 @@ class CreateSupplierTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('address');
-            $table->string('telno');
-            $table->string('mobileno');
-            $table->string('faxno');
-            $table->string('website');
-            $table->string('email');
-            $table->text('notes');
+            $table->string('telno')->nullable();
+            $table->string('mobileno')->nullable();
+            $table->string('faxno')->nullable();
+            $table->string('website')->nullable();
+            $table->string('email')->nullable();
+            $table->text('notes')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

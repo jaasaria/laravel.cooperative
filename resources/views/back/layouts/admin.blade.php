@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta   id="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
 
 
     <link rel="stylesheet" href=" {{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }} ">
@@ -25,6 +25,9 @@
 
     <link rel="stylesheet" href=" {{ asset('vendors/iCheck/skins/flat/green.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/select2/dist/css/select2.min.css') }} ">
+
+    <link rel="stylesheet" href=" {{ asset('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') }} ">
+
 
     <script>
         window.Laravel = <?php echo json_encode([
@@ -109,14 +112,26 @@
     <script src=" {{ asset('js/datepicker/daterangepicker.js') }} "></script>
 
 
-    {{-- <script src="https://unpkg.com/vue/dist/vue.js"></script> --}}
-    {{-- <script src=" {{ asset('js/main.js') }} "></script> --}}
-    
+    <script src=" {{ asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js') }} "></script>
 
 
-    <script src=" {{ asset('js/vue.min.js') }} "></script>
+    <script src="https://unpkg.com/vue@1.0/dist/vue.js"></script>
+
+    {{-- <script src=" {{ asset('js/vendor.js') }} "></script> --}}
+
+
+
+
+    {{-- <script src="http://rawgit.com/JosephSilber/vue/dev/dist/vue.js"></script> --}}
+
+
+    {{-- <script src=" {{ asset('js/vue.js') }} "></script> --}}
+
+
+
+    {{-- <script src=" {{ asset('js/vue.min.js') }} "></script>
     <script src=" {{ asset('js/vue-resource.min.js') }} "></script>
-    <script src=" {{ asset('js/app1.js') }} "></script>
+    <script src=" {{ asset('js/app1.js') }} "></script> --}}
 
 
 

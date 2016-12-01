@@ -25,6 +25,7 @@ class StoreItem extends FormRequest
     {
 
 
+    //added this code because of two identification code (id and code)
     if ($this->method() == 'PUT')
     {
         $code_rule = 'required|max:100|min:3|unique:tbl_item,code,' . $this->get('id')  ;

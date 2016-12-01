@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrPurchases as Cls;
+use App\Models\RefSupplier;
+use App\Models\RefItem;
+
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\StoreCategory;
+
+use App\Http\Requests\StorePurchase as ValidateRequest;
 
 
 class TrPurchasesController extends Controller
@@ -19,6 +24,7 @@ class TrPurchasesController extends Controller
         $this->route = "purchase";
         $this->rList = "back.tr_purchase.list";
         $this->rCreate = "back.tr_purchase.create";
+        $this->items = RefItem::all(['name','code', 'id']);
 
     }
 
@@ -41,9 +47,13 @@ class TrPurchasesController extends Controller
      */
     public function create()
     {
+
+        // dd(RefItem::all(['name','code', 'id']));
         $form = $this->form;
         $route = $this->route;
-        return view($this->rCreate,compact('form','route'));
+        $supplier  = RefSupplier::pluck('name', 'id');   
+        $items  =  $this->items;
+        return view($this->rCreate,compact('form','route','supplier','items'));
     }
 
     /**
@@ -52,14 +62,101 @@ class TrPurchasesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategory $request)
+    public function store(Request $request)
+    // StorePurchase
     {
 
-        $data = new Cls();
-        $data->name =  ucfirst($request->name);
-        $data->description = ucfirst($request->description);
-        $data->save();
-        return redirect($this->route)->with('success',' Record was successfully saved.');
+
+    
+
+ // dd($request->all());
+
+ 
+
+ $this->validate($request, [
+            // 'invoice_no' => 'required|alpha_dash|unique:invoices',
+            // 'client' => 'required|max:255',
+            // 'client_address' => 'required|max:255',
+            // 'invoice_date' => 'required|date_format:Y-m-d',
+            // 'due_date' => 'required|date_format:Y-m-d',
+            // 'title' => 'required|max:255',
+            // 'discount' => 'required|numeric|min:0',
+
+
+            // 'rows.*.itemid' => 'required|max:255',
+            // 'rows.*.qty' => 'required|integer|min:1'
+            // 'rows.*.cost' => 'required|numeric|min:1',
+            
+
+            'trcode'=>'required|alpha_dash|unique:tr_purchases|min:3',
+            'supplier_id'=>'required|exists:tbl_supplier,id', 
+
+            'description'=>'max:255', 
+            'datePurchase'=>'required|date_format:m/d/Y', 
+            'dateDelivery'=>'required|date_format:m/d/Y', 
+            'trtotal'=>'required|min:1|numeric', 
+        ]);
+
+
+        $products = collect($request->rows)->transform(function($row) {
+            $product['subtotal'] = $product['qty'] * $product['cost'];
+            // return new InvoiceProduct($product);
+        });
+
+        if($products->isEmpty()) {
+            return response()
+            ->json([
+                'products_empty' => ['One or more Product is required.']
+            ], 422);
+        }
+
+
+
+
+
+
+ // dd($request->all());
+
+
+
+
+
+// foreach($request->itemcode as $key=>$v){
+// }
+// dd($request->itemcode);
+
+
+        // if($request->itemcode->isEmpty()) {
+        //     return response()
+        //     ->json([
+        //         'products_empty' => ['One or more Product is required.']
+        //     ], 422);
+        // }
+
+
+
+
+        // $products = collect($request->products)->transform(function($product) {
+        //     $product['total'] = $product['qty'] * $product['price'];
+        //     return new InvoiceProduct($product);
+        // });
+
+        // if($products->isEmpty()) {
+        //     return response()
+        //     ->json([
+        //         'products_empty' => ['One or more Product is required.']
+        //     ], 422);
+        // }
+
+
+
+
+
+        // $data = new Cls();
+        // $data->code =  ucfirst($request->code);
+        // $data->description = ucfirst($request->description);
+        // $data->save();
+        // return redirect($this->route)->with('success',' Record was successfully saved.');
 
     }
 
@@ -96,7 +193,7 @@ class TrPurchasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategory $request, $id)
+    public function update(ValidateRequest $request, $id)
     {
 
         $data = Cls::findorfail($id);
@@ -176,4 +273,7 @@ class TrPurchasesController extends Controller
             ])
             ->make(true);
     }
+
+
+
 }

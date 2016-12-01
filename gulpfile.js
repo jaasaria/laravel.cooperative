@@ -1,35 +1,20 @@
-const elixir = require('laravel-elixir');
-
+var elixir = require('laravel-elixir');
+// var vueify = require('laravel-elixir-browserify').init("vueify");
 require('laravel-elixir-vue-2');
-
-// var browserify = require('laravel-elixir-browserify'); 
-// var elixir = require('laravel-elixir');
-// var browserify = require('laravel-elixir-browserify-official');
-
-
-
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for your application as well as publishing vendor resources.
- |
- */
 
 
 
 elixir(function(mix) {
 
     mix.browserify('main.js');
-    mix.version('js/main.js')
+    // mix.webpack('main.js');
 
-    // mix.webpack('main.js'); // mix.browserify(srcPath, outputPath, srcBaseDir, browserifyOptions)
 
-    // browserify.init();
-    // mix.browserify('main.js');
+	// mix.scripts([
+	// 	'vendor/vue.js',
+	// 	'vendor/vue-resource.min.js'
+	// ],'public/js/vendor.js')
+
 
 });
 

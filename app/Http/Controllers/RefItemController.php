@@ -18,7 +18,7 @@ class RefItemController extends Controller
     public $form,$route;
     public $rList,$rCreate;
 
-    public $category,$unit;
+    public $category,$unit,$item;
 
 
     public function __construct(){
@@ -29,6 +29,7 @@ class RefItemController extends Controller
 
         $this->category = RefCategories::pluck('name', 'id');   
         $this->unit = RefUnits::pluck('name', 'id');
+        
 
     }
 
@@ -188,6 +189,37 @@ class RefItemController extends Controller
             ])
             ->make(true);
     }
+
+
+
+    public function apiItem()
+    {
+
+
+        // return Cls::all(['id', 'code']);
+
+
+        // $data = Cls::pluck('code', 'id');
+        // return $data;
+
+        $data = Cls::all(['id', 'code', 'name']);
+        foreach ($data as $key => $value) {
+            $list[$key]['id'] = $value->id;
+            $list[$key]['text'] = $value->code; 
+        }
+        return json_encode($list); 
+    }
+
+
+    public function apiItemId($id)
+    {
+
+        $data = Cls::whereId($id)->get();
+
+        return json_encode($data); 
+    }
+
+
 
 
 }

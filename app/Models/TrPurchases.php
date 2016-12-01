@@ -18,4 +18,12 @@ class TrPurchases extends Model
 		'active',
     ];
 
+
+    public function details()
+    {
+        return $this->hasMany(TrPurchasesItem::class);
+    }
+
+
+
 }
