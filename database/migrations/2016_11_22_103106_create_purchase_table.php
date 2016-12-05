@@ -15,18 +15,18 @@ class CreatePurchaseTable extends Migration
     {
         Schema::create('tr_purchases', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('code');
+            $table->string('trcode');
             
             $table->integer('supplier_id')->unsigned()->index()->nullable();
             $table->foreign('supplier_id')->references('id')->on('tbl_supplier');
 
-            $table->date('purchaseDate');
-            $table->date('deliveryDate');
-
-            $table->double('total', 15, 4)->default(0);
-
+            $table->date('datePurchase');
+            $table->date('dateDelivery');
             $table->text('description')->nullable();
+            $table->double('trsubtotal', 15, 4)->default(0);
+            $table->double('trdiscount', 15, 4)->default(0);
+            $table->double('trtotal', 15, 4)->default(0);
+
             $table->boolean('active')->default(false);
 
             $table->timestamps();

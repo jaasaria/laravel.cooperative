@@ -8,7 +8,6 @@
                   <span class="text-center"  style="font-size: 18px;">SIAM Cooperative</span>
                </a>
 
-
               </div>
 
               <div class="clearfix"></div>
@@ -16,14 +15,13 @@
               <!-- menu profile quick info -->
               <div class="profile">
                 <div class="profile_pic">
-                  <img src="upload/avatars/andrew.jpg" alt="..." class="img-circle profile_img">
+                  <img src="{{ 'upload/avatars/' . auth::user()->avatar }}" alt="..." class="img-circle profile_img">
                 </div>
                 <div class="profile_info">
                   <span>Welcome,</span><br>
-                  <h2 style="font-size: 13px">{{ ucwords(auth::user()->name) }}</h2>
+                  <h2 style="font-size: 13px">{{ ucwords(auth::user()->FullName) }}</h2>
                 </div>
               </div>
-              <!-- /menu profile quick info -->
 
               <br />
 
@@ -39,7 +37,11 @@
                       <ul class="nav child_menu">
                         
                         <li {{ Request::is('purchase') ? 'active' : '' }} >
-                           <a href="{{ url('purchase/') }}">Purchases</a></li>
+                           <a href="{{ url('purchase/') }}">Purchases
+                            @if ($countPurchases )
+                              <span class="label label-success pull-right">{{ $countPurchases  }}</span>
+                            @endif
+                           </a></li>
                            
                         <li><a href="#">Sales</a></li>
 
@@ -54,8 +56,17 @@
 
                     <li><a><i class="fa fa-trophy"></i> Master Files <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
+
                         <li {{ Request::is('item') ? 'active' : '' }}>
-                          <a href="{{ url('item/') }}">Item Listing</a></li>
+                          <a href="{{ url('item/') }}">Item Listing
+                            @if ($countItem)
+                              <span class="label label-success pull-right">{{ $countItem }}</span>
+                            @endif
+                          </a></li>
+
+
+
+
                         <li {{ Request::is('customer') ? 'active' : '' }}>
                           <a href="{{ url('customer/') }}">Customer</a></li>
                         <li {{ Request::is('supplier') ? 'active' : '' }}>
@@ -74,7 +85,10 @@
 
                      <li><a><i class="fa fa-slideshare"></i> Users Setup<span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
-                        <li><a href="#">User List</a></li>
+
+                        <li {{ Request::is('user') ? 'active' : '' }} >
+                           <a href="{{ url('user/') }}">User List</a></li>
+
                         <li><a href="#">Role</a></li>
                         <li><a href="#">Permission</a></li>
                       </ul>

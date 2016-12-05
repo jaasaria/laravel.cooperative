@@ -55,6 +55,7 @@ class RefSupplierController extends Controller
      */
     public function store(ValidateRequest $request)
     {
+
         Cls::create($request->all());
         return redirect($this->route)->with('success',' Record was successfully saved.');
 

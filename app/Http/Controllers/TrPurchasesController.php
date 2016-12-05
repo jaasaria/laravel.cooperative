@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrPurchases as Cls;
+use App\Models\TrPurchasesItem;
 use App\Models\RefSupplier;
 use App\Models\RefItem;
 
@@ -11,7 +12,9 @@ use Yajra\Datatables\Datatables;
 use App\Http\Requests\StoreCategory;
 
 use App\Http\Requests\StorePurchase as ValidateRequest;
+use Validator;
 
+use Carbon\Carbon;
 
 class TrPurchasesController extends Controller
 {
@@ -25,14 +28,17 @@ class TrPurchasesController extends Controller
         $this->rList = "back.tr_purchase.list";
         $this->rCreate = "back.tr_purchase.create";
         $this->items = RefItem::all(['name','code', 'id']);
+        $this->supplier = RefSupplier::pluck('name', 'id');
 
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function messages()
+    {
+        return [
+            'trcode.required' => 'tr code is required custom ',
+        ];
+    }
+
     public function index()
     {
         $form = $this->form;
@@ -40,195 +46,111 @@ class TrPurchasesController extends Controller
         return view($this->rList,compact('form','route'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
 
-        // dd(RefItem::all(['name','code', 'id']));
+        
         $form = $this->form;
         $route = $this->route;
-        $supplier  = RefSupplier::pluck('name', 'id');   
+        $supplier  = $this->supplier;
         $items  =  $this->items;
-        return view($this->rCreate,compact('form','route','supplier','items'));
+        $trCode =  $this->getNextOrderNumber();
+
+        return view($this->rCreate,compact('form','route','supplier','items','trCode'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    // StorePurchase
+    public function store(Request $request)    // StorePurchase
     {
 
 
-    
+        try {
 
- // dd($request->all());
-
- 
-
- $this->validate($request, [
-            // 'invoice_no' => 'required|alpha_dash|unique:invoices',
-            // 'client' => 'required|max:255',
-            // 'client_address' => 'required|max:255',
-            // 'invoice_date' => 'required|date_format:Y-m-d',
-            // 'due_date' => 'required|date_format:Y-m-d',
-            // 'title' => 'required|max:255',
-            // 'discount' => 'required|numeric|min:0',
-
-
-            // 'rows.*.itemid' => 'required|max:255',
-            // 'rows.*.qty' => 'required|integer|min:1'
-            // 'rows.*.cost' => 'required|numeric|min:1',
-            
-
+             $this->validate($request, [
             'trcode'=>'required|alpha_dash|unique:tr_purchases|min:3',
             'supplier_id'=>'required|exists:tbl_supplier,id', 
-
             'description'=>'max:255', 
             'datePurchase'=>'required|date_format:m/d/Y', 
             'dateDelivery'=>'required|date_format:m/d/Y', 
             'trtotal'=>'required|min:1|numeric', 
-        ]);
+            'rows.*.item_id' => 'required|max:255',
+            'rows.*.cost' => 'required|numeric|min:1',
+            'rows.*.qty' => 'required|integer|min:1'
+            ]);
 
 
-        $products = collect($request->rows)->transform(function($row) {
-            $product['subtotal'] = $product['qty'] * $product['cost'];
-            // return new InvoiceProduct($product);
-        });
 
-        if($products->isEmpty()) {
+
+            $rows = collect($request->rows)->transform(function($row) {
+                $row['subtotal'] = $row['qty'] * $row['cost'];
+                return new TrPurchasesItem($row);
+            });
+            if($rows->isEmpty()) {
+                return response()->json([
+                    'products_empty' => ['One or more Items is required.']
+                ], 422);
+            }
+
+            $data = $request->except('rows');
+            $data['datePurchase'] =date_format(date_create($data['datePurchase']),"Y-m-d");
+            $data['dateDelivery'] =date_format(date_create($data['dateDelivery']),"Y-m-d");
+
+            
+            $header = Cls::create($data);
+            $header->details()->saveMany($rows);
+
             return response()
-            ->json([
-                'products_empty' => ['One or more Product is required.']
-            ], 422);
+                ->json([
+                    'created' => true
+            ]);
+
+            
+        } catch (Exception $e) {
         }
-
-
-
-
-
-
- // dd($request->all());
-
-
-
-
-
-// foreach($request->itemcode as $key=>$v){
-// }
-// dd($request->itemcode);
-
-
-        // if($request->itemcode->isEmpty()) {
-        //     return response()
-        //     ->json([
-        //         'products_empty' => ['One or more Product is required.']
-        //     ], 422);
-        // }
-
-
-
-
-        // $products = collect($request->products)->transform(function($product) {
-        //     $product['total'] = $product['qty'] * $product['price'];
-        //     return new InvoiceProduct($product);
-        // });
-
-        // if($products->isEmpty()) {
-        //     return response()
-        //     ->json([
-        //         'products_empty' => ['One or more Product is required.']
-        //     ], 422);
-        // }
-
-
-
-
-
-        // $data = new Cls();
-        // $data->code =  ucfirst($request->code);
-        // $data->description = ucfirst($request->description);
-        // $data->save();
-        // return redirect($this->route)->with('success',' Record was successfully saved.');
-
+       
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $form = $this->form;
         $route = $this->route;
-
         $data = Cls::findorfail($id);
-        return view($this->rCreate,compact('data','form','route'));
+        $supplier  = $this->supplier;
+        $items  =  $this->items;
+
+        // $data->dateDelivery = $data->dateDelivery->format('m-d-Y');
+
+        return view($this->rCreate,compact('data','form','route','supplier','items'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ValidateRequest $request, $id)
     {
-
         $data = Cls::findorfail($id);
         $data->name =  ucfirst($request->name);
         $data->description = ucfirst($request->description);
         $data->save();
-
         return redirect($this->route)->with('success',' Record was successfully updated.');
-
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
     }
 
     public function delete(Request $request)
     {
-
         $id  = $request->get('id');
         $data = Cls::find($id);
         $data->delete();
-
     }
-
-
  
     public function data(){
 
-        $data = Cls::all();
+        // $d = Cls::all();
+        // $data = $d->load('tbl_supplier');
+        $data = Cls::with('tbl_supplier')->orderBy('id', 'desc')->get();
 
         return Datatables::of($data)
 
@@ -246,12 +168,16 @@ class TrPurchasesController extends Controller
             })
 
         ->editColumn('code', ' 
-                         {{ $code }}
+                         {{ $trcode }}
                         ')
 
-        ->editColumn('name', ' 
-                         {{ $code }}
-                        ')
+        // ->editColumn('name', ' 
+        //                  {{ $supplier_id }}
+        //                 ')
+
+        ->editColumn('name',function ($data){
+                        return   $data->tbl_supplier->name;
+                        })
 
         ->editColumn('description', ' 
                           <div class="td-description"> {!! str_limit($description) !!} </div>
@@ -274,6 +200,27 @@ class TrPurchasesController extends Controller
             ->make(true);
     }
 
+
+    public function getNextOrderNumber()
+    {
+    
+        $Prefix  = 'PUR-';
+
+        $lastOrder = Cls::orderBy('created_at', 'desc')->first();
+
+        if ( ! $lastOrder ){
+            $numberOnly = '0';
+        }
+        else {
+            $strDb = $lastOrder->trcode;
+            $numberOnly = preg_replace('/\D/', '', $strDb);
+        }  
+        // Add the string in front and higher up the number.
+        // the %05d part makes sure that there are always 6 numbers in the string.
+        // so it adds the missing zero's when needed.
+     
+        return  $Prefix . sprintf('%06d', intval($numberOnly) + 1);
+    }
 
 
 }

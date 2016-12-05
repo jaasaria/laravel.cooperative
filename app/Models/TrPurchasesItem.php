@@ -9,7 +9,7 @@ class TrPurchasesItem extends Model
     
     protected  $table = 'tr_purchasesItem';
     protected  $fillable = [
-		'code',
+		'trcode',
 		'purchase_id',
 		'item_id',
 		'qty',
@@ -24,5 +24,3 @@ class TrPurchasesItem extends Model
     }
 }
 
-
-}

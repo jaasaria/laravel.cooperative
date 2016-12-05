@@ -1,4 +1,15 @@
+
+
 <?php
+
+use App\Models\TrPurchases;
+use App\User;
+
+Route::get('check_user', function() {
+
+	return  User::all();
+
+});
 
 
 
@@ -49,6 +60,16 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::delete('item/delete', ['uses' => 'RefItemController@delete','as' => 'item.delete']);
 	Route::get('item/data', ['uses' => 'RefItemController@data','as' => 'item.data']);
 	Route::resource('item', 'RefItemController');
+
+//user
+	Route::delete('user/delete', ['uses' => 'RefUserController@delete','as' => 'user.delete']);
+
+	Route::put('user/{id}', ['uses' => 'RefUserController@updatePassword','as' => 'user.pass']);
+	Route::post('user/avatar/{id}', ['uses' => 'RefUserController@avatar','as' => 'user.avatar']);
+	Route::post('user/deleteAvatar/{id}', ['uses' => 'RefUserController@deleteAvatar','as' => 'user.deleteAvatar']);
+
+	Route::get('user/data', ['uses' => 'RefUserController@data','as' => 'user.data']);
+	Route::resource('user', 'RefUserController');
 
 
 //Purchases

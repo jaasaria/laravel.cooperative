@@ -15,7 +15,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','token','verified'
+        'name', 'email', 'password','token','verified',
+        'middlename', 'lastname', 'address','mobile','active','notes','avatar'
     ];
 
     /**
@@ -41,5 +42,10 @@ class User extends Authenticatable
         return $query->where('verified', '=', true);
     }
 
+
+
+    public function getFullNameAttribute() {
+        return ucwords($this->name) . ' ' . ucwords($this->middlename). ' ' . ucwords($this->lastname);
+    }
 
 }

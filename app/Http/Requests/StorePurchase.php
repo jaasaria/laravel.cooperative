@@ -24,14 +24,17 @@ class StorePurchase extends FormRequest
     public function rules()
     {
         return [
-            'code'=>'required|max:100|min:3|unique:tr_purchases',
+
+            'trcode'=>'required|alpha_dash|unique:tr_purchases|min:3',
             'supplier_id'=>'required|exists:tbl_supplier,id', 
-
             'description'=>'max:255', 
-            'datePurchase'=>'required|date', 
-            'dateDelivery'=>'required|date', 
-
-            'trTotal'=>'required|min:1|numeric', 
+            'datePurchase'=>'required|date_format:m/d/Y', 
+            'dateDelivery'=>'required|date_format:m/d/Y', 
+            'trtotal'=>'required|min:1|numeric', 
+            'rows.*.item_id' => 'required|max:255',
+            'rows.*.cost' => 'required|numeric|min:1',
+            'rows.*.qty' => 'required|integer|min:1'
+            
         ];
     }
 

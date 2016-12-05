@@ -1557,23 +1557,29 @@ var vm = new Vue({
     errors: {},
     withErrors: false,
 
-    form: {
-      rows: [{ itemid: '', qty: 1, cost: 0, subtotal: 0 }],
+    // form: {
+    //   rows: [
+    //         {item_id: '', qty: 1,cost: 0,subtotal: 0}
+    //   ],
 
-      trcode: '',
-      supplier_id: '',
-      datePurchase: '',
-      dateDelivery: '',
-      description: '',
-      trsubtotal: 0,
-      trdiscount: 0,
-      trtotal: 0
+    //   trcode:'',
+    //   supplier_id:'',
+    //   datePurchase:'',
+    //   dateDelivery:'',
+    //   description:'',
+    //   trsubtotal:0,
+    //   trdiscount:0,
+    //   trtotal:0
 
-    }
+    // }
+
+    form: {}
 
   },
   created: function created() {
-    // Vue.set(this.$data, 'form', _form);
+    Vue.set(this.$data, 'form', _form);
+
+    // console.logs(_form);
   },
 
   methods: {
@@ -1582,70 +1588,51 @@ var vm = new Vue({
       console.log(this.dt);
     },
 
+    // CheckError: function(val, oldVal){
+    //     if (Object.keys(this.errors).length > 0){
+    //       this.withErrors = true;  
+    //     }else{
+    //       this.withErrors = false;  
+    //     }
+    // },
+
     onSubmit: function onSubmit() {
 
       // e.preventDefault();
       this.isProcessing = true;
-
-      // var data = this.rows;
+      this.withErrors = false;
+      this.errors = {};
 
       // GET request
       this.$http.post('/purchase', this.form).then(function (response) {
 
         if (response.data.created) {
-          // window.location = '/invoices/' + response.data.id;
-          alert('success');
+
+          swal({
+            title: "Success",
+            text: "Record was successfully saved.",
+            type: "success",
+            closeOnConfirm: true,
+            showLoaderOnConfirm: true
+          }, function () {
+            window.location = '/purchase/';
+          });
+          // toastr["success"]("Record was successfully deleted.", "Success")
         } else {
           this.isProcessing = false;
           this.withErrors = true;
-          alert('validate call');
         }
-
-        // console.log('Success!:', response);
-        // this.isProcessing = false;
-
       }, function (response) {
         console.log('Error!:', response.data);
         this.isProcessing = false;
+        this.withErrors = true;
         Vue.set(this.$data, 'errors', response.data);
       });
-
-      // // this.$http.post('/api/item/' + ItemId).then((response) => {
-      // this.$http.post('/purchase',{body:'testing js'}).then((response) => {
-
-      //   alert('success');
-
-      // }, (response) => {
-      //   console.log(response);
-      //   alert('error');
-      // });
-
-      // this.$http.post('/purchase', {payload: this.rows}).then(function(response) { // do something }, function(response) { // do something });
-
-
-      //       // this.$http.post('/purchase',{item: this.rows})
-      //       //   .then(function(response) {
-
-      //           // if(response.data.created) {
-      //           //   window.location = '/invoices/' + response.data.id;
-      //           // } else {
-      //           //   this.isProcessing = false;
-      //           // }
-      //           alert('success');
-
-      //         })
-      //         .catch(function(response) {
-      //           // console.log('error');
-      //           alert('error');
-      //           this.isProcessing = false;
-      //           Vue.set(this.$data, 'errors', response.data);
-      //         })
-
     },
 
     addRow: function addRow() {
       try {
-        this.form.rows.push({ itemid: '', qty: 1, cost: 0, subtotal: 0 });
+        this.form.rows.push({ item_id: '', qty: 1, cost: 0, subtotal: 0 });
       } catch (e) {
         console.log(e);
         alert('error');
@@ -1654,7 +1641,6 @@ var vm = new Vue({
 
     deleteRow: function deleteRow(row) {
       try {
-        // this.rows.splice(row, 1);
         this.form.rows.$remove(row);
       } catch (e) {
         console.log(e);
@@ -1665,40 +1651,14 @@ var vm = new Vue({
     onChangeSubTotal: function onChangeSubTotal(row) {
       row.subtotal = row.qty * row.cost;
     },
-    // onChangeCalendar1:function(){
-    //     row.subtotal = row.qty * row.cost;
-    //     datePurchase = 
-    // },
-
 
     onChange: function onChange(row) {
-      var ItemId = row.itemid;
-
-      // var resource = this.$resource('/api/item{/id}');
-      // // GET someItem/1
-      // resource.get({id: ItemId}).then((response) => {
-      //   this.$set('someData', response.body());
-      // });
-
-      // var self = this;
-
+      var ItemId = row.item_id;
 
       // GET /someUrl
       this.$http.get('/api/item/' + ItemId).then(function (response) {
-
-        // console.log(response.data.id);
-
-        // this.$set('list', response.body);
-
         var obj = JSON.parse(response.body);
         row.cost = obj[0]['cost'];
-
-        // this.onChangeSubTotal(row);
-
-        //use this for looping
-        // Object.keys(obj).forEach(function(key) {
-        //   console.log(key, obj[key]['cost']);
-        // });
       }, function (response) {
         console.log(response);
         alert('error');
@@ -1711,9 +1671,18 @@ var vm = new Vue({
 
     trsubtotal: function trsubtotal() {
 
-      return this.form.rows.reduce(function (carry, row) {
+      var tot = 0;
+
+      // $.each(this.form.rows, function (i, e) {
+      //   tot += e.rows.qty * e.rows.cost;
+      // });
+
+      tot = this.form.rows.reduce(function (carry, row) {
         return carry + parseFloat(row.qty) * parseFloat(row.cost);
       }, 0);
+
+      this.form.trsubtotal = tot;
+      return tot;
 
       // var tt = 0;
       // $.each(this.form, function (i, e) {
@@ -1724,22 +1693,21 @@ var vm = new Vue({
 
     trtotal: function trtotal() {
 
-      // - this.form.trdiscount
-      return parseFloat(this.trsubtotal) - parseFloat(this.form.trdiscount);
-      // return 0;
-      // this.subTotal - parseFloat(this.form.discount);
+      var tot = parseFloat(this.trsubtotal) - parseFloat(this.form.trdiscount);
+      this.form.trtotal = tot;
+      return tot;
     }
   },
 
   watch: {
-    'errors': function errors(val, oldVal) {
+    // 'errors': function(val, oldVal){
+    //     if (Object.keys(this.errors).length > 0){
+    //       this.withErrors = true;  
+    //     }else{
+    //       this.withErrors = false;  
+    //     }
+    // }
 
-      if (Object.keys(this.errors).length > 0) {
-        this.withErrors = true;
-      } else {
-        this.withErrors = false;
-      }
-    }
   }
 
 });

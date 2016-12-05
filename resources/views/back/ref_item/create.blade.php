@@ -34,6 +34,11 @@
 		    
 
 	    <div class="x_content">
+
+
+	    <span class="section">General Info</span>
+
+
 	
 
 			<form  method="POST" action="{{ (empty($data) ? route( $route . '.store'):route( $route . '.update',$data->id)) }}" class="form-horizontal">
@@ -45,7 +50,7 @@
 
 
 		            
-				<div class="col-md-7">
+				<div class="col-md-8  col-md-offset-2">
 					
 					{{-- Item Code --}}
 					<div class="form-group">		
@@ -127,15 +132,7 @@
 
 				
 
-					
-
-
-				</div>
-
-
-				<div class="col-md-5">
-					
-						{{-- Cost --}}
+							{{-- Cost --}}
 					<div class="form-group">		
 				        <label class="control-label col-md-2 col-sm-2 col-xs-12">Cost.: </label>
 				        <div class="col-md-10 col-sm-10 col-xs-12">
@@ -151,8 +148,6 @@
 				        </div>
 					</div>
 	
-
-
 
 					{{-- Tax --}}
 					<div class="form-group">		
@@ -185,6 +180,10 @@
 
 
 				</div>
+{{-- 
+
+				<div class="col-md-5">
+				</div> --}}
 
 
 
@@ -241,14 +240,14 @@
 
 
 
-		// $("#category_id").select2({
-	 //          placeholder: "Select a Category",
-	 //          allowClear: true
-	 //    });
-		// $("#unit_id").select2({
-	 //          placeholder: "Select a Unit",
-	 //          allowClear: true
-	 //    });
+		$("#category_id").select2({
+	          placeholder: "Select a Category",
+	          allowClear: true
+	    });
+		$("#unit_id").select2({
+	          placeholder: "Select a Unit",
+	          allowClear: true
+	    });
 
 
 	    

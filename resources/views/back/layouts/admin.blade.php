@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href=" {{ asset('css/toastr.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('css/sweetalert/sweetalert.css') }} ">
+    <link rel="stylesheet" href=" {{ asset('css/jquery-ui.css') }} ">
 
     {{-- Datatable --}}
     <link rel="stylesheet" href=" {{ asset('vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }} ">
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href=" {{ asset('vendors/iCheck/skins/flat/green.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/select2/dist/css/select2.min.css') }} ">
 
-    <link rel="stylesheet" href=" {{ asset('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') }} ">
+    {{-- <link rel="stylesheet" href=" {{ asset('css/query-ui.css') }} "> --}}
 
 
     <script>
@@ -78,11 +79,9 @@
 
 
 
+    <script src=" {{ asset('js/vue.js') }} "></script>
 
-
-    {{-- <script src=" {{ asset('vendors/jquery/dist/jquery.min.js') }} "></script> --}}
     <script src=" {{ asset('js/jquery.min.js') }} "></script>
-
 
     <script src=" {{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }} "></script>
     <script src=" {{ asset('vendors/fastclick/lib/fastclick.js') }} "></script>
@@ -103,35 +102,15 @@
     <script src=" {{ asset('vendors/iCheck/icheck.min.js') }} "></script>
     <script src=" {{ asset('vendors/switchery/dist/switchery.min.js') }} "></script>
     <script src=" {{ asset('vendors/jquery.tagsinput/src/jquery.tagsinput.js') }} "></script>
-
     <script src=" {{ asset('vendors/select2/dist/js/select2.full.min.js') }} "></script>
-
-
 
     <script src=" {{ asset('js/moment/moment.min.js') }} "></script>
     <script src=" {{ asset('js/datepicker/daterangepicker.js') }} "></script>
 
+    <script src=" {{ asset('js/jquery-ui.js') }} "></script>
+    
 
-    <script src=" {{ asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js') }} "></script>
-
-
-    <script src="https://unpkg.com/vue@1.0/dist/vue.js"></script>
-
-    {{-- <script src=" {{ asset('js/vendor.js') }} "></script> --}}
-
-
-
-
-    {{-- <script src="http://rawgit.com/JosephSilber/vue/dev/dist/vue.js"></script> --}}
-
-
-    {{-- <script src=" {{ asset('js/vue.js') }} "></script> --}}
-
-
-
-    {{-- <script src=" {{ asset('js/vue.min.js') }} "></script>
-    <script src=" {{ asset('js/vue-resource.min.js') }} "></script>
-    <script src=" {{ asset('js/app1.js') }} "></script> --}}
+    {{-- <script src="https://unpkg.com/vue@1.0/dist/vue.js"></script> --}}
 
 
 

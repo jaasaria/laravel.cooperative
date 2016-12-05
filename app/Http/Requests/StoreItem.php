@@ -25,29 +25,34 @@ class StoreItem extends FormRequest
     {
 
 
-    //added this code because of two identification code (id and code)
-    if ($this->method() == 'PUT')
-    {
-        $code_rule = 'required|max:100|min:3|unique:tbl_item,code,' . $this->get('id')  ;
-    }
-    else
-    {
-        $code_rule = 'required|max:100|min:3|unique:tbl_item';
+        //added this code because of two identification code (id and code)
+        if ($this->method() == 'PUT')
+        {
+            $code_rule = 'required|max:100|min:3|unique:tbl_item,code,' . $this->get('id')  ;
+        }
+        else
+        {
+            $code_rule = 'required|max:100|min:3|unique:tbl_item';
+        }
+
+            return [
+                'code'=>$code_rule, 
+                'name'=>'required|max:100|min:3', 
+                'description'=>'max:255', 
+                'cost'=>'required|numeric', 
+                'price'=>'required|numeric', 
+                'tax'=>'required|max:50|numeric', 
+
+                'category_id'=>'required|exists:tbl_categories,id', 
+                'unit_id'=>'required|exists:tbl_units,id', 
+            ];
     }
 
-        return [
-            'code'=>$code_rule, 
-            'name'=>'required|max:100|min:3', 
-            'description'=>'max:255', 
-            'cost'=>'required|numeric', 
-            'price'=>'required|numeric', 
-            'tax'=>'required|max:50|numeric', 
+    // public function messages()
+    // {
+    //     return [
+    //         'name.min' => 'Er, you forgot your email address!',
+    //     ];
+    // }
 
-            'category_id'=>'required|exists:tbl_categories,id', 
-            'unit_id'=>'required|exists:tbl_units,id', 
-            
-            // exists:states
-
-        ];
-    }
 }

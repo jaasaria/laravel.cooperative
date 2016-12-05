@@ -16,10 +16,9 @@ class CreatePurchaseItemTable extends Migration
         Schema::create('tr_purchasesItem', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('code');
             
             $table->integer('purchase_id')->unsigned()->index()->nullable();
-            $table->foreign('purchase_id')->references('id')->on('tr_purchases');
+            $table->foreign('purchase_id')->references('id')->on('tr_purchases')->onDelete('cascade');
 
             $table->integer('item_id')->unsigned()->index()->nullable();
             $table->foreign('item_id')->references('id')->on('tbl_item');

@@ -4,9 +4,11 @@
 	<style>
 		.panel_toolbox {float: left;min-width: 0px;}
 		
-		.w15 {width:15%;text-align: center;}
+		.w5 {width:5%;text-align: center;}
 		.w20 {width:20%;}
+		.w25 {width:25%;}
 		.w40 {width:40%;text-align: center;}
+
  		.td-description{
 	        text-overflow: ellipsis;
 	        white-space: nowrap;
@@ -17,6 +19,17 @@
 	    	background-color: #2f4358;
 	    	color: white
 	    }
+
+		.img-avatar {
+		    width: 29px;
+		    height: 29px;
+		    border-radius: 50%;
+		    /*margin-right: 10px;*/
+		    /*vertical-align: middle*/
+		    /*align-items: center;*/
+		    /*float: center;*/
+		}
+
 	</style>
 @stop
 
@@ -26,7 +39,7 @@
 
 	<div class="box-header with-border">
 		<span class="pull-left">
-			<h3 class="box-title">{{ $form }} <small>Transaction list</small></h3>
+			<h3 class="box-title">{{ $form }} <small>Referencial file</small></h3>
 		</span>
 		<span class="pull-right">
 			<a href=" {{ url( $route . '/create') }} " class="btn btn-success">Create New</a>
@@ -37,7 +50,6 @@
 <div class="row">
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
-
 	    <div class="x_panel">
 		    <div class="x_title">
 		        <h2>Listing</h2>
@@ -47,8 +59,6 @@
 			        </ul>
 		        	<div class="clearfix"></div>
 		    </div>
-
-
 	     <div class="x_content">
 
 			<div class="row">
@@ -60,9 +70,10 @@
 		                <thead>
 		                    <tr role="row">
 
-		                        <th class="w15">Trans Code</th>
-		                        <th class="w15">Supplier Name</th>
-		                        <th class="w40 hidden-xs hidden-sm">Description</th>
+		                        <th class="w5"></th>
+		                        <th class="w20">Name</th>
+		                        <th class="w20">Address</th>
+		                        <th class="w25 hidden-xs hidden-sm">Notes</th>
 		                        <th class="w15 hidden-xs hidden-sm">Date</th>
 		                        <th class="w15">Action</th>
 
@@ -73,7 +84,9 @@
 		                </tbody>
 
 		            </table>
-			
+
+
+
 
 		        </div>
 	    	</div>
@@ -94,24 +107,16 @@
 <script>
 
 
-
-
-
-
-
 	$(document).ready(function(){
+
  		$(function() {
-
-
-
-
-
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{!! url( $route . '/data') !!}',
-                order: [[2, 'desc']],		//start with Zero(0)
+                order: [[3, 'desc']],		//start with Zero(0)
                 columns: [
+                    { data: 'avatar', name: 'avatar' ,"searchable": true},
                     { data: 'code', name: 'code' ,"searchable": true},
                     { data: 'name', name: 'name' ,"searchable": true},
                     { data: 'description', name: 'description' ,"searchable": true},
@@ -145,13 +150,13 @@
                          }  
                     });  
                  });
-	    	});
+	    });
+
+        });
 
 
-
-        });	
+	
 	});
-
 </script>
 @endpush 
 

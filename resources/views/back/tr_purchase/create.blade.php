@@ -17,13 +17,19 @@
 		.w40 {width:35%;}
 		.alignRight {text-align: right;}
 
+		.error {
+    color: #a94442;
+    margin: 0;
+}
 
+.table-error > select,
+.table-error > input {
+    background: #f2dede;
+}
 .datepicker.picker_1 {
     background: #34495E;
     color: #ECF0F1;
 }
-
-
 .table .form-group {
     margin-bottom: 0px;
 }
@@ -72,20 +78,11 @@
 	<div id="app">
 
 
-
-
-	<pre>
-		@{{  $data | json    }}
-		@{{ errors.length }}
-	</pre>
-		         
-
-
-
-
-
-
-<div>
+{{-- <pre>
+	@{{  $data | json    }}
+</pre>  --}}
+	
+<div  >
 	<div class='alert alert-danger' v-if='withErrors'>
         <strong>Error Found!</strong>
         <ul>
@@ -97,26 +94,6 @@
 </div>
 
 
-
-
-
-
-{{-- <div>
-	<div class='alert alert-danger' v-if='errors'>
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul> --}}
-   {{--      <div class='alert alert-danger' v-if='errors'>
-            <li v-for='error in errors'>
-                @{{ error }}
-            </li>
-           </div> --}}
-{{--         </ul>
-	</div>
-</div>
- --}}
-
-
-
 			<form  method="POST" action="{{ (empty($data) ? route( $route . '.store'):route( $route . '.update',$data->id)) }}" class="form-horizontal">
 
 		        {{ csrf_field() }}
@@ -125,32 +102,15 @@
 		        {{-- use for update only --}}
 
 
-   
 				<div class="col-md-4">
-{{-- 
-				 <div class="form-group" :class="{'has-danger': form.$errors.has('age')}">
-    <label for="age">Age</label>
-    <input type="text" class="form-control" id="age" placeholder="age" v-model="form.$fields.age">
-    <div if="form.$errors.has('age')" class="form-control-feedback">{{form.$errors.get('age')}}</div>
-  </div> --}}
-
-				
 					{{-- Item Code --}}
 					<div class="form-group">		
 				        <div class="col-md-12 col-sm-12 col-xs-12">
 				        	<input id="trcode" 
-				        		name="trcode" type="text" class="cls-controls form-control" placeholder="Item Code"  value="{{ (empty($data)?  old('trcode'):old('trcode', $data->code)) }}"  autofocus
+				        		name="trcode" type="text" class="cls-controls form-control" placeholder="Item Code"  value="{{ (empty($data)?  old('trcode',$trCode): old('trcode', $data->trcode)) }}"  autofocus
 				        		v-model="form.trcode">
 				        </div>
 					</div>
-
-{{-- 
-			 		<div class="form-group">
-			            <label>Invoice No.</label>
-			            <input type="text" class="form-control" v-model="form.invoice_no">
-			            <p v-if="errors.invoice_no" class="error">@{{errors.invoice_no[0]}}</p>
-			        </div>
- --}}
 
 					{{-- Supplier --}}
 					<div class="form-group">		
@@ -159,27 +119,20 @@
 				        			name="supplier_id" required class="form-control"
 				        			v-selecttwo="form.supplier_id">
 
-				        		<option></option>
-								@foreach($supplier as $id => $name)	
+					        		<option></option>
+									@foreach($supplier as $id => $name)	
 
-									@if(empty($data))
-										<option value="{{ $id }}">{{ $name }}</option> 
-									@else
-										{{-- <option  {{ ( $data->unit_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option> --}}
-										{{-- <option  {{ ( $data->unit_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option> --}}
-									@endif
-								@endforeach
-
-								{{-- <p v-if="errors.supplier_id" class="error">@{{errors.supplier_id[0]}}</p> --}}
-
+										@if(empty($data))
+											<option value="{{ $id }}">{{ $name }}</option> 
+										@else
+											<option  {{ ( $data->supplier_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option>
+										@endif
+									@endforeach
                     		</select>
 				        </div>
 					</div>
 
-					
-
-			
-
+				
 					{{-- Description --}}
 					<div class="form-group">
 						<div class="col-md-12 col-sm-12 col-xs-12">	
@@ -191,23 +144,30 @@
 
 
 
-
+				{{-- Date --}}
 				<div class="col-md-4">
 					<div class="controls">
                         <div class="col-md-12 xdisplay_inputx form-group has-feedback">
-                            <input type="text" value="{{ old('dateDelivery', date('m/d/Y')) }}" name="datePurchase" id="datePurchase" required class="form-control has-feedback-left calendar"  placeholder="Purchase Date"
+                            <input type="text" value="{{ (empty($data)?  old('datePurchase', date('m/d/Y')): old('datePurchase', $data->datePurchase)) }}" name="datePurchase" id="datePurchase" required class="form-control has-feedback-left calendar"  placeholder="Purchase Date"
                             v-model="form.datePurchase">
                             <span class="fa fa-calendar-o form-control-feedback left"></span>
                         </div>
                     </div>
 					<div class="controls">
                         <div class="col-md-12 xdisplay_inputx form-group has-feedback">
-                            <input type="text"  value="{{ old('dateDelivery', date('m/d/Y')) }}" name="dateDelivery" id="dateDelivery" required class="form-control has-feedback-left calendar"  placeholder="Delivery Date"
+                            <input type="text"  value="{{ (empty($data)?  old('dateDelivery', date('m/d/Y')): old('dateDelivery', $data->dateDelivery))  }}" name="dateDelivery" id="dateDelivery" required class="form-control has-feedback-left calendar"  placeholder="Delivery Date"
                             v-model="form.dateDelivery">
                             <span class="fa fa-calendar-o form-control-feedback left" ></span>
                         </div>
                     </div>
 				</div>
+
+
+{{-- 
+			{{  formatLocalized($data->dateDelivery) 
+				date_format($data->dateDelivery,'m/d/Y')
+			 }}	
+ --}}
 
 				<div class="col-md-4">
 						<div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -219,15 +179,7 @@
 							<p> Total Amount</p>
                         </div>
                       </div>
-
-                     
-
 				</div>
-
-
-
-
-
 
 
  					<table class="table table-striped jambo_table">
@@ -239,9 +191,9 @@
         						</a>
                             </th>
                             <th class="w20">Item Code</th>
-                            <th class="w40">Item Name</th>
+                            <th class="w30">Item Name</th>
                             <th class="w10c">Qty</th>
-                            <th class="w10c">Cost</th>
+                            <th class="w15c">Cost</th>
                             <th class="w15">Sub Total</th>
                             <th class="w10 last"><span class="nobr">Action</span></th>
                           </tr>
@@ -250,40 +202,31 @@
                         <tbody>
 
 
-
-
                         <tr v-for="row in form.rows">
-                         	
-                        
                            <td class="table-delete">                         
 	                           	<a class="btn btn-danger fa fa-minus-square btn-xs" 
 	                           		v-on:click="deleteRow(row)"
 	                           	></a>
                            </td>
 
-                           <td class="table-code">
-
-                           	<select name="itemcode[]" v-model="row.itemid" @change="onChange(row)" class="form-control item_id">
-
+                           <td class="table-code" :class="{'table-error': errors['rows.' + $index + '.item_id']}">
+                           	<select name="itemcode[]" v-model="row.item_id" @change="onChange(row)" class="form-control item_id">
 								<option></option>
 								@foreach($items as $item)	
 
 									@if(empty($data))
 										<option  v-bind:value="{{ $item->id }}">{{ $item->code }}</option>
 									@else
-										{{-- <option  {{ ( $data->unit_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option> --}}
-										{{-- <option  {{ ( $data->unit_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option> --}}
+										<option  {{ ( $data->item_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $item->code  }}</option>
 									@endif
 								@endforeach
-
                     		</select>
-
                            </td>
 
 
                            
-                           <td class="table-name">
-                            	<select name="itemname[]" v-model="row.itemid" @change="onChange(row)" class="form-control item_id">
+                           <td class="table-name" :class="{'table-error': errors['rows.' + $index + '.item_id']}">
+                            	<select name="itemname[]" v-model="row.item_id" @change="onChange(row)" class="form-control item_id">
 
 									<option></option>
 									@foreach($items as $item)	
@@ -291,32 +234,27 @@
 										@if(empty($data))
 											<option  v-bind:value="{{ $item->id }}">{{ $item->name }}</option>
 										@else
-											{{-- <option  {{ ( $data->unit_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option> --}}
-											{{-- <option  {{ ( $data->unit_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $name  }}</option> --}}
+											<option  {{ ( $data->item_id === $id ?'selected="selected"':'') }} value="{{ $id }}">{{ $item->name  }}</option>
 										@endif
 									@endforeach
                     			</select>
 
                            	</td>
 
-                           	<td class="table-qty">
-                            	<input name="itemqty[]" type="number" @change="onChangeSubTotal(row)" v-model="row.qty"  class="form-control" placeholder="Qty">
+                           	<td class="table-qty"  :class="{'table-error': errors['rows.' + $index + '.qty']}">
+                            	<input name="itemqty[]" type="number" @change="onChangeSubTotal(row)" v-model="row.qty"  class="form-control" placeholder="Qty" >
                            	</td>
 
-                           	<td class="table-cost">
+                           	<td class="table-cost" :class="{'table-error': errors['rows.' + $index + '.cost']}">
 								<div class="form-group">
-                            		<input name="itemcost[]" type="number" @change="onChangeSubTotal(row)"  v-model="row.cost|currency ''" step=".01" class="form-control" placeholder="Cost">
+                            		<input name="itemcost[]" type="number" @change="onChangeSubTotal(row)"  v-model="row.cost"  class="form-control" placeholder="Cost">
                         		</div>
                            	</td>
-
                            	<td class="table-subtotal green">
-                           		{{-- <strong><h4>  @{{ row.subtotal | currency '' }} </h4></strong> --}}
                            		<strong><h4>  @{{ row.qty * row.cost | currency '' }} </h4></strong>
                            		<input type="hidden"  name="itemsubtotal[]"  v-model="row.subtotal | currency ''">
                            	</td>
-
-                           <td class="table-view last"><a href="">View</a></td>
-
+                           <td class="table-view last"><a href="" target="_blank">View</a></td>
                         </tr>
 
                         </tbody>
@@ -324,12 +262,9 @@
 
 
 
-
-
 					{{-- Grand Total Table --}}
 					<div class="rows" name="Grandtotal">
 							<div class="col-md-3 pull-right">
-
 								<div class="row">
 									<span class="pull-left col-md-6">
 										<h4>Sub Total:</h4>
@@ -357,51 +292,18 @@
 							</div>
 					</div>
 
-					<input type="hidden"  name="trsubtotal" value=" @{{ trsubtotal }} ">
-{{-- 					<input type="hidden"  name="trdiscount" value=" @{{ discount }} "> --}}
-					<input type="hidden"  name="trtotal" value=" @{{ trtotal }} ">
-					<input type="hidden"  name="test" value="test">
-
-
-
-
 
 					<div class="clearfix"></div>
 					<div class="ln_solid"></div>
+
 			   	<div class="form-group text-center">
-						<a href="{{ url(  $route ) }}" class="btn btn-warning">Cancel</a>
-
-			   		{{-- <button type="submit" class="btn btn-success">{{ (empty($data)? 'Save Data': 'Update Data') }}</button> --}}
-
-			   		<button type="submit" class="btn btn-success">{{ (empty($data)? 'Save Data': 'Update Data') }}</button>
-
-			   		<button class="btn btn-success" @click="onSubmit" :disabled="isProcessing">save</button>
-
-
-
-
-			      </div>
+					<a href="{{ url(  $route ) }}" class="btn btn-warning">Cancel</a>
+			   		<button type="submit" @click="onSubmit" :disabled="isProcessing" class="btn btn-success">{{ (empty($data)? 'Save Data': 'Update Data') }}</button>
+			    </div>
 		        
 			</form>
 
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -416,41 +318,44 @@
 
 
 @push('scripts')
+      
+	<script src=" {{ asset('js/main.js') }} "></script>
 
-{{-- <script>
-		window._form = {
-            invoice_no: ''
- 		};
-</script>    --}}
 
-<script src=" {{ asset('js/main.js') }} "></script>
 
-<script>
-		Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
-</script>
+	@if (! empty($data))		{{-- proceed to edit --}}
+		<script type="text/javascript">
+			Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
+		    window._form = {!! $data->toJson() !!}
+
+		</script>
+
+		<script src=" {{ asset('js/main.js') }} "></script>
+	@else
+		<script src=" {{ asset('js/main.js') }} "></script>
+		<script>
+			Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
+			window._form = {
+	            rows: [{
+	                item_id: '',
+	                cost: 0,
+	                qty: 1
+	            }]
+	        };
+        </script>
+	@endif
+
+	
+
 
 <script>
 	$(document).ready(function(){
 
  		$(function() {
 
-		    // $('.calendar').daterangepicker({
-		    // 	locale: {
-    		// 	  format: 'mm/dd/yy'
-    		// 	},
-    		// 	timePicker: false,
-		    //     singleDatePicker: true,
-		    //     calender_style: "picker_1"
-		    // }, function(start, end, label) {
-		    //     console.log(start.toISOString(), end.toISOString(), label);
-		    // });
-		     // $( "#datePurchase" ).datepicker();
+		$( ".calendar" ).datepicker();
 
-		     $( ".calendar" ).datepicker();
-
-
-
-         $('#table1').DataTable({
+        $('#table1').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{!! url(  $route . '/data') !!}',
@@ -465,30 +370,10 @@
             });
         });
 
-
-
 		$("#supplier_id").select2({
 	          placeholder: "Select a Supplier",
 	          allowClear: true
 	    });
-
-
-
-	   	// $(".item_id").select2({
-	    //       placeholder: "Select a Item Code",
-	    //       allowClear: true,
-	    // });
-
-
-	    // $(".item_name").select2({
-	    //       placeholder: "Select a Item Name",
-	    //       allowClear: true,
-	    // });
-
-
-	
-
-
 	    
 	});
 </script>

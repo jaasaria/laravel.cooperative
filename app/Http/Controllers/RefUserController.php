@@ -3,36 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RefItem as Cls;
-
-use App\Models\RefCategories;
-use App\Models\RefUnits;
+use App\User as Cls;
 
 use Yajra\Datatables\Datatables;
-use App\Http\Requests\StoreItem as ValidateRequest;
+use App\Http\Requests\StoreUser as ValidateRequest;
+use App\Http\Requests\StoreUserPassword as ValidateRequestPass;
+use Validator;
 
-use Carbon\Carbon;
+//use this for the picture and intervention
+use Image;
+use File;
 
 
-class RefItemController extends Controller
+class RefUserController extends Controller
 {
 
     public $form,$route;
-    public $rList,$rCreate;
+    public $rList,$rCreate,$rEdit;
 
     public $category,$unit,$item;
 
 
     public function __construct(){
-        $this->form = "Item";     //plural
-        $this->route = "item";
-        $this->rList = "back.ref_item.list";
-        $this->rCreate = "back.ref_item.create";
-
-        $this->category = RefCategories::pluck('name', 'id');   
-        $this->unit = RefUnits::pluck('name', 'id');
-        
-
+        $this->form = "Users";     //plural
+        $this->route = "user";
+        $this->rList = "back.ref_user.list";
+        $this->rCreate = "back.ref_user.create";
+        $this->rEdit = "back.ref_user.edit";
     }
 
     /**
@@ -72,7 +69,9 @@ class RefItemController extends Controller
     public function store(ValidateRequest $request)
     {
 
-        Cls::create($request->all());
+        $data =  $request->all();
+        $data['password'] =  bcrypt($data['password']);
+        Cls::create($data);
         return redirect($this->route)->with('success',' Record was successfully saved.');
 
     }
@@ -103,7 +102,7 @@ class RefItemController extends Controller
         $unit = $this->unit;
 
         $data = Cls::findorfail($id);
-        return view($this->rCreate,compact('data','form','route','category','unit'));
+        return view($this->rEdit,compact('data','form','route','category','unit'));
     }
 
     /**
@@ -119,10 +118,103 @@ class RefItemController extends Controller
         $active =  ($request->active) ? true : false;
         $request->merge(array('active' =>  $active ));
 
-        Cls::find($id)->update( $request->all());
+        $input = $request->except(['password']);
+
+
+        Cls::find($id)->update( $input);
         return redirect($this->route)->with('success',' Record was successfully updated.');
 
     }
+
+    public function updatePassword(ValidateRequestPass $request, $id)
+    {
+
+        $data = $request->only(['password', 'password_confirmation']);
+        $data['password'] =  bcrypt($data['password']);
+
+        Cls::find($id)->update( $data);
+        return redirect($this->route)->with('success',' Record was successfully updated.');
+
+    }
+
+
+
+    public function avatar(Request $request, $id){
+
+        // $data = $request->only(['avatar']);
+        // dd($request);
+
+
+        $file = array('avatar' => $request->avatar);
+        $rules = array('avatar'=>'mimes:jpeg,jpg,png|max:3000|required',); 
+
+        // $size = Input::file('photo')->getSize();
+
+        $validator = Validator::make($file, $rules);
+        if ($validator->fails()) {
+            return redirect()->back()
+                    ->withErrors($validator)
+                    ->with('error', "Upload File is not valid");
+        }
+
+
+        if ($request->file('avatar')->isValid()) {
+
+            $user = Cls::findorfail($id);
+
+
+
+            $avatar = $request->file('avatar');
+            $filename = $id . '-' .  time() . '.' . $avatar->getClientOriginalExtension();
+            $path = public_path('upload/avatars/' . $filename);
+
+            //deleting image if not default
+            if ($user->avatar !== 'default.png') {
+                $tempfile = 'upload/avatars/' . $user->avatar;
+                if (File::exists($tempfile)) {
+                    unlink($tempfile);
+                }
+            }
+
+            Image::make($avatar)->resize(160,160)->save($path);           
+            $user->avatar  =  $filename;
+            $user->save();
+
+            // dbfunction::insertlogs(Auth::user()->id,'Update Profile Picture');
+
+            // return redirect($this->route)->with('success',' Profile avatar was successfully updated.');
+            return redirect()->back()->with('success',' Profile avatar was successfully updated.');
+        }
+        else{
+            return Redirect::back()
+                ->with('error', "Upload File is not valid");
+        }
+
+    }
+
+
+    public function deleteAvatar(Request $request,$id){
+
+        // dd($request);
+
+        $user  =  Cls::findorfail($id);        
+
+        if ($user->avatar != 'default.png'){
+            $tempfile = 'upload/avatars/' . $user->avatar;
+            if (File::exists($tempfile)) {
+                unlink($tempfile);
+            }
+            $user->avatar = 'default.png';
+            $user->save();
+        }
+
+    }
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -163,16 +255,23 @@ class RefItemController extends Controller
                         ';
             })
 
-        ->editColumn('code', ' 
-                         {{ $code }}
-                        ')
+
+
+
+        ->editColumn('avatar',function ($data){
+                        return '<img class="img-avatar" src="upload/avatars/'.  $data->avatar . '">';
+                        })        
+
+        ->editColumn('code',function ($data){
+                        return   $data->fullname;
+                        })
 
         ->editColumn('name', ' 
-                         {{ $name }}
+                         {{ $address }}
                         ')
 
         ->editColumn('description', ' 
-                          <div class="td-description"> {!! str_limit($description) !!} </div>
+                          <div class="td-description"> {!! str_limit($notes) !!} </div>
                         ')
 
         ->editColumn('created_at',function ($data){

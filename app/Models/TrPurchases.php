@@ -9,21 +9,31 @@ class TrPurchases extends Model
     
     protected  $table = 'tr_purchases';
     protected  $fillable = [
-		'code',
+		'trcode',
 		'supplier_id',
-		'purchaseDate',
-		'deliveryDate',
-		'total',
+		'datePurchase',
+		'dateDelivery',
+		'trsubtotal',
+		'trdiscount',
+		'trtotal',
 		'description',
 		'active',
     ];
 
 
+    // protected $dates = ['datePurchase','dateDelivery'];
+
+
+
     public function details()
     {
-        return $this->hasMany(TrPurchasesItem::class);
+        return $this->hasMany(TrPurchasesItem::class,'purchase_id');
     }
 
+    public function tbl_supplier()
+    {
+        return $this->belongsTo(RefSupplier::class,'supplier_id');
+    }
 
 
 }
