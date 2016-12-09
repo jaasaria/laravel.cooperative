@@ -78,6 +78,19 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::resource('purchase', 'TrPurchasesController');
 
 
+//Role
+	Route::delete('role/delete', ['uses' => 'RefRoleController@delete','as' => 'role.delete']);
+	Route::get('role/data', ['uses' => 'RefRoleController@data','as' => 'role.data']);
+	
+
+	Route::get('role/permission/{roleId}', ['uses' => 'RefRoleController@createPermission','as' => 'role.createPermission']);
+
+	Route::post('role/permission', ['uses' => 'RefRoleController@storePermission','as' => 'role.storePermission']);
+	Route::put('role/permission/{roleID}', ['uses' => 'RefRoleController@updatePermission','as' => 'role.updatePermission']);
+
+
+	Route::resource('role', 'RefRoleController');
+
 
 
 });

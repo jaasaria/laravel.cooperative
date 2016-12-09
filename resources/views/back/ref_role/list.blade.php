@@ -4,10 +4,9 @@
 	<style>
 		.panel_toolbox {float: left;min-width: 0px;}
 		
-		.w10 {width:10%;text-align: center;}
 		.w15 {width:15%;text-align: center;}
 		.w20 {width:20%;}
-		.w30 {width:30%;text-align: center;}
+		.w40 {width:40%;text-align: center;}
 
  		.td-description{
 	        text-overflow: ellipsis;
@@ -19,7 +18,6 @@
 	    	background-color: #2f4358;
 	    	color: white
 	    }
-
 	</style>
 @stop
 
@@ -60,10 +58,8 @@
 		                <thead>
 		                    <tr role="row">
 
-		                        <th class="w15">Item Code</th>
-		                        <th class="w15">Item Name</th>
-		                        <th class="w30 hidden-xs hidden-sm">Description</th>
-		                        <th class="w10 hidden-xs hidden-sm">Status</th>
+		                        <th class="w15">Name</th>
+		                        <th class="w40 hidden-xs hidden-sm">Description</th>
 		                        <th class="w15 hidden-xs hidden-sm">Date</th>
 		                        <th class="w15">Action</th>
 
@@ -74,9 +70,6 @@
 		                </tbody>
 
 		            </table>
-
-
-
 
 		        </div>
 	    	</div>
@@ -99,6 +92,11 @@
 
 	$(document).ready(function(){
 
+  if ($("[rel=tooltip]").length) {
+     $("[rel=tooltip]").tooltip();
+     }
+     
+
  		$(function() {
             $('#table').DataTable({
                 processing: true,
@@ -106,10 +104,8 @@
                 ajax: '{!! url( $route . '/data') !!}',
                 order: [[2, 'desc']],		//start with Zero(0)
                 columns: [
-                    { data: 'code', name: 'code' ,"searchable": true},
                     { data: 'name', name: 'name' ,"searchable": true},
                     { data: 'description', name: 'description' ,"searchable": true},
-                    { data: 'active', name: 'active' ,"searchable": true},
                     { data: 'created_at', name: 'created_at' ,"searchable": true },
                     { data: 'action', name: 'action', "orderable":false,"defaultContent": ""}
                 ]

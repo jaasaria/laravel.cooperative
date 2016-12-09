@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class SupplierTableSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class SupplierTableSeeder extends Seeder
 	            'website' =>  $faker->ean13,
 	            'email' =>  $faker->ean13,
 	            'notes' =>  $faker->word,
+                'created_at' => Carbon::now(),
 	        ]);
         }
 

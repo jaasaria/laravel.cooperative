@@ -3,36 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RefItem as Cls;
+use App\Models\RefRole as Cls;
 
-use App\Models\RefCategories;
-use App\Models\RefUnits;
+use App\Models\RefPermission;
+use App\Models\RefRolePermission;
 
 use Yajra\Datatables\Datatables;
-use App\Http\Requests\StoreItem as ValidateRequest;
+use App\Http\Requests\StoreCategory as ValidateRequest;
+use DB;
 
-use Carbon\Carbon;
 
-
-class RefItemController extends Controller
+class RefRoleController extends Controller
 {
 
     public $form,$route;
     public $rList,$rCreate;
 
-    public $category,$unit,$item;
+    public $permission;
 
 
     public function __construct(){
-        $this->form = "Item";     //plural
-        $this->route = "item";
-        $this->rList = "back.ref_item.list";
-        $this->rCreate = "back.ref_item.create";
+        $this->form = "Role and Permission";     //plural
+        $this->route = "role";
+        $this->rList = "back.ref_role.list";
+        $this->rCreate = "back.ref_role.create";
+        $this->rPermission = "back.ref_role.permission";
 
-        $this->category = RefCategories::pluck('name', 'id');   
-        $this->unit = RefUnits::pluck('name', 'id');
-        
+        $this->permission = RefPermission::all();
 
+        // dd($this->permission);
     }
 
     /**
@@ -57,11 +56,23 @@ class RefItemController extends Controller
         $form = $this->form;
         $route = $this->route;
 
-        $category = $this->category;
-        $unit = $this->unit;
-
-        return view($this->rCreate,compact('form','route','category','unit'));
+        return view($this->rCreate,compact('form','route'));
     }
+
+
+    public function createPermission($roleId)
+    {
+        $form = $this->form;
+        $route = $this->route;
+        $permission = $this->permission;
+
+        $rolePermission = RefRolePermission::where('role_id',$roleId)->get(['value']);        
+        return view($this->rPermission,compact('form','route','permission','roleId','rolePermission'));
+    }
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -74,19 +85,40 @@ class RefItemController extends Controller
 
         Cls::create($request->all());
         return redirect($this->route)->with('success',' Record was successfully saved.');
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function storePermission(Request $request)
     {
 
+        $rolesId = $request->get('rolesId');
+        $roles = $request->get('roles');
+
+
+        //easy process (not recommended)
+        $rolePermission = RefRolePermission::where('role_id',$rolesId)->count();
+        if ($rolePermission > 0){
+            RefRolePermission::where('role_id',$rolesId)->delete();
+        }
+
+
+
+        $dataSet = [];
+        foreach($roles as $name=>$value){
+             $dataSet[] = [
+                'role_id'  => $rolesId,
+                'permission_id' => $value,
+                'value' => $name,
+            ];
+        }
+
+        DB::table('tbl_role_permission')->insert($dataSet);
+
+        return redirect('role')->with('success',' Record was successfully saved.');
+        // return redirect($this->route)->with('success',' Record was successfully saved.');
     }
+
+ 
 
     /**
      * Show the form for editing the specified resource.
@@ -99,8 +131,6 @@ class RefItemController extends Controller
         $form = $this->form;
         $route = $this->route;
 
-        $category = $this->category;
-        $unit = $this->unit;
 
         $data = Cls::findorfail($id);
         return view($this->rCreate,compact('data','form','route','category','unit'));
@@ -123,6 +153,17 @@ class RefItemController extends Controller
         return redirect($this->route)->with('success',' Record was successfully updated.');
 
     }
+     public function updatePermission(ValidateRequest $request, $id)
+    {
+
+        $active =  ($request->active) ? true : false;
+        $request->merge(array('active' =>  $active ));
+
+        Cls::find($id)->update( $request->all());
+        return redirect($this->route)->with('success',' Record was successfully updated.');
+
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -152,21 +193,29 @@ class RefItemController extends Controller
 
             ->addColumn('action', function ($data) {
 
-                return '<div class="text-center">
+
+                if($data->id == 1){
+                    $d = 'disabled';
+                }
+
+                 return '<div class="text-center">
                             <div class="btn-group">
+
+                                <a href="'. route( $this->route . '.createPermission',$data->id) .'" type="btn" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Permission"
+                               
+                                ><i class="fa fa-shield"></i></a>
 
                                 <a href="'. route( $this->route . '.edit',$data->id) .'" type="btn" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Edit Record"><i class="fa fa-pencil-square"></i></a>
 
                                 <button id="btndelete" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete Record" data-token='. csrf_token() .' data-docid='.$data->id.'><i class="fa fa-trash-o"></i></button> 
+
                             </div>
-                        </div>
+                            </div>
                         ';
+
             })
 
-        ->editColumn('code', ' 
-                         {{ $code }}
-                        ')
-
+    
         ->editColumn('name', ' 
                          {{ $name }}
                         ')
@@ -174,24 +223,6 @@ class RefItemController extends Controller
         ->editColumn('description', ' 
                           <div class="td-description"> {!! str_limit($description) !!} </div>
                         ')
-
-
-        ->editColumn('active',function ($data){
-                        return  '<div class="text-center">' . $data->created_at->diffForHumans() . '</div>';
-                        })
-
-
-
-        ->editColumn('active', function ($data) {
-                return $data->active == 0 ? 
-                '<div class="text-center"><span class="label label-warning text-center"><i class="fa fa-clock-o"></i> Not Active</span></div>' 
-                : 
-                '<div class="text-center"><span class="label label-success"> <i class="fa fa-check-circle-o"></i> Active </span></div>';
-            })
-
-
-
-
 
         ->editColumn('created_at',function ($data){
                         return  '<div class="text-center">' . $data->created_at->diffForHumans() . '</div>';
@@ -212,25 +243,6 @@ class RefItemController extends Controller
 
 
 
-    public function apiItem()
-    {
-
-        $data = Cls::all(['id', 'code', 'name']);
-        foreach ($data as $key => $value) {
-            $list[$key]['id'] = $value->id;
-            $list[$key]['text'] = $value->code; 
-        }
-        return json_encode($list); 
-    }
-
-
-    public function apiItemId($id)
-    {
-
-        $data = Cls::whereId($id)->get();
-
-        return json_encode($data); 
-    }
 
 
 

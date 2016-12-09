@@ -89,8 +89,9 @@
                         <li {{ Request::is('user') ? 'active' : '' }} >
                            <a href="{{ url('user/') }}">User List</a></li>
 
-                        <li><a href="#">Role</a></li>
-                        <li><a href="#">Permission</a></li>
+                        <li {{ Request::is('role') ? 'active' : '' }} >
+                           <a href="{{ url('role/') }}">Role and Permission</a></li>
+
                       </ul>
                     </li>
 

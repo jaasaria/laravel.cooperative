@@ -65,7 +65,7 @@
 		        <div class="col-sm-12">
 
 
-		            <table id="table" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
+		            <table id="table" class="table table-striped table-bordered table-hover dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
 
 		                <thead>
 		                    <tr role="row">

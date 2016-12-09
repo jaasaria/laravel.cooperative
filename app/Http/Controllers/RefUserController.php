@@ -128,15 +128,12 @@ class RefUserController extends Controller
 
     public function updatePassword(ValidateRequestPass $request, $id)
     {
-
         $data = $request->only(['password', 'password_confirmation']);
         $data['password'] =  bcrypt($data['password']);
 
         Cls::find($id)->update( $data);
         return redirect($this->route)->with('success',' Record was successfully updated.');
-
     }
-
 
 
     public function avatar(Request $request, $id){
@@ -147,14 +144,15 @@ class RefUserController extends Controller
 
         $file = array('avatar' => $request->avatar);
         $rules = array('avatar'=>'mimes:jpeg,jpg,png|max:3000|required',); 
+        // $message = array('avatar.max'=>'File size is invalid.','avatar.mimes'=>'Invalid file.',); 
 
-        // $size = Input::file('photo')->getSize();
+
 
         $validator = Validator::make($file, $rules);
         if ($validator->fails()) {
             return redirect()->back()
                     ->withErrors($validator)
-                    ->with('error', "Upload File is not valid");
+                    ->with('error', "Upload file is not valid, please check the file size.");
         }
 
 

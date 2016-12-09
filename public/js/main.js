@@ -1557,27 +1557,24 @@ var vm = new Vue({
     errors: {},
     withErrors: false,
 
-    // form: {
-    //   rows: [
-    //         {item_id: '', qty: 1,cost: 0,subtotal: 0}
-    //   ],
+    form: {
+      rows: [{ item_id: '', qty: 1, cost: 0, subtotal: 0 }],
 
-    //   trcode:'',
-    //   supplier_id:'',
-    //   datePurchase:'',
-    //   dateDelivery:'',
-    //   description:'',
-    //   trsubtotal:0,
-    //   trdiscount:0,
-    //   trtotal:0
+      trcode: '',
+      supplier_id: '',
+      datePurchase: '',
+      dateDelivery: '',
+      description: '',
+      trsubtotal: 0,
+      trdiscount: 0,
+      trtotal: 0
+    }
 
-    // }
-
-    form: {}
+    // form: {}
 
   },
   created: function created() {
-    Vue.set(this.$data, 'form', _form);
+    // Vue.set(this.$data, 'form', _form);
 
     // console.logs(_form);
   },

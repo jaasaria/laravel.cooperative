@@ -17,9 +17,8 @@ class SideBarTotalServiceProvider extends ServiceProvider
     {
         
 
-      
-     
-
+        // use this for single 
+        // View::share('site_settings', $site_settings);
 
         view()->composer('back.layouts.admin_sidebar',function($view){
 

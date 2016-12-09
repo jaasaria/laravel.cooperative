@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class ItemTableSeeder extends Seeder
 {
@@ -18,9 +19,7 @@ class ItemTableSeeder extends Seeder
 
 
 
-
-        $limit = 4000;
-
+        $limit = 100;
         for ($i = 0; $i < $limit; $i++) {
             
             DB::table('tbl_item')->insert([
@@ -32,6 +31,7 @@ class ItemTableSeeder extends Seeder
 	            'tax' =>  12,
 	            'qty' =>  1,
 	            'description' => $faker->word,
+                'created_at' => Carbon::now(),
 	        ]);
         }
 
