@@ -24,6 +24,7 @@ class StoreUser extends FormRequest
     public function rules()
     {
 
+
         //added this code because of two identification code (id and code)
         if ($this->method() == 'PUT')
         {

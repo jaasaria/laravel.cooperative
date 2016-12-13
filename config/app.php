@@ -183,6 +183,10 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
 
         App\Providers\SideBarTotalServiceProvider::class,
+        App\Providers\ViewAuthServiceProvider::class,
+        App\Providers\ViewFooterServiceProvider::class,
+
+        
 
         Intervention\Image\ImageServiceProvider::class,
 

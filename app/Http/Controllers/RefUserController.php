@@ -20,7 +20,6 @@ class RefUserController extends Controller
 
     public $form,$route;
     public $rList,$rCreate,$rEdit;
-
     public $category,$unit,$item;
 
 
@@ -32,11 +31,6 @@ class RefUserController extends Controller
         $this->rEdit = "back.ref_user.edit";
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $form = $this->form;
@@ -44,95 +38,86 @@ class RefUserController extends Controller
         return view($this->rList,compact('form','route'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $form = $this->form;
         $route = $this->route;
-
         $category = $this->category;
         $unit = $this->unit;
-
         return view($this->rCreate,compact('form','route','category','unit'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ValidateRequest $request)
     {
-
         $data =  $request->all();
         $data['password'] =  bcrypt($data['password']);
         Cls::create($data);
         return redirect($this->route)->with('success',' Record was successfully saved.');
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
-
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function edit($id)
     {
         $form = $this->form;
         $route = $this->route;
 
-        $category = $this->category;
-        $unit = $this->unit;
-
         $data = Cls::findorfail($id);
-        return view($this->rEdit,compact('data','form','route','category','unit'));
+        return view($this->rEdit,compact('data','form','route'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function editProfile($id)
+    {
+        $form = $this->form;
+        $route = $this->route;
+        $data = Cls::findorfail($id);
+        $profile = true;
+        return view($this->rEdit,compact('data','form','route','profile'));
+    }
+
     public function update(ValidateRequest $request, $id)
     {
 
         $active =  ($request->active) ? true : false;
+        $profile =  $request->profile;
+
+
         $request->merge(array('active' =>  $active ));
 
         $input = $request->except(['password']);
 
-
         Cls::find($id)->update( $input);
-        return redirect($this->route)->with('success',' Record was successfully updated.');
+
+        if($profile){
+            return back()->with('success',' Record was successfully updated.');    
+        }else{
+            return redirect($this->route)->with('success',' Record was successfully updated.');    
+        }
+        
+
+        
 
     }
 
     public function updatePassword(ValidateRequestPass $request, $id)
     {
+
+        $profile =  $request->profile;
         $data = $request->only(['password', 'password_confirmation']);
         $data['password'] =  bcrypt($data['password']);
 
         Cls::find($id)->update( $data);
-        return redirect($this->route)->with('success',' Record was successfully updated.');
+        
+        if($profile){
+            return back()->with('success',' Password was successfully updated.');  
+        }else{
+            return redirect($this->route)->with('success',' Password was successfully updated.');
+        }
+
     }
 
 
@@ -310,6 +295,9 @@ class RefUserController extends Controller
 
         return json_encode($data); 
     }
+
+
+
 
 
 

@@ -254,8 +254,8 @@
 
             <img class="logo-img" src="{{ asset('img/logo-light.png') }}" alt="Admin Login">
             <div class="copy">
-                <h1>{{ config('setup.login_title','Title Here') }}</h1>
-                <p>{{ config('setup.login_description','Description Here') }}</p>
+                <h1>{{ $settingWebsite }}</h1>
+                <p>{{ $settingDesc }}</p>
             </div>
             <div style="clear:both"></div>
 

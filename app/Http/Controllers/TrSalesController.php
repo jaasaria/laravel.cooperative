@@ -3,40 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TrPurchases as Cls;
-use App\Models\TrPurchasesItem;
-use App\Models\RefSupplier;
+use App\Models\TrSales as Cls;
+use App\Models\TrSalesItem;
+use App\Models\RefCustomer;
 use App\Models\RefItem;
 
 use Yajra\Datatables\Datatables;
-use App\Http\Requests\StoreCategory;
 
-use App\Http\Requests\StorePurchase as ValidateRequest;
 use Validator;
-
 use Carbon\Carbon;
 
-class TrPurchasesController extends Controller
+class TrSalesController extends Controller
 {
 
     public $form,$route;
     public $rList,$rCreate;
 
     public function __construct(){
-        $this->form = "Purchases";      //plural
-        $this->route = "purchase";
-        $this->rList = "back.tr_purchase.list";
-        $this->rCreate = "back.tr_purchase.create";
+        $this->form = "Sales";      //plural
+        $this->route = "sales";
+        $this->rList = "back.tr_sales.list";
+        $this->rCreate = "back.tr_sales.create";
         $this->items = RefItem::all(['name','code', 'id']);
-        $this->supplier = RefSupplier::pluck('name', 'id');
+        $this->supplier = RefCustomer::pluck('name', 'id');
 
-    }
-
-    public function messages()
-    {
-        return [
-            'trcode.required' => 'tr code is required custom ',
-        ];
     }
 
     public function index()
@@ -118,12 +108,12 @@ class TrPurchasesController extends Controller
 
             }
 
-            $header->rows()->saveMany($rows);
 
+            $header->rows()->saveMany($rows);
             return response()
                 ->json([
                     'created' => true
-            ],200);
+            ]);
 
             
         } catch (Exception $e) {
@@ -215,10 +205,11 @@ class TrPurchasesController extends Controller
     }
 
 
+    // transfer to trais
     public function getNextOrderNumber()
     {
     
-        $Prefix  = 'PUR-';
+        $Prefix  = 'Sls-';
 
         $lastOrder = Cls::orderBy('created_at', 'desc')->first();
 

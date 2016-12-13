@@ -184,12 +184,10 @@ class RefItemController extends Controller
 
         ->editColumn('active', function ($data) {
                 return $data->active == 0 ? 
-                '<div class="text-center"><span class="label label-warning text-center"><i class="fa fa-clock-o"></i> Not Active</span></div>' 
+                '<div class="text-center"><span class="label label-warning text-center"><i class="fa fa-check-circle-o"></i> Not Active</span></div>' 
                 : 
                 '<div class="text-center"><span class="label label-success"> <i class="fa fa-check-circle-o"></i> Active </span></div>';
             })
-
-
 
 
 

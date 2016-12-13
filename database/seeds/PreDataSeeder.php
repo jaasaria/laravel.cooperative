@@ -52,7 +52,7 @@ c = create , r = read ,  u = update , d = delete',
         ]);
 
         DB::table('tbl_permission')->insert([
-            'name' => 'Role / Permission',
+            'name' => 'User Role',
             'value' => 'c,r,u,d,p',
             'description' => 'User List
 c = create , r = read ,  u = update , d = delete , p = permission',

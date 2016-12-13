@@ -5,17 +5,19 @@
 
                <a href="" class="site_title">
                   <i class="fa fa-home"></i> 
-                  <span class="text-center"  style="font-size: 18px;">SIAM Cooperative</span>
+                  <span class="text-center"  style="font-size: 18px;">{{ $settingWebsite }}</span>
                </a>
 
               </div>
 
               <div class="clearfix"></div>
 
+
+
               <!-- menu profile quick info -->
               <div class="profile">
                 <div class="profile_pic">
-                  <img src="{{ 'upload/avatars/' . auth::user()->avatar }}" alt="..." class="img-circle profile_img">
+                  <img src="{{ asset('upload/avatars/' . auth::user()->avatar)  }}" alt="..." class="img-circle profile_img">
                 </div>
                 <div class="profile_info">
                   <span>Welcome,</span><br>
@@ -24,6 +26,8 @@
               </div>
 
               <br />
+
+
 
               <!-- sidebar menu -->
               <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -41,9 +45,17 @@
                             @if ($countPurchases )
                               <span class="label label-success pull-right">{{ $countPurchases  }}</span>
                             @endif
-                           </a></li>
+                           </a>
+                        </li>
                            
-                        <li><a href="#">Sales</a></li>
+                          <li {{ Request::is('sales') ? 'active' : '' }} >
+                           <a href="{{ url('sales/') }}">Sales
+                            @if ($countSales )
+                              <span class="label label-success pull-right">{{ $countSales  }}</span>
+                            @endif
+                           </a>
+                          </li>
+
 
                         <li><a href="#">Re-Stock</a></li>
                         <li><a href="#">Pull-Out</a></li>
@@ -111,7 +123,10 @@
                       </ul>
                     </li>
 
-                    <li><a><i class="fa fa-wechat"></i> Message</a></li>
+                    <li {{ Request::is('messages') ? 'active' : '' }} >
+                           <a href="{{ url('messages/') }}"><i class="fa fa-wechat"></i>Message</a></li>
+
+
 
                                   
                   </ul>

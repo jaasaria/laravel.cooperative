@@ -1,7 +1,7 @@
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').getAttribute('content');
 
-var VueResource = require('vue-resource');
-Vue.use(VueResource);
+// var VueResource = require('vue-resource');
+// Vue.use(VueResource);
 
 
 Vue.component('date-range-picker', {
@@ -40,44 +40,13 @@ var vm =  new Vue({
     isProcessing: false,
     errors: {},
     withErrors:false,
-
-    form: {
-      rows: [
-            {item_id: '', qty: 1,cost: 0,subtotal: 0}
-      ],
-
-      trcode:'',
-      supplier_id:'',
-      datePurchase:'',
-      dateDelivery:'',
-      description:'',
-      trsubtotal:0,
-      trdiscount:0,
-      trtotal:0
-    }
-
-    // form: {}
-
+    form: {}
   },
   created: function () {
-    // Vue.set(this.$data, 'form', _form);
-
-    // console.logs(_form);
+    Vue.set(this.$data, 'form', _form);
   },
 
   methods: {
-
-    CheckDate:function(){
-      console.log(this.dt);
-    },
-
-    // CheckError: function(val, oldVal){
-    //     if (Object.keys(this.errors).length > 0){
-    //       this.withErrors = true;  
-    //     }else{
-    //       this.withErrors = false;  
-    //     }
-    // },
 
     onSubmit: function() {
 
@@ -86,7 +55,6 @@ var vm =  new Vue({
       this.withErrors = false;
       this.errors = {};
 
-      // GET request
       this.$http.post('/purchase',  this.form).then(function (response) {
 
           if(response.data.created) {

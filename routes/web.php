@@ -1,5 +1,3 @@
-
-
 <?php
 
 use App\Models\TrPurchases;
@@ -13,8 +11,6 @@ Route::get('check_user', function() {
 
 
 
-
-
 // For Guest
 Route::group(['middleware' => 'guest'],function(){
 	Route::get('/', ['uses'=>'\App\Http\Controllers\Auth\LoginController@showLoginForm'] );
@@ -23,13 +19,15 @@ Route::group(['middleware' => 'guest'],function(){
 });
 
 
-
-
-
-
-// For Authenticated User
 Route::group(['middleware' => 'auth'],function(){
+
+
+
+// Pages	
 	Route::get('/dashboard', 'PagesController@dashboard');
+	Route::get('/settings', 'PagesController@settings');
+	Route::post('/settings/update', ['uses' => 'PagesController@settingsUpdate','as' => 'settings.Update']);
+	Route::get('/help', 'PagesController@help');
 	Route::get('logout', 'Auth\LoginController@logout');
 
 
@@ -64,11 +62,13 @@ Route::group(['middleware' => 'auth'],function(){
 //user
 	Route::delete('user/delete', ['uses' => 'RefUserController@delete','as' => 'user.delete']);
 
-	Route::put('user/{id}', ['uses' => 'RefUserController@updatePassword','as' => 'user.pass']);
+	Route::put('user/user/{id}', ['uses' => 'RefUserController@updatePassword','as' => 'user.pass']);
 	Route::post('user/avatar/{id}', ['uses' => 'RefUserController@avatar','as' => 'user.avatar']);
 	Route::post('user/deleteAvatar/{id}', ['uses' => 'RefUserController@deleteAvatar','as' => 'user.deleteAvatar']);
 
 	Route::get('user/data', ['uses' => 'RefUserController@data','as' => 'user.data']);
+	Route::get('user/profile/{id}', ['uses' => 'RefUserController@editProfile','as' => 'user.profile']);
+
 	Route::resource('user', 'RefUserController');
 
 
@@ -81,15 +81,26 @@ Route::group(['middleware' => 'auth'],function(){
 //Role
 	Route::delete('role/delete', ['uses' => 'RefRoleController@delete','as' => 'role.delete']);
 	Route::get('role/data', ['uses' => 'RefRoleController@data','as' => 'role.data']);
-	
-
 	Route::get('role/permission/{roleId}', ['uses' => 'RefRoleController@createPermission','as' => 'role.createPermission']);
-
 	Route::post('role/permission', ['uses' => 'RefRoleController@storePermission','as' => 'role.storePermission']);
 	Route::put('role/permission/{roleID}', ['uses' => 'RefRoleController@updatePermission','as' => 'role.updatePermission']);
-
-
 	Route::resource('role', 'RefRoleController');
+
+
+
+//Sales
+	Route::delete('sales/delete', ['uses' => 'TrSalesController@delete','as' => 'sales.delete']);
+	Route::get('sales/data', ['uses' => 'TrSalesController@data','as' => 'sales.data']);
+	Route::resource('sales', 'TrSalesController');
+
+
+
+
+//Messages
+	Route::get('messages/', ['uses' => 'TrMessagesController@index','as' => 'messages.index']);
+	Route::get('messages/data', ['uses' => 'TrMessagesController@data','as' => 'messages.data']);
+	// Route::resource('sales', 'TrSalesController');
+
 
 
 

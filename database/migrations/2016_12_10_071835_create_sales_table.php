@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePurchaseTable extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreatePurchaseTable extends Migration
      */
     public function up()
     {
-        Schema::create('tr_purchases', function (Blueprint $table) {
+          Schema::create('tr_sales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('trcode')->unique();
             
-            $table->integer('supplier_id')->unsigned()->index()->nullable();
-            $table->foreign('supplier_id')->references('id')->on('tbl_supplier');
+            $table->integer('customer_id')->unsigned()->index()->nullable();
+            $table->foreign('customer_id')->references('id')->on('tbl_customer');
 
-            $table->date('datePurchase');
-            $table->date('dateDelivery');
+            $table->date('dateSales');
             $table->text('description')->nullable();
             $table->double('trsubtotal', 15, 4)->default(0);
             $table->double('trdiscount', 15, 4)->default(0);
@@ -40,6 +39,6 @@ class CreatePurchaseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tr_purchases');
+        Schema::dropIfExists('tr_sales');
     }
 }

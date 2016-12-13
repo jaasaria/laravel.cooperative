@@ -110,6 +110,7 @@
     <script src=" {{ asset('js/jquery-ui.js') }} "></script>
     
 
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
     {{-- <script src="https://unpkg.com/vue@1.0/dist/vue.js"></script> --}}
 
 

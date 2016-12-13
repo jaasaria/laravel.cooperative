@@ -24,10 +24,6 @@
 		    width: 29px;
 		    height: 29px;
 		    border-radius: 50%;
-		    /*margin-right: 10px;*/
-		    /*vertical-align: middle*/
-		    /*align-items: center;*/
-		    /*float: center;*/
 		}
 
 	</style>

@@ -21,7 +21,11 @@
 
 	<div class="box-header with-border">
 		<span class="pull-left">
-			<h3 class="box-title"> {{ $form }} <small>Referencial file</small></h3>
+			<h3 class="box-title"> {{ $form }} <small>{{ (empty($profile) ? ' Referencial file' : ' Profile')  }}   </small></h3>
+
+			 
+
+
 		</span>
 		<span class="pull-right">
 			<a href=" {{ url( $route) }} " class="btn btn-warning">Back</a>
@@ -90,11 +94,15 @@
 {{-- First Tab --}}
           <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 
-          	<form  method="POST" action="{{ (empty($data) ? route( $route . '.store'):route( $route . '.update',$data->id)) }}" class="form-horizontal">
+
+          	<form  method="POST" action="{{ route( 'user.update',$data->id) }}" class="form-horizontal">
 
 		        {{ csrf_field() }}
 		        {{ (empty($data) ? null : Form::hidden('id', $data->id)) }}  
 		        {{ (empty($data) ? null :  method_field('PUT')) }}  
+
+		        {{ (empty($profile) ? null : Form::hidden('profile', true))  }}  
+
 		        {{-- use for update only --}}
 
 				<div class="form-group">		
@@ -179,11 +187,13 @@
 {{-- Second Tab --}}
         <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 
-		<form  method="POST" action="{{ (empty($data) ? route( $route . '.store'):route( $route . '.pass',$data->id)) }}" class="form-horizontal">
+		<form  method="POST" action="{{ route( $route . '.pass',$data->id) }}" class="form-horizontal">
 
 		        {{ csrf_field() }}
 		        {{ (empty($data) ? null : Form::hidden('id', $data->id)) }}  
 		        {{ (empty($data) ? null :  method_field('PUT')) }}
+ 				{{ (empty($profile) ? null : Form::hidden('profile', true))  }}  
+
 
 
 				<div class="form-group">		

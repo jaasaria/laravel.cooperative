@@ -3,7 +3,7 @@
 
 @section('authcontent')
 
-                <h2 >Sign In</h2>
+                <h2>Sign In</h2>
                 <p>Sign in below:</p>
                 
                 <form  method="POST" action="{{ url('/login') }}" id="login">

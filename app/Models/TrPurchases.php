@@ -21,11 +21,7 @@ class TrPurchases extends Model
     ];
 
 
-    // protected $dates = ['datePurchase','dateDelivery'];
-
-
-
-    public function details()
+    public function rows()
     {
         return $this->hasMany(TrPurchasesItem::class,'purchase_id');
     }

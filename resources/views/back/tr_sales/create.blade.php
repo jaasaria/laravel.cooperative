@@ -7,7 +7,6 @@
 		}
 		.w15 {width:15%;}
 		.w10c {width:10%;text-align: center;}
-
 		.w15 {width:15%;}
 		.w15c {width:15%;text-align: center;}
 		.w20 {width:20%;}
@@ -187,7 +186,7 @@
                             <th class="w20">Item Code</th>
                             <th class="w30">Item Name</th>
                             <th class="w10c">Qty</th>
-                            <th class="w15c">Cost</th>
+                            <th class="w15c">Price</th>
                             <th class="w15">Sub Total</th>
                             <th class="w10 last"><span class="nobr">Action</span></th>
                           </tr>
