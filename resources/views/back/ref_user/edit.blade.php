@@ -127,6 +127,13 @@
 				</div>
 
 				<div class="form-group">		
+			        <label class="control-label col-md-2 col-sm-2 col-xs-12">Designation: </label>
+			        <div class="col-md-10 col-sm-10 col-xs-12">
+			        	<input id="designation" name="designation" type="text" class="cls-controls form-control" placeholder="Designation"  value="{{ (empty($data)?  old('designation'):old('designation', $data->designation)) }}" required>
+			        </div>
+				</div>
+
+				<div class="form-group">		
 			        <label class="control-label col-md-2 col-sm-2 col-xs-12">Address:</label>
 			        <div class="col-md-10 col-sm-10 col-xs-12">
 			        	<textarea id="address" name="address" class="form-control" rows="4" placeholder="Address">{{ (empty($data)?  old('address'): $data->address) }}</textarea>

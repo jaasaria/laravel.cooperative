@@ -17,8 +17,8 @@ class CreateTrMessagesTable extends Migration
             $table->increments('id');
 
 
-            $table->integer('sender_Id')->unsigned()->index()->nullable();
-            $table->foreign('sender_Id')->references('id')->on('users');
+            $table->integer('sender_id')->unsigned()->index()->nullable();
+            $table->foreign('sender_id')->references('id')->on('users');
 
             $table->integer('receiver_id')->unsigned()->index()->nullable();
             $table->foreign('receiver_id')->references('id')->on('users');

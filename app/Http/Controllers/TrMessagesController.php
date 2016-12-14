@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TrMessages as Cls;
+use App\Http\Requests\StoreMessages as ValidateRequest;
 
 use App\User;
 use Carbon\Carbon;
@@ -19,7 +21,7 @@ class TrMessagesController extends Controller
         $this->rList = "back.tr_messages.list";
         $this->rCreate = "back.tr_messages.create";
 
-        $this->users = User::all(['name', 'id','avatar']);
+        $this->users = User::all(['name', 'id','avatar','designation','last_login']);
 
     }
 
@@ -28,9 +30,20 @@ class TrMessagesController extends Controller
         $form = $this->form;
         $route = $this->route;
         $user = $this->users;
+        $messages =  Cls::orderby('id','asc')->get();
 
-        return view($this->rList,compact('form','route','user'));
+        return view($this->rList,compact('form','route','user','messages'));
     }
+
+    public function store(ValidateRequest $request)
+    {
+
+        $data =  $request->all();
+
+        Cls::create($data);
+        return back()->with('success',' Message was successfully sent.');
+    }
+
 
 
 
@@ -93,6 +106,13 @@ class TrMessagesController extends Controller
                 'color' => 'red',
             ])
             ->make(true);
+    }
+
+
+    public function dataMessage(){
+        $data = Cls::with('userSender','userReceiver')->orderBy('id', 'desc')->get();
+
+        return $data->toArray();
     }
 
 

@@ -45,6 +45,7 @@ class StoreUser extends FormRequest
             'middlename'=>'required|max:100|min:3', 
             'lastname'=>'required|max:100|min:3', 
 
+            'designation'=>'required|max:255', 
             'address'=>'required|min:3|max:255', 
             'mobile'=>'required|min:3|max:255', 
 

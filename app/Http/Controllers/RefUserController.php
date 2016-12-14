@@ -50,7 +50,10 @@ class RefUserController extends Controller
     public function store(ValidateRequest $request)
     {
         $data =  $request->all();
+
+
         $data['password'] =  bcrypt($data['password']);
+        $data['designation'] =  ucwords($data['designation']);
         Cls::create($data);
         return redirect($this->route)->with('success',' Record was successfully saved.');
     }
@@ -89,6 +92,7 @@ class RefUserController extends Controller
         $request->merge(array('active' =>  $active ));
 
         $input = $request->except(['password']);
+        $input['designation'] =  ucwords($input['designation']);
 
         Cls::find($id)->update( $input);
 

@@ -4,10 +4,18 @@ use App\Models\TrPurchases;
 use App\User;
 
 Route::get('check_user', function() {
-
 	return  User::all();
+});
+
+
+Event::listen('auth.last_login', function($user){
+	$user->last_login = new DateTime;
+	$user->save();
 
 });
+
+
+
 
 
 
@@ -97,8 +105,10 @@ Route::group(['middleware' => 'auth'],function(){
 
 
 //Messages
-	Route::get('messages/', ['uses' => 'TrMessagesController@index','as' => 'messages.index']);
+	Route::get('messages', ['uses' => 'TrMessagesController@index','as' => 'messages.index']);
+	Route::post('messages', ['uses' => 'TrMessagesController@store','as' => 'messages.store']);
 	Route::get('messages/data', ['uses' => 'TrMessagesController@data','as' => 'messages.data']);
+	Route::get('messages/dataMessage', ['uses' => 'TrMessagesController@dataMessage','as' => 'messages.dataMessage']);
 	// Route::resource('sales', 'TrSalesController');
 
 

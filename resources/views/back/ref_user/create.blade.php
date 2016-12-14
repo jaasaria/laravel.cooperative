@@ -97,6 +97,12 @@
 		        	<input id="lastname" name="lastname" type="text" class="cls-controls form-control" placeholder="Last Name"  value="{{ (empty($data)?  old('lastname'):old('lastname', $data->lastname)) }}" required autofocus>
 		        </div>
 			</div>
+			<div class="form-group">		
+		        <label class="control-label col-md-2 col-sm-2 col-xs-12">Designation: </label>
+		        <div class="col-md-10 col-sm-10 col-xs-12">
+		        	<input id="designation" name="designation" type="text" class="cls-controls form-control" placeholder="Designation"  value="{{ (empty($data)?  old('designation'):old('designation', $data->designation)) }}" required>
+		        </div>
+			</div>
 
 			<div class="form-group">		
 		        <label class="control-label col-md-2 col-sm-2 col-xs-12">Address:</label>

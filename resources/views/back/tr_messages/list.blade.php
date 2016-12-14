@@ -2,20 +2,76 @@
 
 @section('css.import')
 	<style>
-		.panel_toolbox {float: left;min-width: 0px;}
 
+
+.message_pic {
+    width: 10%;
+    float: left;
+}
+.message_pic_right {
+    width: 10%;
+    float: right;
+}
+
+.pull-right {
+     float: right; 
+}
+.pull-right {
+     float: right!important; 
+} 
+
+.img-circlechat {
+    width: 70%;
+    background: #fff;
+    z-index: 1000;
+    position: inherit;
+    border: 1px solid rgba(52,73,94,0.44);
+    padding: 4px;
+    border-radius: 50%;
+}
+.img-circlechat-left {
+    width: 70%;
+    background: #b9e7f5;
+    z-index: 1000;
+    position: inherit;
+    border: 1px solid rgba(52,73,94,0.44);
+    padding: 4px;
+    border-radius: 50%;
+}
+.img-circlechat_right {
+    width: 70%;
+    background: #fff;
+    z-index: 1000;
+    position: inherit;
+    text-align: right;
+    border: 1px solid rgba(52,73,94,0.44);
+    padding: 4px;
+    float: right;
+    border-radius: 50%;
+}
+
+
+.sidebar{
+    float: left;
+    width: 200px;
+    color: #f4f4f4;
+     background-color: #2e3238; 
+}
+
+
+
+
+
+		.panel_toolbox {float: left;min-width: 0px;}
 		.panel-heading{
 	    	background-color: #2f4358;
 	    	color: white
 	    }
-
 	    .panel-primary>.panel-heading {
 			background-color: #2f4358;
 	    	color: white
 		    border-color: #2f4358;
 		}
-
-
 		.chat
 {
     list-style: none;
@@ -30,16 +86,10 @@
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li.left .chat-body
+.chat-body-left
 {
     margin-left: 60px;
 }
-
-.chat li.right .chat-body
-{
-    margin-right: 60px;
-}
-
 
 .chat li .chat-body p
 {
@@ -55,7 +105,7 @@
 .panel-body
 {
     overflow-y: scroll;
-    height: 250px;
+    height: 330px;
 }
 .panel-footer
 {
@@ -85,9 +135,7 @@
 		<span class="pull-left">
 			<h3 class="box-title">{{ $form }} <small>User and Messages list</small></h3>
 		</span>
-		<span class="pull-right">
-			<a href=" {{ url( $route . '/create') }} " class="btn btn-success">Create New</a>
-		</span>
+	
 	</div>
 
 
@@ -96,71 +144,54 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 
 	    <div class="x_panel">
-		    <div class="x_title">
-		        <h2>Users</h2>
-			        <ul class="nav navbar-right panel_toolbox">
-			          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-			          </li>
-			        </ul>
-		        	<div class="clearfix"></div>
-		    </div>
-
-
-	     <div class="x_content">
-
 			<div class="row">
 		        <div class="col-sm-4">
 
-		        	<div class="container">
-					    <div class="row">
-					        <div class="col-md-12">
-					            <div class="panel panel-primary">
-					                <div class="panel-heading">
-					                    <span class="glyphicon glyphicon-user"></span> Users
-					                    <div class="btn-group pull-right">
-					                    </div>
-					                </div>
-					                <div class="panel-body">
 
-<ul class="list-unstyled top_profiles scroll-view" tabindex="5001" style="overflow: hidden; outline: none; cursor: -webkit-grab;">
+	        	<div class="container">
+				    <div class="row">
+				        <div class="col-md-12">
+				            <div class="panel panel-primary">
+				                <div class="panel-heading">
+				                    <span class="glyphicon glyphicon-user"></span> Users
+				                    <div class="btn-group pull-right">
+				                    </div>
+				                </div>
+				                <div class="panel-body">
 
 
-                        <li class="media event active">
-                          <a class="pull-left border-green profile_thumb">
-                            <i class="fa fa-user green"></i>
-                          </a>
-                          <div class="media-body">
-                            <a class="title" href="#">Ms. Mary Jane</a>
-                            <p>Sales Agent </p>
-                            <p> <small>Last Online: Today</small>
-                            </p>
-                          </div>
-                        </li>
-                       
-                         <li class="media event active">
-                          <a class="pull-left border-green profile_thumb">
-                            <i class="fa fa-user green"></i>
-                          </a>
-                          <div class="media-body">
-                            <a class="title" href="#">Ms. Mary Jane</a>
-                            <p>Sales Agent </p>
-                            <p> <small>Last Online: Today</small>
-                            </p>
-                          </div>
-                        </li>
+				<div id="sidebarChat">
+					<ul class="list-unstyled top_profiles scroll-view"  style="overflow: hidden; outline: none; cursor: -webkit-grab;">
+						@foreach ($user as $u)
 
-                      </ul>
+							<li class="media event">
+					        <div class="profile_pic">
+				            	<img src="{{ asset('upload/avatars/' . $u->avatar)  }}" class="img-circlechat">
+				            </div>
 
-					            
-					                   
-					                </div>
-					                <div class="panel-footer">
-										<small>List of Users (8)</small>
-					                </div>
-					            </div>
-					        </div>
-					    </div>
-					</div>
+				            <div class="media-body">
+				                <a class="title" href="#">{{ $u->fullname }}</a>
+				                <p>{{ $u->designation }}</p>
+				                @if (!empty($u->last_login))
+				                	<p> <small>Last Online: {{ $u->last_login->diffForHumans() }}</small>
+				                </p>	
+				                @endif
+				                
+				            </div>
+
+				            </li>
+						@endforeach
+				   	</ul>
+				</div>
+			
+				                </div>
+				                <div class="panel-footer">
+									<small>Number of Users ({{$user->count()}})</small>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
 
 		
 		        </div>
@@ -169,8 +200,11 @@
 
 					<div class="container">
 					    <div class="row">
+
+
 					        <div class="col-md-12">
 					            <div class="panel panel-primary">
+
 					                <div class="panel-heading">
 					                    <span class="glyphicon glyphicon-comment"></span> Messages
 					                    <div class="btn-group pull-right">
@@ -186,82 +220,104 @@
 					                            </span>Busy</a></li>
 					                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-time"></span>
 					                                Away</a></li>
-					                            <li class="divider"></li>
-					                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-off"></span>
-					                                Sign Out</a></li>
+					                            
 					                        </ul>
 					                    </div>
 					                </div>
+
+
 					                <div class="panel-body">
 					                    <ul class="chat">
-					                        <li class="left clearfix"><span class="chat-img pull-left">
-					                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-					                        </span>
-					                            <div class="chat-body clearfix">
-					                                <div class="header">
-					                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-					                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-					                                </div>
-					                                <p>
-					                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-					                                    dolor, quis ullamcorper ligula sodales.
-					                                </p>
-					                            </div>
-					                        </li>
-					                        <li class="right clearfix"><span class="chat-img pull-right">
-					                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-					                        </span>
-					                            <div class="chat-body clearfix">
-					                                <div class="header">
-					                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-					                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-					                                </div>
-					                                <p>
-					                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-					                                    dolor, quis ullamcorper ligula sodales.
-					                                </p>
-					                            </div>
-					                        </li>
-					                        <li class="left clearfix"><span class="chat-img pull-left">
-					                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-					                        </span>
-					                            <div class="chat-body clearfix">
-					                                <div class="header">
-					                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-					                                        <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-					                                </div>
-					                                <p>
-					                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-					                                    dolor, quis ullamcorper ligula sodales.
-					                                </p>
-					                            </div>
-					                        </li>
-					                        <li class="right clearfix"><span class="chat-img pull-right">
-					                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-					                        </span>
-					                            <div class="chat-body clearfix">
-					                                <div class="header">
-					                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-					                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-					                                </div>
-					                                <p>
-					                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-					                                    dolor, quis ullamcorper ligula sodales.
-					                                </p>
-					                            </div>
-					                        </li>
+
+
+					                    @foreach ($messages as $message)
+
+											<div class="col-md-12 ">
+									
+
+					<li class="clearfix">
+
+
+						@if ($message->sender_id === auth::user()->id)						
+
+							<div class="message_pic pull-left">
+								<img src="{{ asset('upload/avatars/' . auth::user()->avatar) }}" class="img-circlechat-left" />	
+							</div>
+
+
+	                        <div class="chat-body clearfix">
+
+	                            <div class="header">
+	                                <strong class="primary-font">{{  $message->userSender->name  }}</strong> 
+
+	                                <small class="pull-right text-muted">
+	                                    <span class="glyphicon glyphicon-time"></span>
+	                                    {{ $message->created_at->diffForHumans() }}
+	                                </small>
+
+	                            </div>
+	                            {!! $message->messages !!}
+	                        </div>
+
+						@else
+							<div class="message_pic_right pull-right">
+								<img src="{{ asset('upload/avatars/' . $message->userSender->avatar) }}" class="img-circlechat_right" />	
+
+							</div>	
+
+							<div class="chat-body-left clearfix">
+
+	                            <div class="header">
+	                                
+									<strong class="primary-font">{{  $message->userSender->name  }}</strong> 
+	                                <small class="pull-right text-muted">
+	                                    <span class="glyphicon glyphicon-time"></span>
+	                                    {{ $message->created_at->diffForHumans() }}
+	                                </small>
+
+	                            </div>
+	                            {!! $message->messages !!}
+	                        </div>
+
+						@endif 
+
+						
+
+                    
+
+
+                    </li>
+     
+
+
+											</div> 	
+					                    @endforeach
+
+
 					                    </ul>
 					                </div>
 					                <div class="panel-footer">
-					                    <div class="input-group">
+					                   
 
-											<input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-					                        <span class="input-group-btn">
-					                            <button class="btn btn-warning btn-sm" id="btn-chat">
-					                                Send</button>
-					                        </span>
+					<form  method="POST" action="{{ route('messages.store') }}" >
+					    {{ csrf_field() }}
+						{{ Form::hidden('sender_id', Auth::user()->id ) }}  
+						{{ Form::hidden('receiver_id', 2 ) }}  
 
-					                    </div>
+						<div class="input-group {{ $errors->has('messages') ? 'has-error' :'' }}">	
+							<input id="messages" name="messages" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+						
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-warning btn-sm">
+					                Send</button>
+					        </span>
+						</div>		
+
+					</form>
+
+
+
+					                
 					                </div>
 					            </div>
 
@@ -275,7 +331,7 @@
 
 	    	</div>
 
-	      </div>
+	    
 	    </div>
   	</div>
 

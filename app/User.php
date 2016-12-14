@@ -16,7 +16,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password','token','verified',
-        'middlename', 'lastname', 'address','mobile','active','notes','avatar'
+        'middlename', 'lastname', 'address','mobile','active','notes','avatar','last_login','designation'
     ];
 
     /**
@@ -28,7 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
+  protected $dates = [
+        'created_at',
+        'updated_at',
+        'last_login'
+    ];
 
     public function UpdateVerified(){
             $this->verified = true;
