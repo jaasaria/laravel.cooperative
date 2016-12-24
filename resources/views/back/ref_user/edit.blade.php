@@ -23,9 +23,6 @@
 		<span class="pull-left">
 			<h3 class="box-title"> {{ $form }} <small>{{ (empty($profile) ? ' Referencial file' : ' Profile')  }}   </small></h3>
 
-			 
-
-
 		</span>
 		<span class="pull-right">
 			<a href=" {{ url( $route) }} " class="btn btn-warning">Back</a>

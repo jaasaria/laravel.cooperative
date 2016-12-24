@@ -15,7 +15,7 @@ class AddColumnUsers extends Migration
     {
         Schema::table('users', function ($table) {
             $table->string('designation')->nullable();
-            $table->dateTime('last_login')->nullable();
+            $table->dateTime('last_login')->nullable();            
         });
 
     }

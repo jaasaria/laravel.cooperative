@@ -7,6 +7,9 @@ use App\Models\TrMessages as Cls;
 use App\Http\Requests\StoreMessages as ValidateRequest;
 
 use App\User;
+use Auth;
+
+use Event;
 use Carbon\Carbon;
 
 class TrMessagesController extends Controller
@@ -21,7 +24,7 @@ class TrMessagesController extends Controller
         $this->rList = "back.tr_messages.list";
         $this->rCreate = "back.tr_messages.create";
 
-        $this->users = User::all(['name', 'id','avatar','designation','last_login']);
+        $this->users = User::all(['name', 'id','avatar','designation','last_login','chat_status']);
 
     }
 
@@ -31,90 +34,73 @@ class TrMessagesController extends Controller
         $route = $this->route;
         $user = $this->users;
         $messages =  Cls::orderby('id','asc')->get();
-
         return view($this->rList,compact('form','route','user','messages'));
     }
 
-    public function store(ValidateRequest $request)
+    public function store(Request $request)
     {
 
-        $data =  $request->all();
+        $request->request->add(['sender_id' => Auth::user()->id]);
+        $messageId = Cls::create($request->all());
 
-        Cls::create($data);
-        return back()->with('success',' Message was successfully sent.');
+        $data = Cls::where('id',$messageId->id)->
+                     with('userSender','userReceiver')->first();
+
+        broadcast(new \App\Events\ChatMessageReceived($data))->toOthers();
+        // event(new \App\Events\ChatMessageReceived($data));
+
+        return $data;
+
     }
 
-
-
-
-
- 
-    public function data(){
-
-        $data = Cls::with('tbl_supplier')->orderBy('id', 'desc')->get();
-
-        return Datatables::of($data)
-
-            ->addColumn('action', function ($data) {
-
-                return '<div class="text-center">
-                            <div class="btn-group">
-
-                                <a href="'. route( $this->route . '.edit',$data->id) .'" type="btn" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Edit Record"><i class="fa fa-pencil-square"></i></a>
-
-                                <button id="btndelete" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete Record" data-token='. csrf_token() .' data-docid='.$data->id.'><i class="fa fa-trash-o"></i></button> 
-                            </div>
-                        </div>
-                        ';
-            })
-
-        ->editColumn('code', ' 
-                         {{ $trcode }}
-                        ')
-
-
-        ->editColumn('name',function ($data){
-                        return   $data->tbl_supplier->name;
-                        })
-
-        ->editColumn('description', ' 
-                          <div class="td-description"> {!! str_limit($description) !!} </div>
-                        ')
-
-
-        ->editColumn('active', function ($data) {
-                return $data->active == 0 ? 
-                '<div class="text-center"><span class="label label-warning text-center"><i class="fa fa-check-circle-o"></i> Pending</span></div>' 
-                : 
-                '<div class="text-center"><span class="label label-success"> <i class="fa fa-check-circle-o"></i> Posted </span></div>';
-            })
-
-
-
-        ->editColumn('created_at',function ($data){
-                        return  '<div class="text-center">' . $data->created_at->diffForHumans() . '</div>';
-                        })
-
-        ->setRowId('id')
-            ->setRowClass(function ($data) {
-                 return 'odd';
-            })
-            ->setRowData([                  //same with = data-id={{ $Notes->id }} note: not sure but i think
-                'id' => 'test',
-            ])
-            ->setRowAttr([
-                'color' => 'red',
-            ])
-            ->make(true);
+    public function updateStatus(Request $request)
+    {
+        $data =  User::findorfail(Auth::user()->id);
+        $data->chat_status  = $request->stat;
+        $data->save();
+        return response('done',200);
+        // return back()->with('success',' User status was successfully saved.');
+    }
+    public function userStat()
+    {
+        $data =  User::findorfail(Auth::user()->id);
+        return response()
+            ->json([
+                'status' => $data->chat_status
+        ],200);
+    }
+    public function userList()
+    {
+        $LogUser = Auth::user()->id;
+        $data =  User::where('id','<>',$LogUser)->get();
+        return $data;
     }
 
+    public function dataMessage(Request $request){
 
-    public function dataMessage(){
-        $data = Cls::with('userSender','userReceiver')->orderBy('id', 'desc')->get();
+        $selectedid = $request->selectedUserId;
+        $authId = Auth::user()->id;
 
-        return $data->toArray();
+        $data = Cls::whereIn('sender_id',array($authId,$selectedid))->
+                    whereIn('receiver_id',array($authId,$selectedid))->
+                    with('userSender','userReceiver')->
+                    take(20)->
+                    orderBy('id', 'asc')->
+                    get();
+
+                    // ->latest()->take(5)->get()->sortBy('created_at')
+
+        return $data;
     }
 
+    public function dataReceivedMessage(Request $request){
+
+        $selectedMessageId = $request->selectedMessageId;
+        $data = Cls::where('id',$selectedMessageId)->
+                     with('userSender','userReceiver')->first();
+
+        return $data;
+    }
 
 
 }

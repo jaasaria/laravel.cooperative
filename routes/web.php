@@ -1,21 +1,61 @@
 <?php
 
 use App\Models\TrPurchases;
+use App\Models\TrMessages;
 use App\User;
+
 
 Route::get('check_user', function() {
 	return  User::all();
 });
 
-
-Event::listen('auth.last_login', function($user){
-	$user->last_login = new DateTime;
-	$user->save();
-
+Route::get('allmessage', function() {
+        $data = TrMessages::all();
+        return $data;
 });
 
 
 
+
+// use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+// class TestEvent implements ShouldBroadcast
+// {
+//     public $text;
+//     public function __construct($text)
+//     {
+//         $this->text = $text;
+//     }
+//     public function broadcastOn()
+//     {
+//         return ['test-channel'];
+//     }
+// }
+route::get('/broadcast', function() {
+
+$data = TrMessages::where('id',1)->
+                     with('userSender','userReceiver')->first();
+
+    event(new \App\Events\ChatMessageReceived($data));
+
+    return $data;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+//Events
+Event::listen('auth.last_login', function($user){
+	$user->last_login = new DateTime;
+	$user->save();
+});
 
 
 
@@ -106,10 +146,16 @@ Route::group(['middleware' => 'auth'],function(){
 
 //Messages
 	Route::get('messages', ['uses' => 'TrMessagesController@index','as' => 'messages.index']);
+
 	Route::post('messages', ['uses' => 'TrMessagesController@store','as' => 'messages.store']);
+
+	Route::post('messages/updateStatus', ['uses' => 'TrMessagesController@updateStatus','as' => 'messages.updateStatus']);
+	Route::get('messages/userStat', ['uses' => 'TrMessagesController@userStat','as' => 'messages.userStat']);	
+	Route::get('messages/userList', ['uses' => 'TrMessagesController@userList','as' => 'messages.userList']);
+
 	Route::get('messages/data', ['uses' => 'TrMessagesController@data','as' => 'messages.data']);
 	Route::get('messages/dataMessage', ['uses' => 'TrMessagesController@dataMessage','as' => 'messages.dataMessage']);
-	// Route::resource('sales', 'TrSalesController');
+	Route::get('messages/dataReceivedMessage', ['uses' => 'TrMessagesController@dataReceivedMessage','as' => 'messages.dataReceivedMessage']);
 
 
 

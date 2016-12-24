@@ -1,20 +1,20 @@
 var elixir = require('laravel-elixir');
-// var vueify = require('laravel-elixir-browserify').init("vueify");
-require('laravel-elixir-vue-2');
+
+// require('laravel-elixir-vueify');
+
+require('laravel-elixir-vue-2')
+// require('laravel-elixir-vueify');
+
 
 
 
 elixir(function(mix) {
 
-    mix.browserify('main.js');
-    // mix.webpack('main.js');
+    // mix.browserify('main.js');
+    // mix.sass('app.scss');
+    // mix.browserify('app.js');
 
-
-	// mix.scripts([
-	// 	'vendor/vue.js',
-	// 	'vendor/vue-resource.min.js'
-	// ],'public/js/vendor.js')
-
+	mix.webpack('app.js');
 
 });
 

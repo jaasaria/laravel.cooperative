@@ -9,7 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta   id="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
+    <meta  name="csrf-token" content="{{ csrf_token() }}">
+
 
 
     <link rel="stylesheet" href=" {{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }} ">
@@ -28,13 +29,10 @@
     <link rel="stylesheet" href=" {{ asset('vendors/select2/dist/css/select2.min.css') }} ">
 
     {{-- <link rel="stylesheet" href=" {{ asset('css/query-ui.css') }} "> --}}
+    {{-- <link rel="stylesheet" href=" {{ asset('css/hover.css') }} "> --}}
+    <link rel="stylesheet" href=" {{ asset('css/hover-min.css') }} ">
 
 
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
 
 
     {{-- <link rel="stylesheet" href=" {{ asset('bootstrap/css/bootstrap.min.css') }} ">
@@ -79,7 +77,17 @@
 
 
 
-    <script src=" {{ asset('js/vue.js') }} "></script>
+    <script>
+
+        window.Laravel = { csrfToken: '{{ csrf_token() }}'};
+
+    </script>
+
+
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    {{-- <script src=" {{ asset('js/vue.js') }} "></script> --}}
+    {{-- <script src="https://unpkg.com/vue/dist/vue.js"></script> --}}
 
     <script src=" {{ asset('js/jquery.min.js') }} "></script>
 
@@ -108,11 +116,44 @@
     <script src=" {{ asset('js/datepicker/daterangepicker.js') }} "></script>
 
     <script src=" {{ asset('js/jquery-ui.js') }} "></script>
+
+    
+    {{-- <script src=" {{ asset('js/timeago.min.js') }} "></script> --}}
+
     
 
-    <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+    {{-- vue js at the top --}}
+    {{-- <script src=" {{ asset('js/vue-resource.min.js') }} "></script> --}}
+
+    {{-- <script src="https://js.pusher.com/3.2/pusher.min.js"></script> --}}
+
+{{-- <script src="https://js.pusher.com/3.2/pusher.min.js"></script> --}}
+
+
+  {{-- 
+<script>
+
+    // Enable pusher logging - do
+n't include this in production
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('ecce3514ecfa8d62617e', {
+      cluster: 'ap1',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('jaasaria_channel');
+    channel.bind('ChatMessageReceived', function(data) {
+      alert(data.message);
+    });
+  </script> --}}
+
+    {{-- <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script> --}}
     {{-- <script src="https://unpkg.com/vue@1.0/dist/vue.js"></script> --}}
 
+
+    {{-- <script src="https://unpkg.com/vue@2.1.6/dist/vue.js"></script> --}}
+
+    
 
 
     @yield('jsscript')     

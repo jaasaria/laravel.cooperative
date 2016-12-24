@@ -77,9 +77,7 @@
     
    </div>
 </div>
-
-
-                      
+  
 
                     </div>
 
@@ -88,8 +86,44 @@
               </div>
 
 
+              <div id="app">
+                
 
+            <comments> </comments>
+
+              </div>  
 
 @stop
+
+
+
+
+
+{{-- 
+
+
+
+@push('scripts')
+<script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('ecce3514ecfa8d62617e', {
+      cluster: 'ap1',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('jaasaria_channel');
+    channel.bind('ChatMessageReceived', function(data) {
+      alert(data.message);
+    });
+  </script>
+@endpush  --}}
+
+
+
+
 
 

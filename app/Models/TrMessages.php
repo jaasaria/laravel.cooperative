@@ -16,16 +16,29 @@ class TrMessages extends Model
 		'create_at',
     ];
 
+    // protected $appends = ['sFullname','sAvatar','rFullname','rAvatar'];
 
-
+    //sender
     public function userSender(){
-    	return $this->belongsTo(User::class,'sender_id')->select(array('id','name','lastname','avatar'));
+        return $this->belongsTo(User::class,'sender_id')->select('id','name', 'avatar');
     }
+    // public function getSFullnameAttribute(){
+    //     return $this->userSender->fullname;
+    // }
+    // public function getSAvatarAttribute(){
+    //     return $this->userSender->avatar;
+    // }
 
+
+    // receiver
     public function userReceiver(){
-    	return $this->belongsTo(User::class,'receiver_id')->select(array('id','name','lastname','avatar'));
+    	return $this->belongsTo(User::class,'receiver_id')->select('id','name', 'avatar');
     }
-
-
+    // public function getRFullnameAttribute(){
+    //     return $this->userReceiver->fullname;
+    // }
+    // public function getRAvatarAttribute(){
+    //     return $this->userReceiver->avatar;
+    // }
 
 }

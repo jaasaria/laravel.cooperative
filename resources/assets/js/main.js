@@ -1,5 +1,4 @@
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').getAttribute('content');
-
 // var VueResource = require('vue-resource');
 // Vue.use(VueResource);
 
@@ -17,8 +16,6 @@ Vue.component('date-range-picker', {
   } 
 });
 
-
-
 Vue.directive('selecttwo', {
   twoWay: true,
   bind: function () {
@@ -34,6 +31,8 @@ Vue.directive('selecttwo', {
 
 
 
+
+
 var vm =  new Vue({
   el: '#app',
   data: {
@@ -42,19 +41,17 @@ var vm =  new Vue({
     withErrors:false,
     form: {}
   },
+
   created: function () {
     Vue.set(this.$data, 'form', _form);
   },
 
-  methods: {
+  methods: {           
 
     onSubmit: function() {
-
-      // e.preventDefault();
       this.isProcessing = true;
       this.withErrors = false;
       this.errors = {};
-
       this.$http.post('/purchase',  this.form).then(function (response) {
 
           if(response.data.created) {
@@ -69,7 +66,6 @@ var vm =  new Vue({
             function(){
               window.location = '/purchase/';
             });
-            // toastr["success"]("Record was successfully deleted.", "Success")
 
           } else {
             this.isProcessing = false;
@@ -85,7 +81,7 @@ var vm =  new Vue({
     },
 
 
-      addRow: function(){
+    addRow: function(){
         try {
                 this.form.rows.push({item_id: '',qty: 1, cost: 0,subtotal:0 });
             } catch(e)
@@ -93,9 +89,9 @@ var vm =  new Vue({
                 console.log(e);
                 alert('error');
             }
-      },
+    },
 
-      deleteRow: function(row){
+    deleteRow: function(row){
       try {
             this.form.rows.$remove(row);
           } catch(e)
@@ -105,7 +101,7 @@ var vm =  new Vue({
           }
       },
 
-      onChangeSubTotal:function(row){
+    onChangeSubTotal:function(row){
           row.subtotal = row.qty * row.cost;
       },
 
@@ -127,29 +123,16 @@ var vm =  new Vue({
   computed: {
 
      trsubtotal:function () {
-
             var tot =  0 ;
-
-             // $.each(this.form.rows, function (i, e) {
-             //   tot += e.rows.qty * e.rows.cost;
-             // });
-        
             tot =  this.form.rows.reduce(function(carry, row) {
               return carry + (parseFloat(row.qty) * parseFloat(row.cost));
             }, 0);
 
             this.form.trsubtotal = tot;
             return tot;
-
-            // var tt = 0;
-            // $.each(this.form, function (i, e) {
-            //     tt += e.rows.qty * e.rows.cost;
-            // });
-            // return tt;
       },
 
       trtotal () {
-
             var tot = parseFloat(this.trsubtotal) - parseFloat(this.form.trdiscount);
             this.form.trtotal = tot;
             return tot;
@@ -157,19 +140,9 @@ var vm =  new Vue({
 
   },
 
-  watch: {
-      // 'errors': function(val, oldVal){
-      //     if (Object.keys(this.errors).length > 0){
-      //       this.withErrors = true;  
-      //     }else{
-      //       this.withErrors = false;  
-      //     }
-      // }
-    
-    }
 
-
-
+  watch: {    
+  }
 
 
 });

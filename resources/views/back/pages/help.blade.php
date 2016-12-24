@@ -117,56 +117,10 @@
 <script>
 
 
-
-
-
-
-
 	$(document).ready(function(){
  		$(function() {
 
-     //        $('#table').DataTable({
-     //            processing: true,
-     //            serverSide: true,
-     //            ajax: '',
-     //            order: [[4, 'desc']],		//start with Zero(0)
-     //            columns: [
-     //                { data: 'code', name: 'code' ,"searchable": true},
-     //                { data: 'name', name: 'name' ,"searchable": true},
-     //                { data: 'description', name: 'description' ,"searchable": true},
-     //                { data: 'active', name: 'active' ,"searchable": true},
-     //                { data: 'created_at', name: 'created_at' ,"searchable": true },
-     //                { data: 'action', name: 'action', "orderable":false,"defaultContent": ""}
-     //            ]
-     //        });
-
-
-     //        $(document).on('click', '#btndelete', function(){  
-
-		   //  var token = $(this).data("token");
-		   //  var docid = $(this).data("docid");
-
-	    //    	swal({ title: "Are you sure?",   text: "You will not be able to recover this record!",   
-	    //    			type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, delete it!",   closeOnConfirm: true }, 
-	    //    		function(){   
-
-  			// 		var value = {
-     //                    'id':docid,
-     //                    _token:$('meta[name="csrf-token"]').attr('content')
-     //                };
-
-					// $.ajax({  
-     //                     url:'', 			//URL::to('/category/delete')
-     //                     type:"delete",  
-     //                     data: value,  
-     //                     success:function(){ 
-     //                     	$('#table').DataTable().ajax.reload();
-					// 		toastr["success"]("Record was successfully deleted.", "Success")
-     //                     }  
-     //                });  
-     //             });
-	    // 	});
-
+     
 
 
         });	

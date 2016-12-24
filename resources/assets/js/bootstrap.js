@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -7,8 +6,8 @@ window._ = require('lodash');
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass');
+// window.$ = window.jQuery = require('jquery');
+// require('bootstrap-sass');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -17,7 +16,10 @@ require('bootstrap-sass');
  */
 
 window.Vue = require('vue');
+
 require('vue-resource');
+// require('vue-moment');
+
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
@@ -27,9 +29,10 @@ require('vue-resource');
 
 Vue.http.interceptors.push((request, next) => {
     request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
-
     next();
 });
+
+// var Pusher = require('pusher-js');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -37,9 +40,11 @@ Vue.http.interceptors.push((request, next) => {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from "laravel-echo"
+import Echo from "laravel-echo"
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '0b2d51bd7823864f411c',
+    cluster: 'eu',
+    encrypted: true
+});

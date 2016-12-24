@@ -8,7 +8,6 @@
 		.w20 {width:20%;}
 		.w25 {width:25%;}
 		.w40 {width:40%;text-align: center;}
-
  		.td-description{
 	        text-overflow: ellipsis;
 	        white-space: nowrap;
@@ -19,13 +18,11 @@
 	    	background-color: #2f4358;
 	    	color: white
 	    }
-
 		.img-avatar {
 		    width: 29px;
 		    height: 29px;
 		    border-radius: 50%;
 		}
-
 	</style>
 @stop
 

@@ -320,8 +320,6 @@
 
 		<script src=" {{ asset('js/main.js') }} "></script>
 	@else
-
-		
 		<script>
 			Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 			window._form = {
@@ -337,19 +335,16 @@
       			trtotal:0,
 	            rows: [{item_id: '', qty: 1,cost: 0,subtotal: 0}]
 	        };
-
         </script>
+
         <script src=" {{ asset('js/main.js') }} "></script>
 	@endif
 
 	
 <script>
 	$(document).ready(function(){
-
  		$(function() {
-
 		$( ".calendar" ).datepicker();
-
         $('#table1').DataTable({
                 processing: true,
                 serverSide: true,
@@ -364,14 +359,14 @@
                 ]
             });
         });
-
 		$("#supplier_id").select2({
 	          placeholder: "Select a Supplier",
 	          allowClear: true
-	    });
-	    
+	    });	    
 	});
 </script>
+
+
 @endpush 
 
 

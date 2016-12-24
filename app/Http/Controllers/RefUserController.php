@@ -127,15 +127,8 @@ class RefUserController extends Controller
 
     public function avatar(Request $request, $id){
 
-        // $data = $request->only(['avatar']);
-        // dd($request);
-
-
         $file = array('avatar' => $request->avatar);
         $rules = array('avatar'=>'mimes:jpeg,jpg,png|max:3000|required',); 
-        // $message = array('avatar.max'=>'File size is invalid.','avatar.mimes'=>'Invalid file.',); 
-
-
 
         $validator = Validator::make($file, $rules);
         if ($validator->fails()) {
@@ -144,12 +137,9 @@ class RefUserController extends Controller
                     ->with('error', "Upload file is not valid, please check the file size.");
         }
 
-
         if ($request->file('avatar')->isValid()) {
 
             $user = Cls::findorfail($id);
-
-
 
             $avatar = $request->file('avatar');
             $filename = $id . '-' .  time() . '.' . $avatar->getClientOriginalExtension();
