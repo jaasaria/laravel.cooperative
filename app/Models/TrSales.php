@@ -18,6 +18,19 @@ class TrSales extends Model
 		'active',
     ];
 
+    // protected $appends = ['datePurchase','dateDelivery'];
+
+    // public function getDatePurchaseAttribute($value)
+    // {
+    //     return Carbon::parse($value)->format('m/d/Y');
+    // }
+    // public function getDateDeliveryAttribute($value)
+    // {
+    //     return Carbon::parse($value)->format('m/d/Y');
+    // }
+
+
+
 
     public function rows()
     {

@@ -78,15 +78,13 @@
 
 
     <script>
-
         window.Laravel = { csrfToken: '{{ csrf_token() }}'};
-
     </script>
-
 
     <script src="{{ asset('js/app.js') }}"></script>
 
     {{-- <script src=" {{ asset('js/vue.js') }} "></script> --}}
+    {{-- <script src=" {{ asset('js/vue-resource.min.js') }} "></script> --}}
     {{-- <script src="https://unpkg.com/vue/dist/vue.js"></script> --}}
 
     <script src=" {{ asset('js/jquery.min.js') }} "></script>
@@ -119,41 +117,6 @@
 
     
     {{-- <script src=" {{ asset('js/timeago.min.js') }} "></script> --}}
-
-    
-
-    {{-- vue js at the top --}}
-    {{-- <script src=" {{ asset('js/vue-resource.min.js') }} "></script> --}}
-
-    {{-- <script src="https://js.pusher.com/3.2/pusher.min.js"></script> --}}
-
-{{-- <script src="https://js.pusher.com/3.2/pusher.min.js"></script> --}}
-
-
-  {{-- 
-<script>
-
-    // Enable pusher logging - do
-n't include this in production
-    Pusher.logToConsole = true;
-    var pusher = new Pusher('ecce3514ecfa8d62617e', {
-      cluster: 'ap1',
-      encrypted: true
-    });
-
-    var channel = pusher.subscribe('jaasaria_channel');
-    channel.bind('ChatMessageReceived', function(data) {
-      alert(data.message);
-    });
-  </script> --}}
-
-    {{-- <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script> --}}
-    {{-- <script src="https://unpkg.com/vue@1.0/dist/vue.js"></script> --}}
-
-
-    {{-- <script src="https://unpkg.com/vue@2.1.6/dist/vue.js"></script> --}}
-
-    
 
 
     @yield('jsscript')     

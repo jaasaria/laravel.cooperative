@@ -85,14 +85,14 @@
                 </div>
               </div>
 
-
+{{-- 
               <div id="app">
                 
 
             <comments> </comments>
 
               </div>  
-
+ --}}
 @stop
 
 

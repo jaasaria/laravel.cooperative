@@ -84,9 +84,8 @@ class TrMessagesController extends Controller
         $data = Cls::whereIn('sender_id',array($authId,$selectedid))->
                     whereIn('receiver_id',array($authId,$selectedid))->
                     with('userSender','userReceiver')->
-                    take(20)->
                     orderBy('id', 'asc')->
-                    get();
+                    get();                  
 
                     // ->latest()->take(5)->get()->sortBy('created_at')
 

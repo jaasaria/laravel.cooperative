@@ -16,6 +16,7 @@ use Validator;
 
 use Carbon\Carbon;
 
+
 class TrPurchasesController extends Controller
 {
 
@@ -29,6 +30,7 @@ class TrPurchasesController extends Controller
         $this->rCreate = "back.tr_purchase.create";
         $this->items = RefItem::all(['name','code', 'id']);
         $this->supplier = RefSupplier::pluck('name', 'id');
+        // $this->supplier = RefSupplier::all(['id','name']);
 
     }
 
@@ -49,7 +51,9 @@ class TrPurchasesController extends Controller
     public function create()
     {
 
-        
+        // dd(  $this->supplier->toJson());
+
+
         $form = $this->form;
         $route = $this->route;
         $supplier  = $this->supplier;
@@ -68,7 +72,6 @@ class TrPurchasesController extends Controller
             
             if ($request->crudstat == 'edit')
             {
-
                 $trans_id = $request->id;
                 $code_rule = 'required|alpha_dash|min:3|unique:tr_purchases,trcode,' . $request->id;
             }
@@ -143,10 +146,36 @@ class TrPurchasesController extends Controller
         $supplier  = $this->supplier;
         $items  =  $this->items;
 
+
+        $data = array_add($data, 'crudstat', true);
+
+
+
+        // $inputPurchase  = $data->datePurchase;
+        // $inputDelivery  = $data->dateDelivery;
+        // $format = 'm/d/Y'
+
+
+        // print_pre(Carbon::createFromFormat( $format, $inputPurchase));
+
+        // $data->datePurchase = $inputPurchase->format($format);
+        // $data->dateDelivery = '12/1/2016';
+
+
+        // $data->datePurchase = Carbon::createFromFormat( $format, $inputPurchase);
+
+
+        // $array = array_fetch($array, 'developer.name');
+
+        // dd($data);
+
+
+        // $data->merge(array('crudstat' =>  true ));
+
+
         return view($this->rCreate,compact('data','form','route','supplier','items'));
     }
 
-   
     public function delete(Request $request)
     {
         $id  = $request->get('id');
@@ -155,7 +184,6 @@ class TrPurchasesController extends Controller
     }
  
     public function data(){
-
 
         $data = Cls::with('tbl_supplier')->orderBy('id', 'desc')->get();
 

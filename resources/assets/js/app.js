@@ -2,28 +2,17 @@ require('./bootstrap');
 
 // var Vue = require('vue');
 
-import VueMoment from 'vue-moment'
-Vue.use(VueMoment)
-
+// import VueMoment from 'vue-moment'
+// Vue.use(VueMoment)
 
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('comments', require('./components/Comments.vue'));
+// Vue.component('purchase', require('./components/Purchases.vue'));
 
 const app = new Vue({
     el: '#app',
     created(){
-
-		// this.pusher = new Pusher('ecce3514ecfa8d62617e',{
-		// 	encrypted: true,
-		// 	cluster:'ap1'
-		// });
-
-		// this.channel = this.pusher.subscribe('jaasaria_channel')
-		// this.channel.bind('ChatMessageReceived',function(data){
-		// 	console.log('receive message from pusher');
-		// });
-
     }
 
 

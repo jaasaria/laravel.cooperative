@@ -6,20 +6,33 @@
                     <div class="panel-heading">Example Component</div>
 
                     <div class="panel-body">
-                        I'm an example component! bwisit
+                        I'm an example component! bwisit1 123
                     </div>
                 </div>
+
+  
+
+                <v-select :value.sync="selected" :options="options"></v-select>
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
+    // require("vue-select")
+    // import vSelect from 'vue-select'
+
+
     export default {
+        components: {vSelect},
+        props: ['propsupplier'],
         data() {
             return {
                 comments:[],
-                new_comment:'comment me baby'
+                new_comment:'comment me baby',
+                option: this.propsupplier
             }
 
         },

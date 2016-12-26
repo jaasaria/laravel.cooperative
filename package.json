@@ -9,6 +9,8 @@
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
     "laravel-elixir": "^6.0.0-11",
+    "laravel-elixir-browserify": "^0.8.1",
+    "laravel-elixir-browserify-official": "^0.1.3",
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.16.2",
@@ -19,6 +21,8 @@
     "laravel-echo": "^1.1.3",
     "pusher-js": "^3.2.4",
     "vue-moment": "^2.0.2",
-    "vue-sticky-scroll": "^0.1.0"
+    "vue-select2": "^0.2.6",
+    "vue-sticky-scroll": "^0.1.0",
+    "vuejs-datepicker": "^0.4.29"
   }
 }

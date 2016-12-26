@@ -206,9 +206,7 @@ ul .media li{
 		</div>
 
 		<div class="col-sm-8">
-
-			<chat :userid.sync="userSelectedId" :userauth.sync=" {{ auth::user()->id }} "></chat>
-
+			<chat :userid.sync="userSelectedId" :userauthid.sync=" {{ auth::user()->id }} "></chat>
 		</div>
 	</div>
 
@@ -355,7 +353,6 @@ ul .media li{
 		  				{{-- </transition-group> --}}
 		        </ul>
 
-
 		        </div>
 
 	        </div>
@@ -387,18 +384,13 @@ ul .media li{
 
 @push('scripts')
 
-
-{{-- <script src=" {{ asset('js/app.js') }} "></script> --}}
-{{-- <script src='https://cdn.rawgit.com/heatherbooker/vue-sticky-scroll/master/stickyScroll.js'></script> --}}
 <script>
 
 // Vue.use(require('vue-moment'))
-
 // import 'vue-sticky-scroll';
-// var stickyScroll = require('vue-sticky-scroll');
+// vue loading
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
-
 Vue.component('user', {
 	template: '#template-user',
 	data(){
@@ -429,7 +421,7 @@ Vue.component('user', {
 })
 Vue.component('chat', {
 	
-  props: ['userid','userauth'],
+  props: ['userid','userauthid'],
   template: '#template-chat',
 
 	data() {
@@ -455,7 +447,7 @@ Vue.component('chat', {
   	Echo.channel('jaasaria_channel' )
       .listen('ChatMessageReceived', (e) => {
 
-      	if(e.message.receiver_id == this.userauth){
+      	if(e.message.receiver_id == this.userauthid){
 						var v = {params: {selectedMessageId: e.message.id }};
 						this.$http.get('messages/dataReceivedMessage',v).then((response) => {
 							if(response.status == 200){
@@ -547,19 +539,12 @@ Vue.component('chat', {
   }	//end of method
 })
 
-
-
-// import 'vue-sticky-scroll';
-
 var vm =  new Vue({
     el: '#appDirect',
     data:{
     	userSelectedId: ''
-    }
- 
+    } 
 });
-
-
 
 </script>
 

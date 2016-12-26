@@ -1,7 +1,6 @@
-// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').getAttribute('content');
-// var VueResource = require('vue-resource');
-// Vue.use(VueResource);
 
+
+// require('./bootstrap');
 
 Vue.component('date-range-picker', {
   props:['id'],
@@ -43,7 +42,7 @@ var vm =  new Vue({
   },
 
   created: function () {
-    Vue.set(this.$data, 'form', _form);
+    // Vue.set(this.$data, 'form', _form);
   },
 
   methods: {           

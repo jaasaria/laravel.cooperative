@@ -9,8 +9,8 @@ Route::get('check_user', function() {
 	return  User::all();
 });
 
-Route::get('allmessage', function() {
-        $data = TrMessages::all();
+Route::get('purchases', function() {
+        $data = TrPurchases::all();
         return $data;
 });
 

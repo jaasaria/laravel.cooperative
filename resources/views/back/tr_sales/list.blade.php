@@ -62,7 +62,7 @@
 		                    <tr role="row">
 
 		                        <th class="w15">Trans Code</th>
-		                        <th class="w15">Supplier Name</th>
+		                        <th class="w15">Customer Name</th>
 		                        <th class="w30 hidden-xs hidden-sm">Description</th>
 		                        <th class="w10 hidden-xs hidden-sm">Status</th>
 		                        <th class="w15 hidden-xs hidden-sm">Date</th>

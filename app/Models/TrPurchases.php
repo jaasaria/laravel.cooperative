@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class TrPurchases extends Model
 {
@@ -19,6 +20,17 @@ class TrPurchases extends Model
 		'description',
 		'active',
     ];
+
+    protected $appends = ['datePurchase','dateDelivery'];
+
+    public function getDatePurchaseAttribute($value)
+    {
+        return Carbon::parse($value)->format('m/d/Y');
+    }
+    public function getDateDeliveryAttribute($value)
+    {
+        return Carbon::parse($value)->format('m/d/Y');
+    }
 
 
     public function rows()

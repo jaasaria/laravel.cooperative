@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrSales as Cls;
-use App\Models\TrSalesItem;
+use App\Models\TrSalesItem as ClsDetails;
 use App\Models\RefCustomer;
 use App\Models\RefItem;
 
@@ -26,7 +26,15 @@ class TrSalesController extends Controller
         $this->rCreate = "back.tr_sales.create";
         $this->items = RefItem::all(['name','code', 'id']);
         $this->supplier = RefCustomer::pluck('name', 'id');
+        // $this->supplier = RefSupplier::all(['id','name']);
 
+    }
+
+    public function messages()
+    {
+        return [
+            'trcode.required' => 'tr code is required custom ',
+        ];
     }
 
     public function index()
@@ -39,7 +47,9 @@ class TrSalesController extends Controller
     public function create()
     {
 
-        
+        // dd(  $this->supplier->toJson());
+
+
         $form = $this->form;
         $route = $this->route;
         $supplier  = $this->supplier;
@@ -58,21 +68,19 @@ class TrSalesController extends Controller
             
             if ($request->crudstat == 'edit')
             {
-
                 $trans_id = $request->id;
-                $code_rule = 'required|alpha_dash|min:3|unique:tr_purchases,trcode,' . $request->id;
+                $code_rule = 'required|alpha_dash|min:3|unique:tr_sales,trcode,' . $request->id;
             }
             else
             {
-                $code_rule = 'required|alpha_dash|unique:tr_purchases,trcode|min:3';
+                $code_rule = 'required|alpha_dash|unique:tr_sales,trcode|min:3';
             }
 
              $this->validate($request, [
             'trcode'=>$code_rule,
-            'supplier_id'=>'required|exists:tbl_supplier,id', 
+            'customer_id'=>'required|exists:tbl_supplier,id', 
             'description'=>'max:255', 
-            'datePurchase'=>'required|date_format:m/d/Y', 
-            'dateDelivery'=>'required|date_format:m/d/Y', 
+            'dateSales'=>'required|date_format:m/d/Y', 
             'trtotal'=>'required|min:1|numeric', 
             'rows.*.item_id' => 'required|max:255',
             'rows.*.cost' => 'required|numeric|min:1',
@@ -82,7 +90,7 @@ class TrSalesController extends Controller
 
             $rows = collect($request->rows)->transform(function($row) {
                 $row['subtotal'] = $row['qty'] * $row['cost'];
-                return new TrPurchasesItem($row);
+                return new ClsDetails($row);
             });
             if($rows->isEmpty()) {
                 return response()->json([
@@ -101,19 +109,19 @@ class TrSalesController extends Controller
                 Cls::where('id',$trans_id)->update($data);
                 $header =  Cls::findorfail($trans_id);
 
-                TrPurchasesItem::where('purchase_id',$trans_id)->delete();
+                ClsDetails::where('purchase_id',$trans_id)->delete();
             }
             else{
                 $header = Cls::create($data);
 
             }
 
-
             $header->rows()->saveMany($rows);
+
             return response()
                 ->json([
                     'created' => true
-            ]);
+            ],200);
 
             
         } catch (Exception $e) {
@@ -133,10 +141,36 @@ class TrSalesController extends Controller
         $supplier  = $this->supplier;
         $items  =  $this->items;
 
+
+        $data = array_add($data, 'crudstat', true);
+
+
+
+        // $inputPurchase  = $data->datePurchase;
+        // $inputDelivery  = $data->dateDelivery;
+        // $format = 'm/d/Y'
+
+
+        // print_pre(Carbon::createFromFormat( $format, $inputPurchase));
+
+        // $data->datePurchase = $inputPurchase->format($format);
+        // $data->dateDelivery = '12/1/2016';
+
+
+        // $data->datePurchase = Carbon::createFromFormat( $format, $inputPurchase);
+
+
+        // $array = array_fetch($array, 'developer.name');
+
+        // dd($data);
+
+
+        // $data->merge(array('crudstat' =>  true ));
+
+
         return view($this->rCreate,compact('data','form','route','supplier','items'));
     }
 
-   
     public function delete(Request $request)
     {
         $id  = $request->get('id');
@@ -146,8 +180,9 @@ class TrSalesController extends Controller
  
     public function data(){
 
+        $data = Cls::with('tbl_customer')->orderBy('id', 'desc')->get();
 
-        $data = Cls::with('tbl_supplier')->orderBy('id', 'desc')->get();
+    
 
         return Datatables::of($data)
 
@@ -170,7 +205,7 @@ class TrSalesController extends Controller
 
 
         ->editColumn('name',function ($data){
-                        return   $data->tbl_supplier->name;
+                        return   $data->tbl_customer->name;
                         })
 
         ->editColumn('description', ' 
@@ -205,11 +240,10 @@ class TrSalesController extends Controller
     }
 
 
-    // transfer to trais
     public function getNextOrderNumber()
     {
     
-        $Prefix  = 'Sls-';
+        $Prefix  = 'SALES-';
 
         $lastOrder = Cls::orderBy('created_at', 'desc')->first();
 
