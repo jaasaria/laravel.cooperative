@@ -25,7 +25,7 @@
 	      this.isProcessing = true;
 	      this.withErrors = false;
 	      this.errors = {};
-	      this.$http.post('/sales',  this.form).then(function (response) {
+	      this.$http.post('/stockOut',  this.form).then(function (response) {
 
 	          if(response.data.created) {
 	            
@@ -37,7 +37,7 @@
 	              showLoaderOnConfirm: true,
 	            },
 	            function(){
-	              window.location = '/sales/';
+	              window.location = '/stockOut/';
 	            });
 
 	          } else {
@@ -56,7 +56,7 @@
 
 	    addRow: function(){
 	        try {
-	                this.form.rows.push({item_id: '',qty: 1, price: 0,subtotal:0 });
+	                this.form.rows.push({item_id: '',qty: 1, cost: 0,subtotal:0 });
 	            } catch(e)
 	            {
 	                console.log(e);
@@ -76,19 +76,16 @@
 	      },
 
 	    onChangeSubTotal:function(row){
-	          row.subtotal = row.qty * row.price;
+	          row.subtotal = row.qty * row.cost;
 	      },
 
-	    onChange:function(row){
-
-	    	console.log('getting item price');
+	      onChange:function(row){
 	        var ItemId = row.item_id;
-	        console.log(ItemId);
 
 	        // GET /someUrl
 	        this.$http.get('/api/item/' + ItemId).then((response) => {
 	          var obj = JSON.parse(response.body);
-	          row.price = obj[0]['price'];
+	          row.cost = obj[0]['cost'];
 	        }, (response) => {
 	          console.log(response);
 	          alert('error');
@@ -102,7 +99,7 @@
 	     trsubtotal:function () {
 	            var tot =  0 ;
 	            tot =  this.form.rows.reduce(function(carry, row) {
-	              return carry + (parseFloat(row.qty) * parseFloat(row.price));
+	              return carry + (parseFloat(row.qty) * parseFloat(row.cost));
 	            }, 0);
 
 	            this.form.trsubtotal = tot;

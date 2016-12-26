@@ -145,33 +145,8 @@ class TrPurchasesController extends Controller
         $data = Cls::with('rows')->findorfail($id);
         $supplier  = $this->supplier;
         $items  =  $this->items;
-
-
+        
         $data = array_add($data, 'crudstat', true);
-
-
-
-        // $inputPurchase  = $data->datePurchase;
-        // $inputDelivery  = $data->dateDelivery;
-        // $format = 'm/d/Y'
-
-
-        // print_pre(Carbon::createFromFormat( $format, $inputPurchase));
-
-        // $data->datePurchase = $inputPurchase->format($format);
-        // $data->dateDelivery = '12/1/2016';
-
-
-        // $data->datePurchase = Carbon::createFromFormat( $format, $inputPurchase);
-
-
-        // $array = array_fetch($array, 'developer.name');
-
-        // dd($data);
-
-
-        // $data->merge(array('crudstat' =>  true ));
-
 
         return view($this->rCreate,compact('data','form','route','supplier','items'));
     }

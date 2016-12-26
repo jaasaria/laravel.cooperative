@@ -3,14 +3,14 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\RefItem;
+
 use App\Models\TrPurchases;
 use App\Models\TrSales;
 use App\Models\TrStockIn;
 use App\Models\TrStockOut;
-use App\Models\TrSettings;
 
-class SideBarTotalServiceProvider extends ServiceProvider
+
+class ViewDashboardServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -19,25 +19,16 @@ class SideBarTotalServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+          view()->composer('back.pages.dashboard',function($view){
 
-        // View::share('site_settings', $site_settings);    notes:use this for single 
-
-        view()->composer('back.layouts.admin_sidebar',function($view){
-
-            $countItem =  RefItem::count();
             $countPurchases  =  TrPurchases::count();
             $countSales  =  TrSales::count();
             $countStockIn  =  TrStockIn::count();
             $countStockOut  =  TrStockOut::count();
-
-            $settingWebsite = TrSettings::where('field','Initial Name')->value('value');
             
-            $view->with(['countItem'=>$countItem,'countPurchases'=>$countPurchases,'countSales'=>$countSales,'settingWebsite'=>$settingWebsite,'countStockIn'=>$countStockIn,'countStockOut'=>$countStockOut]);
+            $view->with(['countPurchases'=>$countPurchases,'countSales'=>$countSales,'countStockIn'=>$countStockIn,'countStockOut'=>$countStockOut]);
 
         });
-
-
 
 
     }

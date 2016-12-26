@@ -9,10 +9,7 @@ Route::get('check_user', function() {
 	return  User::all();
 });
 
-Route::get('purchases', function() {
-        $data = TrPurchases::all();
-        return $data;
-});
+
 
 
 
@@ -156,6 +153,21 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::get('messages/data', ['uses' => 'TrMessagesController@data','as' => 'messages.data']);
 	Route::get('messages/dataMessage', ['uses' => 'TrMessagesController@dataMessage','as' => 'messages.dataMessage']);
 	Route::get('messages/dataReceivedMessage', ['uses' => 'TrMessagesController@dataReceivedMessage','as' => 'messages.dataReceivedMessage']);
+
+
+
+
+//Stock In
+	Route::delete('stockIn/delete', ['uses' => 'TrStockInController@delete','as' => 'stockIn.delete']);
+	Route::get('stockIn/data', ['uses' => 'TrStockInController@data','as' => 'stockIn.data']);
+	Route::resource('stockIn', 'TrStockInController');
+
+//Stock Out
+	Route::delete('stockOut/delete', ['uses' => 'TrStockOutController@delete','as' => 'stockOut.delete']);
+	Route::get('stockOut/data', ['uses' => 'TrStockOutController@data','as' => 'stockOut.data']);
+	Route::resource('stockOut', 'TrStockOutController');
+
+
 
 
 

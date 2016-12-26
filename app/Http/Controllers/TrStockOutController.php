@@ -3,39 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TrSales as Cls;
-use App\Models\TrSalesItem as ClsDetails;
-use App\Models\RefCustomer;
+use App\Models\TrStockOut as Cls;
+use App\Models\TrStockOutItem as ClsDetails;
+use App\Models\RefSupplier;
 use App\Models\RefItem;
 
 use Yajra\Datatables\Datatables;
-
 use Validator;
+
 use Carbon\Carbon;
 
-class TrSalesController extends Controller
+class TrStockOutController extends Controller
 {
 
     public $form,$route;
     public $rList,$rCreate;
 
     public function __construct(){
-        $this->form = "Sales";      //plural
-        $this->route = "sales";
-        $this->rList = "back.tr_sales.list";
-        $this->rCreate = "back.tr_sales.create";
+        $this->form = "Stock Out";      //plural
+        $this->route = "stockOut";
+        $this->rList = "back.tr_stockOut.list";
+        $this->rCreate = "back.tr_stockOut.create";
         $this->items = RefItem::all(['name','code', 'id']);
-        $this->supplier = RefCustomer::pluck('name', 'id');
+        $this->supplier = RefSupplier::pluck('name', 'id');
         // $this->supplier = RefSupplier::all(['id','name']);
 
     }
 
-    public function messages()
-    {
-        return [
-            'trcode.required' => 'tr code is required custom ',
-        ];
-    }
 
     public function index()
     {
@@ -46,6 +40,10 @@ class TrSalesController extends Controller
 
     public function create()
     {
+
+        // dd(  $this->supplier->toJson());
+
+
         $form = $this->form;
         $route = $this->route;
         $supplier  = $this->supplier;
@@ -65,27 +63,27 @@ class TrSalesController extends Controller
             if ($request->crudstat == 'edit')
             {
                 $trans_id = $request->id;
-                $code_rule = 'required|alpha_dash|min:3|unique:tr_sales,trcode,' . $request->id;
+                $code_rule = 'required|alpha_dash|min:3|unique:tr_stock_out,trcode,' . $request->id;
             }
             else
             {
-                $code_rule = 'required|alpha_dash|unique:tr_sales,trcode|min:3';
+                $code_rule = 'required|alpha_dash|unique:tr_stock_out,trcode|min:3';
             }
 
              $this->validate($request, [
             'trcode'=>$code_rule,
-            'customer_id'=>'required|exists:tbl_supplier,id', 
+            'supplier_id'=>'required|exists:tbl_supplier,id', 
             'description'=>'max:255', 
-            'dateSales'=>'required|date_format:m/d/Y', 
+            'dateTrans'=>'required|date_format:m/d/Y', 
             'trtotal'=>'required|min:1|numeric', 
             'rows.*.item_id' => 'required|max:255',
-            'rows.*.price' => 'required|numeric|min:1',
+            'rows.*.cost' => 'required|numeric|min:1',
             'rows.*.qty' => 'required|integer|min:1'
             ]);
 
 
             $rows = collect($request->rows)->transform(function($row) {
-                $row['subtotal'] = $row['qty'] * $row['price'];
+                $row['subtotal'] = $row['qty'] * $row['cost'];
                 return new ClsDetails($row);
             });
             if($rows->isEmpty()) {
@@ -96,7 +94,7 @@ class TrSalesController extends Controller
 
 
             $data = $request->except('rows','crudstat','id','created_at','updated_at','active');
-            $data['dateSales'] = date_format(date_create($data['dateSales']),"Y-m-d");
+            $data['dateTrans'] =date_format(date_create($data['dateTrans']),"Y-m-d");
 
 
             if ($request->crudstat == 'edit')
@@ -104,7 +102,7 @@ class TrSalesController extends Controller
                 Cls::where('id',$trans_id)->update($data);
                 $header =  Cls::findorfail($trans_id);
 
-                ClsDetails::where('sales_id',$trans_id)->delete();
+                ClsDetails::where('stockout_id',$trans_id)->delete();
             }
             else{
                 $header = Cls::create($data);
@@ -135,7 +133,7 @@ class TrSalesController extends Controller
         $data = Cls::with('rows')->findorfail($id);
         $supplier  = $this->supplier;
         $items  =  $this->items;
-
+        
         $data = array_add($data, 'crudstat', true);
 
         return view($this->rCreate,compact('data','form','route','supplier','items'));
@@ -150,9 +148,7 @@ class TrSalesController extends Controller
  
     public function data(){
 
-        $data = Cls::with('tbl_customer')->orderBy('id', 'desc')->get();
-
-    
+        $data = Cls::with('tbl_supplier')->orderBy('id', 'desc')->get();
 
         return Datatables::of($data)
 
@@ -175,7 +171,7 @@ class TrSalesController extends Controller
 
 
         ->editColumn('name',function ($data){
-                        return   $data->tbl_customer->name;
+                        return   $data->tbl_supplier->name;
                         })
 
         ->editColumn('description', ' 
@@ -201,8 +197,8 @@ class TrSalesController extends Controller
                  return 'odd';
             })
             ->setRowData([                  //same with = data-id={{ $Notes->id }} note: not sure but i think
-                'id' => 'test',
-            ])
+                'id' => 'test'
+,            ])
             ->setRowAttr([
                 'color' => 'red',
             ])
@@ -213,7 +209,7 @@ class TrSalesController extends Controller
     public function getNextOrderNumber()
     {
     
-        $Prefix  = 'SALES-';
+        $Prefix  = 'StockOut-';
 
         $lastOrder = Cls::orderBy('created_at', 'desc')->first();
 

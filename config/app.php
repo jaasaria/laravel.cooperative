@@ -184,6 +184,7 @@ return [
         App\Providers\SideBarTotalServiceProvider::class,
         App\Providers\ViewAuthServiceProvider::class,
         App\Providers\ViewFooterServiceProvider::class,
+        App\Providers\ViewDashboardServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
         Vinkla\Pusher\PusherServiceProvider::class,

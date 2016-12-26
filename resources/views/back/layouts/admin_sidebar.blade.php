@@ -57,8 +57,20 @@
                           </li>
 
 
-                        <li><a href="#">Re-Stock</a></li>
-                        <li><a href="#">Pull-Out</a></li>
+                        <li {{ Request::is('stockIn') ? 'active' : '' }} >
+                           <a href="{{ url('stockIn/') }}">Stock In
+                            @if ($countSales )
+                              <span class="label label-success pull-right">{{ $countStockIn  }}</span>
+                            @endif
+                           </a>
+                        </li>
+                        <li {{ Request::is('stockOut') ? 'active' : '' }} >
+                           <a href="{{ url('stockOut/') }}">Stock Out
+                            @if ($countSales )
+                              <span class="label label-success pull-right">{{ $countStockOut  }}</span>
+                            @endif
+                           </a>
+                        </li>
 
                       </ul>
                     </li>

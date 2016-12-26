@@ -6,33 +6,33 @@
 	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="tile-stats">
 			  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-			  <div class="count">3</div>
+			  <div class="count"> {{ $countPurchases }} </div>
 			  <h3>Today Purchase</h3>
-			  <a href="" ><p>View purchases listing</p></a>
+			  <a href=" {{ url('purchase') }}" ><p>View purchases listing</p></a>
 		</div>
 	</div>
 	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="tile-stats">
 			  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-			  <div class="count">179</div>
+			  <div class="count">{{ $countSales }}</div>
 			  <h3>Today Sales</h3>
-			  <a href="" ><p>View sales listing</p></a>
+			  <a href="{{ url('sales') }}" ><p>View sales listing</p></a>
 		</div>
 	</div>
 	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="tile-stats">
 			  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-			  <div class="count">55</div>
-			  <h3>Today Re-Stock</h3>
-			  <a href="" ><p>View re-stock listing</p></a>
+			  <div class="count">{{ $countStockIn }}</div>
+			  <h3>Today Stock In</h3>
+			  <a href="{{ url('stockIn') }}" ><p>View re-stock listing</p></a>
 		</div>
 	</div>
 	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="tile-stats">
 			  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-			  <div class="count">31</div>
-			  <h3>Today Pull-Out</h3>
-			  <a href="" ><p>View pull-out listing</p></a>
+			  <div class="count">{{ $countStockOut }}</div>
+			  <h3>Today Stock Out</h3>
+			  <a href="{{ url('stockOut') }}" ><p>View pull-out listing</p></a>
 		</div>
 	</div>
 

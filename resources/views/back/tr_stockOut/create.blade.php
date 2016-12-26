@@ -120,9 +120,9 @@
 
 						<div class="form-group">		
 					        <div class="col-md-12 col-sm-12 col-xs-12">
-					        	<select id="customer_id" 
-					        			name="customer_id" required class="form-control"
-					        			v-model="form.customer_id">
+					        	<select id="supplier_id" 
+					        			name="supplier_id" required class="form-control"
+					        			v-model="form.supplier_id">
 
 						        		<option value="" disabled selected></option>
 													@foreach($supplier as $id => $name)	
@@ -146,14 +146,13 @@
 					</div>
 
 					<div class="col-md-4">
-							<div class="controls">
+						<div class="controls">
                 <div class="col-md-12 xdisplay_inputx form-group has-feedback">
-                    <input type="text" value="" name="dateSales" id="dateSales" required class="form-control has-feedback-left calendar"  placeholder="Sales Date"
-                    v-model="form.dateSales">
+                    <input type="text" value="" name="dateTrans" id="dateTrans" required class="form-control has-feedback-left calendar"  placeholder="Date"
+                    v-model="form.dateTrans">
                     <span class="fa fa-calendar-o form-control-feedback left"></span>
               </div>
-	                    </div>
-						
+	          </div>
 					</div>
 
 
@@ -183,7 +182,7 @@
 	              <th class="w20">Item Code</th>
 	              <th class="w30">Item Name</th>
 	              <th class="w10c">Qty</th>
-	              <th class="w15c">Price</th>
+	              <th class="w15c">Cost</th>
 	              <th class="w15">Sub Total</th>
 	              <th class="w10 last"><span class="nobr">Action</span></th>
 	            </tr>
@@ -228,13 +227,13 @@
 	                <input name="itemqty[]" type="number" @change="onChangeSubTotal(row)" v-model="row.qty"  class="form-control" placeholder="Qty" >
 	              </td>
 
-	             	<td class="table-price" :class="{'table-error': errors['rows.' + $index + '.price']}">
+	             	<td class="table-cost" :class="{'table-error': errors['rows.' + $index + '.cost']}">
 									<div class="form-group">
-	              		<input name="itemprice[]" type="number" @change="onChangeSubTotal(row)"  v-model="row.price"  class="form-control" placeholder="Price">
+	              		<input name="itemcost[]" type="number" @change="onChangeSubTotal(row)"  v-model="row.cost"  class="form-control" placeholder="Cost">
 	          			</div>
 	             	</td>
 	             	<td class="table-subtotal green">
-	             		<strong><h4>  @{{ row.qty * row.price  }} </h4></strong>
+	             		<strong><h4>  @{{ row.qty * row.cost  }} </h4></strong>
 	             		<input type="hidden"  name="itemsubtotal[]"  v-model="row.subtotal">
 	             	</td>
 	              <td class="table-view last"><a href="" target="_blank">View</a></td>
@@ -317,7 +316,7 @@
 		    window._form = {!! $data->toJson() !!}
 		    
 		</script>
-		<script src=" {{ asset('js/sales.js') }} "></script>
+		<script src=" {{ asset('js/stockOut.js') }} "></script>
 
 
 	@else
@@ -327,23 +326,23 @@
 			Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 			window._form = {
 				id:'',
-				crudstat:'create',
+				crudstat:'',
 				trcode:'{{ (empty($data)?  old('trcode',$trCode): old('trcode', $data->trcode)) }}',
 				description:'',
-				customer_id:'',
-				dateSales:'{{ old('dateSales', date('m/d/Y')) }}',
+				supplier_id:'',
+				dateTrans:'{{ old('datePurchase', date('m/d/Y')) }}',
 				trsubtotal:0,
 				trdiscount:0,
 				trtotal:0.00,
 		    rows: [{
 		        item_id: '',
-		        price: 0,
+		        cost: 0,
 		        qty: 1,
 		        total:0
 		    }]
 		  };
 		</script>
-		<script src=" {{ asset('js/sales.js') }} "></script>
+		<script src=" {{ asset('js/stockOut.js') }} "></script>
 
 
         
