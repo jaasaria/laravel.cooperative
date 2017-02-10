@@ -9,11 +9,6 @@
 		    border: 3px solid #d2d6de;
 		}
 
-/*		.tabMargin{
-			margin-bottom: 20px;
-		}
-*/
-
 	</style>
 @stop
 
@@ -45,28 +40,7 @@
 		        	<div class="clearfix"></div>
 		    </div>
 
-		  
-
-
 <div class="x_content">
-
-
-
-	{{-- <div class="col-md-3">
-
-		<img class="profile-user-img img-responsive img-circle" src="" alt="User profile picture" style="margin-bottom: 5px;">
-
-		{!! Form::open(['method' => 'POST', 'url' => 'user', 'class' => 'form-horizontal','enctype'=>'multipart/form-data', 'files'=>true]) !!}
-
-				<div class="form-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
-				    {!! Form::file('avatar', ['required' => 'required','accept' =>'image/*']) !!}
-				    <small class="text-danger">{{ $errors->first('avatar') }}</small>
-				</div>
-
-			{!! Form::submit('Update Avatar', ['class' => 'btn btn-success btn-block']) !!}
-			<button id="btndelete" type="button" class="btn btn-warning btn-block" >Clear Avatar</button>
-		{!! Form::close() !!}
-	</div> --}}
 
 	<div class="col-md-10 col-md-offset-1">
 
@@ -162,11 +136,6 @@
 		        </div>
 			</div>
 
-
-
-
-
-
 			<div class="clearfix"></div>
 
 			<div class="ln_solid"></div>
@@ -181,10 +150,6 @@
 
 </div>
 
-
-		
-
-
 	      </div>
 	    </div>
   	</div>
@@ -192,17 +157,10 @@
 </div>
 @stop
 
-
-
-
 @push('scripts')
 <script>
 	$(document).ready(function(){
 
-	
-
-
-	    
 	});
 </script>
 @endpush 

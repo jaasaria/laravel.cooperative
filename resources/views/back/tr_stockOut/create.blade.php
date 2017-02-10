@@ -342,16 +342,8 @@
 		    }]
 		  };
 		</script>
-		<script src=" {{ asset('js/stockOut.js') }} "></script>
-
-
-        
+		<script src=" {{ asset('js/stockOut.js') }} "></script>        
 	@endif
-
-
-
-
-
 
 
 
@@ -360,10 +352,6 @@
 
  		$(function() {
 		$( ".calendar" ).datepicker();
-		// $("#supplier_id").select2({
-	  //          placeholder: "Select a Supplier",
-	  //          allowClear: true
-	  //    });
 		});
  	});
 </script>

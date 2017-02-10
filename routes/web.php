@@ -4,47 +4,15 @@ use App\Models\TrPurchases;
 use App\Models\TrMessages;
 use App\User;
 
-
-Route::get('check_user', function() {
-	return  User::all();
-});
-
-
-
-
-
-
-// use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-// class TestEvent implements ShouldBroadcast
-// {
-//     public $text;
-//     public function __construct($text)
-//     {
-//         $this->text = $text;
-//     }
-//     public function broadcastOn()
-//     {
-//         return ['test-channel'];
-//     }
-// }
+//testing purposes only
 route::get('/broadcast', function() {
-
 $data = TrMessages::where('id',1)->
                      with('userSender','userReceiver')->first();
-
     event(new \App\Events\ChatMessageReceived($data));
-
     return $data;
 });
 
-
-
-
-
-
-
-
-
+//------------------------------------------------------------------------------------------//
 
 
 
@@ -53,7 +21,6 @@ Event::listen('auth.last_login', function($user){
 	$user->last_login = new DateTime;
 	$user->save();
 });
-
 
 
 // For Guest
@@ -139,8 +106,6 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::resource('sales', 'TrSalesController');
 
 
-
-
 //Messages
 	Route::get('messages', ['uses' => 'TrMessagesController@index','as' => 'messages.index']);
 
@@ -166,11 +131,6 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::delete('stockOut/delete', ['uses' => 'TrStockOutController@delete','as' => 'stockOut.delete']);
 	Route::get('stockOut/data', ['uses' => 'TrStockOutController@data','as' => 'stockOut.data']);
 	Route::resource('stockOut', 'TrStockOutController');
-
-
-
-
-
 
 });
 

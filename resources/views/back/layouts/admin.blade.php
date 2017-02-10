@@ -11,8 +11,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta  name="csrf-token" content="{{ csrf_token() }}">
 
-
-
     <link rel="stylesheet" href=" {{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/font-awesome/css/font-awesome.min.css') }} ">
     <link rel="stylesheet" href=" {{ asset('css/custom.min.css') }} ">  
@@ -27,20 +25,7 @@
 
     <link rel="stylesheet" href=" {{ asset('vendors/iCheck/skins/flat/green.css') }} ">
     <link rel="stylesheet" href=" {{ asset('vendors/select2/dist/css/select2.min.css') }} ">
-
-    {{-- <link rel="stylesheet" href=" {{ asset('css/query-ui.css') }} "> --}}
-    {{-- <link rel="stylesheet" href=" {{ asset('css/hover.css') }} "> --}}
     <link rel="stylesheet" href=" {{ asset('css/hover-min.css') }} ">
-
-
-
-
-    {{-- <link rel="stylesheet" href=" {{ asset('bootstrap/css/bootstrap.min.css') }} ">
-    <link rel="stylesheet" href=" {{ asset('dist/icons/ionicons.min.css') }} ">
-    <link rel="stylesheet" href=" {{ asset('dist/icons/font-awesome-4.6.3/css/font-awesome.min.css') }} ">
-    <link rel="stylesheet" href=" {{ asset('dist/css/toastr.min.css') }} ">
-    <link rel="stylesheet" href=" {{ asset('dist/css/bootstrap-select.min.css') }} ">
-    <link rel="stylesheet" href=" {{ asset('plugins/datepicker/datepicker3.css') }} "> --}}
 
     @yield('css.import')
 
@@ -83,10 +68,6 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-    {{-- <script src=" {{ asset('js/vue.js') }} "></script> --}}
-    {{-- <script src=" {{ asset('js/vue-resource.min.js') }} "></script> --}}
-    {{-- <script src="https://unpkg.com/vue/dist/vue.js"></script> --}}
-
     <script src=" {{ asset('js/jquery.min.js') }} "></script>
 
     <script src=" {{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }} "></script>
@@ -103,8 +84,6 @@
     <script src=" {{ asset('vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }} "></script>
     <script src=" {{ asset('vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }} "></script>
     <script src=" {{ asset('vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }} "></script>
-
-
     <script src=" {{ asset('vendors/iCheck/icheck.min.js') }} "></script>
     <script src=" {{ asset('vendors/switchery/dist/switchery.min.js') }} "></script>
     <script src=" {{ asset('vendors/jquery.tagsinput/src/jquery.tagsinput.js') }} "></script>
@@ -115,32 +94,10 @@
 
     <script src=" {{ asset('js/jquery-ui.js') }} "></script>
 
-    
-    {{-- <script src=" {{ asset('js/timeago.min.js') }} "></script> --}}
-
 
     @yield('jsscript')     
     @stack('scripts')
 
-
-
-{{-- 
-
-<script src=" {{ asset('js/jquery.min.js') }} "></script>
-<script src=" {{ asset('bootstrap/js/bootstrap.min.js') }} "></script>
-<script src=" {{ asset('js/sweetalert/sweetalert.min.js') }} "></script>
-<script src=" {{ asset('js/toastr.min.js') }} "></script>
-<script src=" {{ asset('dist/js/bootstrap-select.min.js') }}"></script>
-<script src=" {{ asset('plugins/datepicker/bootstrap-datepicker.js') }}"></script>
-
-<script src=" {{ asset('js/buttons.print.min.js') }} "></script>
-<script src=" {{ asset('js/dataTables.buttons.min.js') }} "></script>
-<script src=" {{ asset('js/buttons.flash.min.js') }} "></script>
-<script src=" {{ asset('js/jszip.min.js') }} "></script>
-<script src=" {{ asset('js/pdfmake.min.js') }} "></script>
-<script src=" {{ asset('js/vfs_fonts.js') }} "></script>
-<script src=" {{ asset('js/buttons.html5.min.js') }} "></script>
- --}}
 
 
   </body>

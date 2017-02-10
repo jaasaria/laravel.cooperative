@@ -9,11 +9,6 @@
 		    border: 3px solid #d2d6de;
 		}
 
-/*		.tabMargin{
-			margin-bottom: 20px;
-		}
-*/
-
 	</style>
 @stop
 

@@ -3,8 +3,6 @@
 
 <style>
 
-
-
 .list-item {
   display: inline-block;
   margin-right: 10px;

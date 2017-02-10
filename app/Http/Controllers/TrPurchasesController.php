@@ -67,13 +67,12 @@ class TrPurchasesController extends Controller
     {
 
         try {
-
-            // dd($request->crudstat);
             
             if ($request->crudstat == 'edit')
             {
                 $trans_id = $request->id;
                 $code_rule = 'required|alpha_dash|min:3|unique:tr_purchases,trcode,' . $request->id;
+                // $code_rule = 'required|alpha_dash|min:3|exist:tr_purchases,trcode,' . $request->id;
             }
             else
             {

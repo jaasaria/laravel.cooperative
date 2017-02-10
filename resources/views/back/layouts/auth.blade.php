@@ -28,12 +28,6 @@
           background-color: #fff;
          }
 
-        /*   .login-page {
-            background-image: url('');
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-        }*/
 
         .logo-img {
             width: 100px;
@@ -234,10 +228,6 @@
             left: 0;
         }
 
-        /*
-        #messagebox .alert{
-            margin: 0;
-        }*/
 
     </style>
 
@@ -252,7 +242,7 @@
     <div class="hidden-xs hidden-sm col-md-9">
         <div id="title_section">
 
-            <img class="logo-img" src="{{ asset('img/logo-light.png') }}" alt="Admin Login">
+            <img class="logo-img" src="{{ asset('img/logolight.png') }}" alt="Admin Login">
             <div class="copy">
                 <h1>{{ $settingWebsite }}</h1>
                 <p>{{ $settingDesc }}</p>

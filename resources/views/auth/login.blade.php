@@ -28,7 +28,7 @@
                                 </span>
                                 <span class="login_loader">
                                     <img class="btn-loading"
-                                            src="{{ asset('img/logo-light.png') }}"> Logging in
+                                            src="{{ asset('img/logolight.png') }}"> Logging in
                                 </span>
                             </button>
 
@@ -40,20 +40,30 @@
                                 <a class="btn-link" href="{{ url('/register') }}">
                                         <small>Register New User</small>
                                 </a>
-
-
                                 @if (old('token'))
                                     <br>
                                     <a class="btn-link" href="{{ url('/register/resend/' . old('token')) }}">
                                             <small>Resend Verification Link</small>
                                     </a>      
                                 @endif
+                            </div>
 
-  
+                            <br><br>
+                            <div id="notes" class="hidden-xs">
 
+                                <small>User registration not working due to smpt/email server. Please use sample user's for convenient</small>
+
+                                <br>
+                                <small>email: asaria.ja@gmail.com pass: 123123</small>
+                                <br>
+                                <small>email: b@yahoo.com pass: 123123</small>
 
 
                             </div>
+
+
+
+
                 </form>
 
 

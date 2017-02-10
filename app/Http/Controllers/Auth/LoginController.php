@@ -29,7 +29,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = 'dashboard';
+
+
+
 
     /**
      * Create a new controller instance.
@@ -44,9 +47,17 @@ class LoginController extends Controller
     public function LoginForm()
     {
         $this->middleware('guest', ['except' => 'logout']);
-        
-
+    
     }
+
+    protected function authenticated($request, $user)
+    {
+        // if($user->is_admin) {
+        //     return redirect()->intended('/admin_path_here');
+        // }
+        return redirect()->intended('/dashboard');
+}
+
 
    
 
